@@ -11,15 +11,12 @@
     await loadScript(loader);
     await loadScript(sapp_utils);
     await load(wasm);
-    // wait one second
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(wasm_exports);
-    console.log(consume_js_object(wasm_exports.receive_json_plugin(js_object('{"name":"John", "age":30, "car":null}'))))
-    console.log(consume_js_object(wasm_exports.receive_json_plugin(js_object(JSON.stringify(sand)))))
-    console.log(consume_js_object(wasm_exports.receive_json_plugin(js_object(JSON.stringify(replicant)))))
+    consume_js_object(wasm_exports.receive_json_plugin(js_object(JSON.stringify(sand))))
+    consume_js_object(wasm_exports.receive_json_plugin(js_object(JSON.stringify(replicant))))
   });
 </script>
 
-<div class="bg-black">
-  <canvas class="w-full h-full" id="glcanvas"></canvas>
+<div class="flex flex-col place-items-center h-[100vh] justify-center bg-black">
+  <canvas class="w-full h-full m-0 p-0" id="glcanvas"></canvas>
+
 </div>
