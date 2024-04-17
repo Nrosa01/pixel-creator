@@ -1,0 +1,15 @@
+{
+  "name": "Replicant",
+  "version": "1.0.0",
+  "color": [255, 168, 139],
+  "alpha": [1,1],
+  "update": [
+    {
+      "block": "forEachTransformation",
+      "data": {
+        "transformation": "Rotation",
+        "block": { "block": "copyTo", "data": { "direction": [0, -1] } }
+      }
+    }
+  ]
+}
