@@ -1,34 +1,39 @@
 {
   "name": "TestParticle",
   "version": "1.0.0",
-  "color": [204, 198, 159],
-  "alpha": [0.9, 1],
+  "color": [185, 179, 138],
+  "alpha": [0.8, 0.9],
   "update": [
     {
-      "block": "randomTransformation",
+      "action": "randomTransformation",
       "data": {
         "transformation": "HorizontalReflection",
         "block": {
-          "block": "if",
+          "action": "if",
           "data": {
             "condition": {
-              "block": "ifDirectionIsAnyType",
+              "block": "checkTypesInDirection",
               "data": {
-                "direction": [0, -1],
+                "direction": { "direction": "constant", "data": [0, -1] },
                 "types": [
                   { "constant_number": "particleIdFromName", "data": "empty" },
                   { "constant_number": "particleIdFromName", "data": "water" }
                 ]
               }
             },
-            "result": { "block": "swap", "data": { "direction": [0, -1] } },
+            "result": {
+              "action": "swap",
+              "data": {
+                "direction": { "direction": "constant", "data": [0, -1] }
+              }
+            },
             "else": {
-              "block": "if",
+              "action": "if",
               "data": {
                 "condition": {
-                  "block": "ifDirectionIsAnyType",
+                  "block": "checkTypesInDirection",
                   "data": {
-                    "direction": [-1, -1],
+                    "direction": { "direction": "constant", "data": [-1, -1] },
                     "types": [
                       {
                         "constant_number": "particleIdFromName",
@@ -42,16 +47,21 @@
                   }
                 },
                 "result": {
-                  "block": "swap",
-                  "data": { "direction": [-1, -1] }
+                  "action": "swap",
+                  "data": {
+                    "direction": { "direction": "constant", "data": [-1, -1] }
+                  }
                 },
                 "else": {
-                  "block": "if",
+                  "action": "if",
                   "data": {
                     "condition": {
-                      "block": "ifDirectionIsAnyType",
+                      "block": "checkTypesInDirection",
                       "data": {
-                        "direction": [1, -1],
+                        "direction": {
+                          "direction": "constant",
+                          "data": [1, -1]
+                        },
                         "types": [
                           {
                             "constant_number": "particleIdFromName",
@@ -65,8 +75,13 @@
                       }
                     },
                     "result": {
-                      "block": "swap",
-                      "data": { "direction": [1, -1] }
+                      "action": "swap",
+                      "data": {
+                        "direction": {
+                          "direction": "constant",
+                          "data": [1, -1]
+                        }
+                      }
                     },
                     "else": null
                   }
