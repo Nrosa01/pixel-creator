@@ -127,8 +127,6 @@
       <button title="Open particle editor" class="{button_class} whitespace-nowrap sm:grow-0 grow" on:click="{openEditor}">Open editor</button>
     </div>
 
-    <div class="flex flex-wrap gap-2 items-start h-full bg-slate-600/50 rounded-xl p-2">
       <ParticleButtons {particle_array} />
-    </div>
   </div>
 </div>
