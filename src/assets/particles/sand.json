@@ -1,7 +1,7 @@
 {
   "name": "TestParticle",
   "version": "1.0.0",
-  "color": [185, 179, 138],
+  "color": [135, 129, 78],
   "alpha": [0.8, 0.9],
   "update": [
     {
