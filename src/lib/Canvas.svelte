@@ -16,7 +16,7 @@
     add_particle(new ParticleModel("Empty", empty));
     add_particle(new ParticleModel("Sand", sand));
     add_particle(new ParticleModel("Replicant", replicant));
-    wasm_exports.resize_simulation(js_object(Math.round(150).toString()));
+    wasm_exports.resize_simulation(js_object(Math.round(current_size).toString()));
     console.log(particle_array);
   });
 
@@ -31,11 +31,11 @@
   }
 
   let paused = false;
-  var current_size = 300;
-  var performance_mode = false;
+  var current_size = 150;
+  let  performance_mode = false;
 
-  let button_class = "bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded";
-  let dropdown = "bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded";
+  let button_class = "bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow";
+  let dropdown = "bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow";
 
   let particle_array = [];
 
@@ -100,14 +100,14 @@
   }
 </script>
 
-<div class="h-screen w-screen flex flex-col lg:flex-row justify-center items-center bg-slate-300 py-8 gap-8">
-  <div class="aspect-square lg:ml-8 h-full bg-slate-600 border-2 border-black">
+<div class="h-screen w-screen flex flex-col lg:flex-row justify-center items-center py-8 gap-8">
+  <div class="aspect-square w-[90vmin] lg:ml-8 bg-slate-600 border-2 border-black">
     <canvas class="w-full h-full cursor-none" id="glcanvas"></canvas>
   </div>
 
-  <div class="flex flex-col lg:pr-8 w-full h-full">
-    <div class="flex justify-between items-center bg-slate-600/50 rounded-xl mb-4 p-2">
-      <div class="flex justify-start gap-2 items-center">
+  <div class="flex flex-col h-full lg:w-[40vw] w-[98vw] px-8 lg:px-0 lg:pr-8">
+    <div class="flex gap-2 flex-wrap justify-between items-center bg-slate-600/50 rounded-xl mb-4 p-2">
+      <div class="flex gap-2 flex-wrap justify-start items-center grow">
         <button class="{button_class}" on:click="{toggle_pause}">
           {#if paused}
             <i class="ph-duotone ph-play"></i>
@@ -118,20 +118,21 @@
         <button class="{button_class}" title="Clear all the particles" on:click="{clear}"><i class="ph-duotone ph-broom"></i></button>
         <button class="{button_class}" title="Save the current state of the simulation as a file" on:click="{save}"><i class="ph-duotone ph-floppy-disk"></i></button>
         <button class="{button_class}" title="Load a state from disk" on:click="{load_state}"><i class="ph-duotone ph-upload"></i></button>
-        <button class="{button_class}" title="Toggle performance mode. Performance mode disables realtime particle editing updates and animations when resizing the world" on:click="{toggle_performance_mode}"><i class="ph-duotone ph-fire"></i></button>
+        <button class="{button_class} transition-colors {!performance_mode ? "text-red-500" : ""}" title="Toggle performance mode. Performance mode disables realtime particle editing updates and animations when resizing the world" on:click="{toggle_performance_mode}"><i class="ph-duotone ph-fire"></i></button>
 
         <select title="Change the simulation size. Tiny is 75*75, normal 150*150 and big is 300*300" class="{dropdown}" on:change="{handleNewSizeChange}">
           <option value="75">Tiny</option>
-          <option value="150">Normal</option>
-          <option value="300" selected>Big</option>
+          <option value="150" selected>Normal</option>
+          <option value="300">Big</option>
         </select>
       </div>
-      <button title="Open particle editor" class="{button_class} ml-4 whitespace-nowrap" on:click="{openEditor}">Open editor</button>
-    </div>
 
-    <div class="flex justify-start gap-2 items-start h-full bg-slate-600/50 rounded-xl p-2">
+      <button title="Open particle editor" class="{button_class} whitespace-nowrap sm:grow-0 grow" on:click="{openEditor}">Open editor</button>
+    </div>
+    
+    <div class="flex flex-wrap gap-2 items-start h-full bg-slate-600/50 rounded-xl p-2">
       {#each particle_array as particle, i}
-        <button class="border-2 border-black hover:bg-slate-300 hover:scale-105 font-semibold py-1 px-2 rounded" on:click="{() => select_particle(i)}">{particle.display_name}</button>
+        <button style="background-color: rgb(rgba(${particle.data.color[0]}, 255, 255);" class="border-2 border-black hover:bg-slate-300 hover:scale-105 font-semibold py-1 px-2 rounded" on:click="{() => select_particle(i)}">{particle.display_name}</button>
       {/each}
     </div>
   </div>
