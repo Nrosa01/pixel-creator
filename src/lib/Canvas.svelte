@@ -8,6 +8,7 @@
   import replicant from "../assets/particles/replicant.json";
   import empty from "../assets/particles/empty.json";
   import ParticleModel from "../assets/models/particle.js";
+  import ParticleButtons from "./ParticleButtons.svelte";
 
   onMount(async () => {
     await loadScript(loader);
@@ -20,11 +21,6 @@
     console.log(particle_array);
   });
 
-  function select_particle(particle_id) {
-    console.log("Particle selected:", particle_id);
-    wasm_exports.select_particle(js_object(particle_id.toString()));
-  }
-
   function add_particle(particle) {
     consume_js_object(wasm_exports.receive_json_plugin(js_object(JSON.stringify(particle.data))));
     particle_array = [...particle_array, particle];
@@ -32,7 +28,7 @@
 
   let paused = false;
   var current_size = 150;
-  let  performance_mode = false;
+  let performance_mode = false;
 
   let button_class = "bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow";
   let dropdown = "bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow";
@@ -118,7 +114,8 @@
         <button class="{button_class}" title="Clear all the particles" on:click="{clear}"><i class="ph-duotone ph-broom"></i></button>
         <button class="{button_class}" title="Save the current state of the simulation as a file" on:click="{save}"><i class="ph-duotone ph-floppy-disk"></i></button>
         <button class="{button_class}" title="Load a state from disk" on:click="{load_state}"><i class="ph-duotone ph-upload"></i></button>
-        <button class="{button_class} transition-colors {!performance_mode ? "text-red-500" : ""}" title="Toggle performance mode. Performance mode disables realtime particle editing updates and animations when resizing the world" on:click="{toggle_performance_mode}"><i class="ph-duotone ph-fire"></i></button>
+        <button class="{button_class} transition-colors {!performance_mode ? 'text-red-500' : ''}" title="Toggle performance mode. Performance mode disables realtime particle editing updates and animations when resizing the world" on:click="{toggle_performance_mode}"
+          ><i class="ph-duotone ph-fire"></i></button>
 
         <select title="Change the simulation size. Tiny is 75*75, normal 150*150 and big is 300*300" class="{dropdown}" on:change="{handleNewSizeChange}">
           <option value="75">Tiny</option>
@@ -129,11 +126,9 @@
 
       <button title="Open particle editor" class="{button_class} whitespace-nowrap sm:grow-0 grow" on:click="{openEditor}">Open editor</button>
     </div>
-    
+
     <div class="flex flex-wrap gap-2 items-start h-full bg-slate-600/50 rounded-xl p-2">
-      {#each particle_array as particle, i}
-        <button style="background-color: rgb(rgba(${particle.data.color[0]}, 255, 255);" class="border-2 border-black hover:bg-slate-300 hover:scale-105 font-semibold py-1 px-2 rounded" on:click="{() => select_particle(i)}">{particle.display_name}</button>
-      {/each}
+      <ParticleButtons {particle_array} />
     </div>
   </div>
 </div>
