@@ -99,37 +99,41 @@
   }
 </script>
 
-<div class="h-screen w-screen flex flex-col lg:flex-row justify-center items-center py-8 gap-8">
-  <div class="aspect-square w-[90vmin] lg:ml-8 bg-slate-600 border-2 border-black">
-    <canvas class="w-full h-full cursor-none" id="glcanvas"></canvas>
-  </div>
-
-  <div class="flex flex-col h-full lg:w-[40vw] w-[98vw] px-8 lg:px-0 lg:pr-8">
-    <div class="flex gap-2 flex-wrap justify-between items-center bg-slate-600/50 rounded-xl mb-4 p-2">
-      <div class="flex gap-2 flex-wrap justify-start items-center grow">
-        <button class="{button_class}" on:click="{toggle_pause}">
-          {#if paused}
-            <i class="ph-duotone ph-play"></i>
-          {:else}
-            <i class="ph-duotone ph-pause"></i>
-          {/if}
-        </button>
-        <button class="{button_class}" title="Clear all the particles" on:click="{clear}"><i class="ph-duotone ph-broom"></i></button>
-        <button class="{button_class}" title="Save the current state of the simulation as a file" on:click="{save}"><i class="ph-duotone ph-floppy-disk"></i></button>
-        <button class="{button_class}" title="Load a state from disk" on:click="{load_state}"><i class="ph-duotone ph-upload"></i></button>
-        <button class="{button_class} transition-colors {!performance_mode ? 'text-red-500' : ''}" title="Toggle performance mode. Performance mode disables realtime particle editing updates and animations when resizing the world" on:click="{toggle_performance_mode}"
-          ><i class="ph-duotone ph-fire"></i></button>
-
-        <select title="Change the simulation size. Tiny is 75*75, normal 150*150 and big is 300*300" class="{dropdown}" on:change="{handleNewSizeChange}">
-          <option value="75">Tiny</option>
-          <option value="150" selected>Normal</option>
-          <option value="300">Big</option>
-        </select>
-      </div>
-
-      <button title="Open particle editor" class="{button_class} whitespace-nowrap sm:grow-0 grow" on:click="{openEditor}">Open editor</button>
+<div class="flex flex-row">
+  <div class="h-screen w-screen flex {is_editor_open ? 'flex-row lg:flex-col' : 'flex-col lg:flex-row '} justify-center items-center py-8 gap-8">
+    <div class="aspect-square {is_editor_open ? 'max-w-[40vmin]' : 'w-[90vmin]'} lg:ml-8 bg-slate-600 border-2 border-black">
+      <canvas class="w-full h-full cursor-none" id="glcanvas"></canvas>
     </div>
-    <ParticleButtons {particle_array} {is_editor_open} />
-    <Blockly {particle_array} {is_editor_open} />
+
+    <div class="flex flex-col h-full lg:w-[40vw] w-[98vw] px-8 lg:px-0 lg:pr-8">
+      <div class="flex gap-2 flex-wrap justify-between items-center bg-slate-600/50 rounded-xl mb-4 p-2">
+        <div class="flex gap-2 flex-wrap justify-start items-center grow">
+          <button class="{button_class}" on:click="{toggle_pause}">
+            {#if paused}
+              <i class="ph-duotone ph-play"></i>
+            {:else}
+              <i class="ph-duotone ph-pause"></i>
+            {/if}
+          </button>
+          <button class="{button_class}" title="Clear all the particles" on:click="{clear}"><i class="ph-duotone ph-broom"></i></button>
+          <button class="{button_class}" title="Save the current state of the simulation as a file" on:click="{save}"><i class="ph-duotone ph-floppy-disk"></i></button>
+          <button class="{button_class}" title="Load a state from disk" on:click="{load_state}"><i class="ph-duotone ph-upload"></i></button>
+          <button class="{button_class} transition-colors {!performance_mode ? 'text-red-500' : ''}" title="Toggle performance mode. Performance mode disables realtime particle editing updates and animations when resizing the world" on:click="{toggle_performance_mode}"
+            ><i class="ph-duotone ph-fire"></i></button>
+
+          <select title="Change the simulation size. Tiny is 75*75, normal 150*150 and big is 300*300" class="{dropdown}" on:change="{handleNewSizeChange}">
+            <option value="75">Tiny</option>
+            <option value="150" selected>Normal</option>
+            <option value="300">Big</option>
+          </select>
+        </div>
+
+        <button title="Open particle editor" class="{button_class} whitespace-nowrap sm:grow-0 grow" on:click="{openEditor}">Open editor</button>
+      </div>
+      <ParticleButtons {particle_array} {is_editor_open} />
+      <!-- <Blockly {particle_array} {is_editor_open} /> -->
+    </div>
   </div>
+
+  <Blockly {particle_array} {is_editor_open}></Blockly>
 </div>
