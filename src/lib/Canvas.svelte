@@ -9,6 +9,7 @@
   import empty from "../assets/particles/empty.json";
   import ParticleModel from "../assets/models/particle.js";
   import ParticleButtons from "./ParticleButtons.svelte";
+  import Blockly from "./Blockly.svelte";
 
   onMount(async () => {
     await loadScript(loader);
@@ -29,6 +30,7 @@
   let paused = false;
   var current_size = 150;
   let performance_mode = false;
+  let is_editor_open = false;
 
   let button_class = "bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow";
   let dropdown = "bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow";
@@ -56,6 +58,7 @@
 
   function openEditor() {
     console.log("Open editor button clicked");
+    is_editor_open = !is_editor_open;
   }
 
   function lerp(a, b, t) {
@@ -126,7 +129,7 @@
 
       <button title="Open particle editor" class="{button_class} whitespace-nowrap sm:grow-0 grow" on:click="{openEditor}">Open editor</button>
     </div>
-
-      <ParticleButtons {particle_array} />
+    <ParticleButtons {particle_array} {is_editor_open} />
+    <Blockly {particle_array} {is_editor_open} />
   </div>
 </div>

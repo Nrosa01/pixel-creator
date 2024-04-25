@@ -1,6 +1,7 @@
 <script>
   import ParticleModel from "../assets/models/particle.js";
   export let particle_array = [];
+  export let is_editor_open = false;
 
   let button_class = "bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow";
   let selected = 1;
@@ -35,9 +36,10 @@
   }
 </script>
 
-<div class="flex flex-wrap gap-2 items-start h-full bg-slate-600/50 rounded-xl p-2 content-start">
+<div class="flex flex-wrap gap-2 items-start bg-slate-600/50 rounded-xl p-2 content-start {is_editor_open ? "" : "h-full"}">
   {#each particle_array as particle, i}
-    <button class="border-2 border-black hover:bg-slate-300 hover:scale-105 font-semibold py-1 px-2 rounded {selected == i ? 'border-white font-extrabold text-white stroke-slate-900 stroke-4' : ''}" style="background-color: rgb({particle.data.color.join(',')});" on:click="{() => select_particle(i)}"
+    <button class="border-2 border-black hover:bg-slate-300 hover:scale-105 font-semibold py-1 px-2 rounded {selected == i ? 'border-white font-extrabold text-white stroke-slate-900 stroke-4' : ''}" 
+    style="background-color: rgb({particle.data.color.join(',')});" on:click="{() => select_particle(i)}"
       ><span class="{selected == i ? 'drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]' : ''}">{particle.display_name}</span></button>
   {/each}
   <button class="{button_class} font-black" title="Add a new particle" on:click="{add}">+</button>

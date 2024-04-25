@@ -16,8 +16,8 @@
               "data": {
                 "direction": { "direction": "constant", "data": [0, -1] },
                 "types": [
-                  { "constant_number": "particleIdFromName", "data": "empty" },
-                  { "constant_number": "particleIdFromName", "data": "water" }
+                  { "particle_type": "fromName", "data": "empty" },
+                  { "particle_type": "fromName", "data": "water" }
                 ]
               }
             },
@@ -35,14 +35,8 @@
                   "data": {
                     "direction": { "direction": "constant", "data": [-1, -1] },
                     "types": [
-                      {
-                        "constant_number": "particleIdFromName",
-                        "data": "empty"
-                      },
-                      {
-                        "constant_number": "particleIdFromName",
-                        "data": "water"
-                      }
+                      { "particle_type": "fromName", "data": "empty" },
+                      { "particle_type": "fromName", "data": "water" }
                     ]
                   }
                 },
@@ -63,14 +57,8 @@
                           "data": [1, -1]
                         },
                         "types": [
-                          {
-                            "constant_number": "particleIdFromName",
-                            "data": "empty"
-                          },
-                          {
-                            "constant_number": "particleIdFromName",
-                            "data": "water"
-                          }
+                          { "particle_type": "fromName", "data": "empty" },
+                          { "particle_type": "fromName", "data": "water" }
                         ]
                       }
                     },
