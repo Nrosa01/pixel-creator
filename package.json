@@ -22,6 +22,5 @@
     "@blockly/block-plus-minus": "^7.0.4",
     "@blockly/field-slider": "^6.1.7",
     "blockly": "^10.0.0",
-    "blockly-field-color-wheel": "^1.0.2"
-  }
+    "blockly-field-color-wheel": "^1.0.2"  }
 }

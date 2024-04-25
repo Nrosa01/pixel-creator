@@ -14,116 +14,63 @@ listed here.
 
 
 export const toolbox = {
-  'kind': 'categoryToolbox',
+  'kind': 'flyoutToolbox',
   "contents": [
     {
-      "kind": "category",
-      "name": "Particle",
-      
-      "contents": [
-        {
-          'kind': 'block',
-          'type': 'particle_base',
-        },
-        {
-          'kind': 'block',
-          'type': 'custom_input_color'
-        },
-        {
-          'kind': 'block',
-          'type': 'test_field_slider'
-        },
-        {
-          'kind': 'block',
-          'type': 'if'
-        },
-        {
-          'kind': 'block',
-          'type': 'randomTransformation'
-        },
-        {
-          'kind': 'block',
-          'type': 'update'
-        },
-        {
-          'kind': 'block',
-          'type': 'move',
-          'inputs': {
-            'OTHER': {
-              'shadow': {
-                'type': 'cell',
-              },
-            },
-          },
-        },
-        {
-          'kind': 'block',
-          'type': 'cell'
-        },
-        {
-          'kind': 'block',
-          'type': 'particle'
-        },
-        {
-          'kind': 'block',
-          'type': 'is_equal',
-          'inputs': {
-            'DIRECTION': {
-              'shadow': {
-                'type': 'cell',
-              },
-            },
-            'TYPE_PARTICLE': {
-              'shadow': {
-                'type': 'particle',
-              },
-            }
-          },
-        }
-      ]
+      'kind': 'block',
+      'type': 'particle_base',
     },
-
-    //#region tutorial
     {
-      "kind": "category",
-      "name": "basic",
-      "contents": [
-        {
-          'kind': 'block',
-          'type': 'object'
+      'kind': 'block',
+      'type': 'custom_input_color'
+    },
+    {
+      'kind': 'block',
+      'type': 'test_field_slider'
+    },
+    {
+      'kind': 'block',
+      'type': 'randomTransformation'
+    },
+    {
+      'kind': 'block',
+      'type': 'update'
+    },
+    {
+      'kind': 'block',
+      'type': 'move',
+      'inputs': {
+        'OTHER': {
+          'shadow': {
+            'type': 'cell',
+          },
         },
-        {
-          'kind': 'block',
-          'type': 'member'
+      },
+    },
+    {
+      'kind': 'block',
+      'type': 'cell'
+    },
+    {
+      'kind': 'block',
+      'type': 'particle'
+    },
+    {
+      'kind': 'block',
+      'type': 'is_equal',
+      'inputs': {
+        'DIRECTION': {
+          'shadow': {
+            'type': 'cell',
+          },
         },
-
-        {
-          'kind': 'block',
-          'type': 'math_number'
-        },
-        {
-          'kind': 'block',
-          'type': 'text'
-        },
-        {
-          'kind': 'block',
-          'type': 'logic_boolean'
-        },
-        {
-          'kind': 'block',
-          'type': 'logic_null'
-        },
-        {
-          'kind': 'block',
-          'type': 'lists_create_with'
-        },
-        {
-          'kind': 'block',
-          'type': 'controls_if'
+        'TYPE_PARTICLE': {
+          'shadow': {
+            'type': 'particle',
+          },
         }
-      ]
+      },
     }
-    //#endregion
   ]
 
 

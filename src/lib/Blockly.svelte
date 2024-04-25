@@ -16,13 +16,15 @@
   onMount(() => {
     console.log("Blockly mounted");
 
+    Blockly.common.defineBlocks(blocks);
+
     const blocklyDiv = document.getElementById("blocklyDiv");
     const ws = Blockly.inject(blocklyDiv, {
       renderer: "Zelos",
       toolbox,
     });
 
-    load(ws);
+    // load(ws);
   });
 </script>
 
