@@ -57,7 +57,7 @@ onMounted(() => {
   const blocklyDiv = document.getElementById("blocklyDiv");
   const ws = Blockly.inject(blocklyDiv, {
     renderer: "Zelos",
-    scrollbars: true,
+    scrollbars: false,
     grid: {
       spacing: 20,
       length: 3,
@@ -83,12 +83,11 @@ onMounted(() => {
     toolbox,
   });
 
-  // load(ws);
+  loadWorkspace(props.selected_particle);
 });
 </script>
 
 <template>
-  <p>{{ props.selected_particle }}</p>
   <div class="w-full m-4 bg-slate-600/50 rounded-xl box-content overflow-clip">
     <div class="w-full h-full" id="blocklyDiv"></div>
   </div>
