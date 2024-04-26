@@ -1,8 +1,11 @@
-import "./app.postcss";
-import App from "./App.svelte";
+import './assets/main.css'
 
-const app = new App({
-  target: document.getElementById("app"),
-});
+import { createApp } from 'vue'
+import App from './App.vue'
+import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 
-export default app;
+const app = createApp(App)
+
+app.use(autoAnimatePlugin)
+
+app.mount('#app')

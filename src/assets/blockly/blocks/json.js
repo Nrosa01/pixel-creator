@@ -222,7 +222,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
   },
   {
     type: "randomTransformation",
-    message0: "random transformation %1 %2 %3",
+    message0: "in a random %1 %2 %3",
     args0: [
 
       {
@@ -231,8 +231,21 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         options: [
 
           [
+            "↻ Rotation",
+            "Rotation"
+          ],
+          [
+            "✥ Reflection",
+            "Reflection",
+          ],
+          [
+            "⟷ HorizontalReflection",
             "HorizontalReflection",
-            "HorizontalReflection"
+          ],
+          [
+            "↕ VerticalReflection",
+           
+            "VerticalReflection",
           ]
         ]
       },

@@ -1,5 +1,4 @@
 {
-    "svelteStrictMode": true,
     "bracketSameLine": true,
-    "printWidth": 300
+    "printWidth": 600
 }
