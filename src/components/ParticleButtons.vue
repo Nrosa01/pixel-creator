@@ -4,11 +4,12 @@ import ParticleModel from "../assets/models/particle.js";
 
 const props = defineProps({
   particle_array: Array,
-  is_editor_open: Boolean,
 });
 
 let buttonClass = "bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow";
-let selected = ref(1);
+const selected = ref(1);
+
+defineExpose({ selected });
 
 function selectParticle(particleId) {
   console.log("Particle selected:", particleId);

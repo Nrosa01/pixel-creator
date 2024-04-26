@@ -40,6 +40,8 @@ const performance_mode = ref(false);
 const buttonClass = ref("bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow");
 const dropdown = ref("bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow");
 const particle_array = ref([]);
+const selected_particle = ref(1);
+const particle_buttons = ref();
 
 const windowWidth = ref(window.innerWidth);
 
@@ -128,11 +130,10 @@ function togglePerformanceMode() {
             </select>
           </div>
         </div>
-        <ParticleButtons v-model:particle_array="particle_array" />
-
+        <ParticleButtons ref="particle_buttons" :particle_array/>
         <p v-if="!isDesktop" class="text-2xl font-bold text-red-500 py-2">Use a bigger screen to edit particles</p>
       </div>
     </div>
-    <Blockly v-if="isDesktop" v-model:particle_array="particle_array"></Blockly>
+    <Blockly v-if="isDesktop" :particle_array :selected_particle="particle_buttons?.selected"></Blockly>
   </div>
 </template>

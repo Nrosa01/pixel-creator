@@ -1,7 +1,8 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted } from "vue";
 import ParticleModel from "../assets/models/particle.js";
 import * as Blockly from "blockly";
+import { watch } from "vue";
 import { blocks } from "../assets/blockly/blocks/json";
 import { jsonGenerator } from "../assets/blockly/generators/json";
 import { save, load } from "../assets/blockly/serialization";
@@ -10,7 +11,40 @@ import "../assets/blockly/renderers/renderer.js";
 
 const props = defineProps({
   particle_array: Array,
+  selected_particle: Number,
 });
+
+// computed property to handle the selected particle
+watch(
+  () => props.selected_particle,
+  (selection, prevSelection) => {
+    if (prevSelection !== undefined) saveWorkspace(prevSelection);
+    if (selection !== undefined) loadWorkspace(selection);
+  }
+);
+
+function loadWorkspace(index) {
+  Blockly.Events.disable();
+  const workspace = Blockly.getMainWorkspace();
+  const data = props.particle_array[index]?.blockly_workspace;
+  if (data) {
+    Blockly.serialization.workspaces.load(data, workspace);
+  } else {
+    workspace.clear();
+
+    const block = workspace.newBlock("particle_base");
+    console.log("Loading index", index, props.particle_array[index]?.display_name);
+    block.setFieldValue(props.particle_array[index]?.display_name, "NAME");
+    block.initSvg();
+    block.render();
+  }
+  Blockly.Events.enable();
+}
+
+function saveWorkspace(index) {
+  const json = Blockly.serialization.workspaces.save(Blockly.getMainWorkspace());
+  props.particle_array[index].blockly_workspace = json;
+}
 
 onMounted(() => {
   console.log("Blockly mounted");
@@ -23,6 +57,29 @@ onMounted(() => {
   const blocklyDiv = document.getElementById("blocklyDiv");
   const ws = Blockly.inject(blocklyDiv, {
     renderer: "Zelos",
+    scrollbars: true,
+    grid: {
+      spacing: 20,
+      length: 3,
+      colour: "#ccc",
+      snap: true,
+    },
+    maxInstances: {
+      particle_base: 1,
+    },
+    move: {
+      scrollbars: true,
+      drag: true,
+      wheel: true,
+    },
+    zoom: {
+      controls: true,
+      wheel: false,
+      startScale: 1.0,
+      maxScale: 1.5,
+      minScale: 0.5,
+      scaleSpeed: 1.2,
+    },
     toolbox,
   });
 
@@ -31,8 +88,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex w-full flex-wrap gap-2 items-start bg-slate-600/50 rounded-xl content-start">
+  <p>{{ props.selected_particle }}</p>
+  <div class="w-full m-4 bg-slate-600/50 rounded-xl box-content overflow-clip">
     <div class="w-full h-full" id="blocklyDiv"></div>
   </div>
 </template>
-

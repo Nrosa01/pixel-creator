@@ -18,10 +18,6 @@ export const toolbox = {
   "contents": [
     {
       'kind': 'block',
-      'type': 'particle_base',
-    },
-    {
-      'kind': 'block',
       'type': 'custom_input_color'
     },
     {
