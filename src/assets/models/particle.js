@@ -20,6 +20,14 @@ class ParticleModel {
         }
         return new ParticleModel("New Particle", data);
     }
+
+    update_data(data) {
+        // This is because we NEVER want to modify the internal name, the name we edit in blockly is used as the display name 
+        this.display_name = data.name; 
+        data.name = this.data.name; // So we copy the internal name to the new data
+        this.data = data; // And then we update the data safely, few, this gave me quite a headache until I figured it out. If error logs were more descriptive...
+        consume_js_object(wasm_exports.receive_json_plugin(js_object(JSON.stringify(data))));
+    }
 }
 
 export default ParticleModel;
