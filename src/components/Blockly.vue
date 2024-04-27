@@ -20,10 +20,9 @@ watch(
   ([selection, particleArrayLength], [prevSelection, prevParticleArrayLength]) => {
     if (selection !== prevSelection) {
       // console.log("Selected particle changed", selection);
-      if (prevSelection !== undefined && prevSelection <  particleArrayLength) saveWorkspace(prevSelection);
+      if (prevSelection !== undefined && prevSelection < particleArrayLength) saveWorkspace(prevSelection);
       if (selection !== undefined) loadWorkspace(selection);
-    }
-    else if (particleArrayLength !== prevParticleArrayLength) {
+    } else if (particleArrayLength !== prevParticleArrayLength) {
       // console.log("Particle array length changed", particleArrayLength);
       if (selection !== undefined) loadWorkspace(selection);
     }
@@ -59,9 +58,40 @@ function saveWorkspace(index) {
   props.particle_array[index].blockly_workspace = json;
 }
 
-function update_particle(index, data)
-{
+function update_particle(index, data) {
   props.particle_array[index].update_data(JSON.parse(data));
+}
+
+function parse(data) {
+  // This data is a JSON, but it can contain more text after the } closing brackets
+  // So I'll just remove everything after the closing brackets
+  // That way we can keep comments in the workspace without affecting logic
+
+  // As we can have more closing brackets, we have to find the matching closing bracket to the first opening bracket
+  // This means we have to deal with nested objects... But we just have to make a stack of opening brackets and pop them when we find a closing bracket that matches the last opening bracket
+  // This is a simple implementation, but it should work for our purposes
+
+  // I would like to do this in a more optimal way but well, this works idk
+
+  let stack = [];
+  let i = 0;
+  let opening = 0;
+  let closing = 0;
+  for (i = 0; i < data.length; i++) {
+    if (data[i] == "{") {
+      stack.push("{");
+      opening++;
+    } else if (data[i] == "}") {
+      stack.pop();
+      closing++;
+    }
+
+    if (stack.length == 0) {
+      break;
+    }
+  }
+
+  return data.substring(0, i + 1);
 }
 
 onMounted(() => {
@@ -102,21 +132,18 @@ onMounted(() => {
   });
 
   ws.addChangeListener((e) => {
-  // Don't run the code when the workspace finishes loading; we're
-  // already running it once when the application starts.
-  // Don't run the code during drags; we might have invalid state.
-  if (e.isUiEvent || e.type == Blockly.Events.FINISHED_LOADING ||
-    ws.isDragging()) {
-    return;
-  }
+    // Don't run the code when the workspace finishes loading; we're
+    // already running it once when the application starts.
+    // Don't run the code during drags; we might have invalid state.
+    if (e.isUiEvent || e.type == Blockly.Events.FINISHED_LOADING || ws.isDragging()) {
+      return;
+    }
 
-  console.log("Workspace changed");
-  const code = jsonGenerator.workspaceToCode(ws);
-  // To parse the data we first need to use JSON.parse, but we have to be careful, there can be a trailing comma at the last element of the object
-  const sanitized_data = code.replace(/,\s*([\]}])/g, "$1");
-  generatedCode.value = sanitized_data;
-  update_particle(props.selected_particle, sanitized_data);
-});
+    console.log("Workspace changed");
+    const code = parse(jsonGenerator.workspaceToCode(ws));
+    generatedCode.value = code;
+    update_particle(props.selected_particle, code);
+  });
 
   loadWorkspace(props.selected_particle);
 });

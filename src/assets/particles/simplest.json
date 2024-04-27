@@ -1,0 +1,13 @@
+{
+  "name": "Simplest",
+  "version": "1.0.0",
+  "color": [0, 168, 139],
+  "alpha": [1, 1],
+  "update": [
+    {
+      "action": "swap",
+      "data": { 
+        "direction": { "direction": "constant", "data": [0, -1] } }
+    }
+  ]
+}
