@@ -113,8 +113,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       //for the time being i will just use a list of names of particles for testing
       {
         type: "input_dummy",
-        name: "PARTICLE",
-        options: []
+        name: "DUMMY",
       }
 
     ],
