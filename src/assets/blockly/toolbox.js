@@ -31,10 +31,6 @@ export const toolbox = {
     },
     {
       'kind': 'block',
-      'type': 'update'
-    },
-    {
-      'kind': 'block',
       'type': 'move',
       'inputs': {
         'OTHER': {

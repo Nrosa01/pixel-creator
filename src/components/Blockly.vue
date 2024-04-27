@@ -62,38 +62,6 @@ function update_particle(index, data) {
   props.particle_array[index].update_data(JSON.parse(data));
 }
 
-function parse(data) {
-  // This data is a JSON, but it can contain more text after the } closing brackets
-  // So I'll just remove everything after the closing brackets
-  // That way we can keep comments in the workspace without affecting logic
-
-  // As we can have more closing brackets, we have to find the matching closing bracket to the first opening bracket
-  // This means we have to deal with nested objects... But we just have to make a stack of opening brackets and pop them when we find a closing bracket that matches the last opening bracket
-  // This is a simple implementation, but it should work for our purposes
-
-  // I would like to do this in a more optimal way but well, this works idk
-
-  let stack = [];
-  let i = 0;
-  let opening = 0;
-  let closing = 0;
-  for (i = 0; i < data.length; i++) {
-    if (data[i] == "{") {
-      stack.push("{");
-      opening++;
-    } else if (data[i] == "}") {
-      stack.pop();
-      closing++;
-    }
-
-    if (stack.length == 0) {
-      break;
-    }
-  }
-
-  return data.substring(0, i + 1);
-}
-
 onMounted(() => {
   console.log("Blockly mounted");
 
@@ -139,8 +107,11 @@ onMounted(() => {
       return;
     }
 
+    // Modify workspace so only particle_base block and its children stay
     console.log("Workspace changed");
-    const code = parse(jsonGenerator.workspaceToCode(ws));
+    
+    const particle_base = ws.getBlocksByType("particle_base")[0];
+    const code = jsonGenerator.blockToCode(particle_base);
     generatedCode.value = code;
     update_particle(props.selected_particle, code);
   });
