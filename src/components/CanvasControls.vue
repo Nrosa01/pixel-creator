@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 
+const current_size = ref(150);
 const paused = ref(false);
 const performance_mode = ref(false);
 const buttonClass = ref("bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow");
