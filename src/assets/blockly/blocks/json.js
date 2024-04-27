@@ -76,7 +76,7 @@ Blockly.Blocks['test_field_slider'] = {
 
 
 //placeholder
-var particlesOptions = [
+globalThis.particlesOptions = [
   ["empty", "empty"],
   ["sand", "sand"],
   ["water", "water"],
@@ -97,15 +97,6 @@ var transformationOptions = [
         ["? Neighbor", "RAND"],
         ["Arrow Keys", "KB"],
 ];
-
-// Blockly.Extensions.registerMutator(
-//   "if_else_mutator",
-//   {
-    
-//   }
-
-// );
-
 
 
 export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
@@ -131,13 +122,13 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       //this will need to fetch other particles names in order to work
       //for the time being i will just use a list of names of particles for testing
       {
-        type: "field_dropdown",
+        type: "input_dummy",
         name: "PARTICLE",
         options: particlesOptions
       }
 
     ],
-    
+    extensions: ["particle_list_extension"],
     output: "Particle",
     colour: 230,
     

@@ -65,6 +65,14 @@ function update_particle(index, data) {
 onMounted(() => {
   console.log("Blockly mounted");
 
+  Blockly.Extensions.register("particle_list_extension", function () {
+    this.getInput("PARTICLE").appendField(
+      new Blockly.FieldDropdown(function () {
+        return props.particle_array.map((particle) => [particle.display_name, particle.data.name]);
+      })
+    );
+  });
+
   // Check if blocks are already defined
   if (!Blockly.Blocks["particle"]) {
     Blockly.common.defineBlocks(blocks);
@@ -109,7 +117,7 @@ onMounted(() => {
 
     // Modify workspace so only particle_base block and its children stay
     console.log("Workspace changed");
-    
+
     const particle_base = ws.getBlocksByType("particle_base")[0];
     const code = jsonGenerator.blockToCode(particle_base);
     generatedCode.value = code;
