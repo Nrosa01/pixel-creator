@@ -16,14 +16,19 @@ const props = defineProps({
 
 // computed property to handle the selected particle
 watch(
-  () => props.selected_particle,
-  (selection, prevSelection) => {
-    console.log("Selected particle changed", selection, prevSelection);
-    if (prevSelection !== undefined && prevSelection < props.particle_array.length) saveWorkspace(prevSelection);
-    if (selection !== undefined) loadWorkspace(selection);
+  () => [props.selected_particle, props.particle_array.length],
+  ([selection, particleArrayLength], [prevSelection, prevParticleArrayLength]) => {
+    if (selection !== prevSelection) {
+      // console.log("Selected particle changed", selection);
+      if (prevSelection !== undefined && prevSelection <  particleArrayLength) saveWorkspace(prevSelection);
+      if (selection !== undefined) loadWorkspace(selection);
+    }
+    else if (particleArrayLength !== prevParticleArrayLength) {
+      // console.log("Particle array length changed", particleArrayLength);
+      if (selection !== undefined) loadWorkspace(selection);
+    }
   }
 );
-
 function loadWorkspace(index) {
   Blockly.Events.disable();
   const workspace = Blockly.getMainWorkspace();

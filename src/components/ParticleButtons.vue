@@ -23,9 +23,7 @@ function removeSelected() {
   props.particle_array.splice(selected.value, 1);
 
   // Just making sure we don't go out of bounds
-  if (selected.value >= props.particle_array.length) {
-    selected.value = props.particle_array.length - 1;
-  }
+  selected.value = Math.min(selected.value, props.particle_array.length - 1);
 }
 
 function add() {
