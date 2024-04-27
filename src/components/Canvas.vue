@@ -33,7 +33,6 @@ onUnmounted(() => {
 });
 
 function add_particle(particle) {
-  consume_js_object(wasm_exports.receive_json_plugin(js_object(JSON.stringify(particle.data))));
   particle_array.value.push(particle);
 }
 

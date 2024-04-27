@@ -5,6 +5,8 @@ class ParticleModel {
         this.display_name = display_name;
         this.data = data;
         this.blockly_workspace = null;
+
+        consume_js_object(wasm_exports.receive_json_plugin(js_object(JSON.stringify(data))));
     }
 
     static create() {

@@ -32,7 +32,6 @@ function add() {
   var newParticle = ParticleModel.create();
   console.log("Add new particle", newParticle);
   props.particle_array.push(newParticle);
-  wasm_exports.receive_json_plugin(js_object(JSON.stringify(newParticle.data)));
 }
 </script>
 

@@ -15,6 +15,7 @@ listed here.
 
 export const toolbox = {
   'kind': 'flyoutToolbox',
+  'scrollbars': 'NEVER',
   "contents": [
     {
       'kind': 'block',

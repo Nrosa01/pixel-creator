@@ -18,7 +18,8 @@ const props = defineProps({
 watch(
   () => props.selected_particle,
   (selection, prevSelection) => {
-    if (prevSelection !== undefined) saveWorkspace(prevSelection);
+    console.log("Selected particle changed", selection, prevSelection);
+    if (prevSelection !== undefined && prevSelection < props.particle_array.length) saveWorkspace(prevSelection);
     if (selection !== undefined) loadWorkspace(selection);
   }
 );
