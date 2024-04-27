@@ -40,7 +40,7 @@ Blockly.Blocks['particle_base'] = {
 
 
     this.setInputsInline(true);
-    this.setDeletable(true);
+    this.setDeletable(false);
     this.setMovable(true);
     this.setColour(160);
     
@@ -73,16 +73,6 @@ Blockly.Blocks['test_field_slider'] = {
       .appendField(new FieldSlider(50), 'FIELDNAME');
   },
 };
-
-
-//placeholder
-globalThis.particlesOptions = [
-  ["empty", "empty"],
-  ["sand", "sand"],
-  ["water", "water"],
-  ["stone", "stone"],
-
-];
 
 var transformationOptions = [
   ["me", "HERE"],
@@ -124,7 +114,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: "input_dummy",
         name: "PARTICLE",
-        options: particlesOptions
+        options: []
       }
 
     ],
