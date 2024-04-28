@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import Draggable from "./Draggable.vue";
 import ParticleModel from "../assets/models/particle.js";
 import * as Blockly from "blockly";
 import { watch } from "vue";
@@ -75,9 +76,9 @@ onMounted(() => {
     this.getInput("DUMMY").appendField(
       new Blockly.FieldDropdown(function () {
         return props.particle_array.map((particle) => [particle.display_name, particle.data.name]);
-      }), "PARTICLE"
+      }),
+      "PARTICLE"
     );
-
   });
 
   // Check if blocks are already defined
@@ -140,7 +141,11 @@ const generatedCode = ref(""); // For debugging purposes
 </script>
 
 <template>
-  <pre class="absolute text-xs origin-top-left scale-75 pivo top-0 left-0 z-10 m-4 p-4 bg-slate-400 rounded-xl opacity-75 pointer-events-none">{{ generatedCode }}</pre>
+  <Draggable>
+  <!-- For some reason, tailwind z index class dont work well -->
+    <pre style="z-index: 300;" class="select-none backdrop-blur-md max-h-[80vmin] overflow-scroll absolute text-xs origin-top-left scale-75 pivo top-0 left-0 m-4 p-4 bg-slate-400/75 resize-y rounded-xl">{{ generatedCode }}</pre>
+  </Draggable>
+
   <div class="w-full m-4 bg-slate-600/50 rounded-xl box-content overflow-clip">
     <div class="w-full h-full" id="blocklyDiv"></div>
   </div>
