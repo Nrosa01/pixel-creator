@@ -32,7 +32,7 @@ export const toolbox = {
 
     {
       'kind': 'block',
-      'type': 'move',
+      'type': 'swap',
       'inputs': {
         'OTHER': {
           'shadow': {
@@ -51,7 +51,7 @@ export const toolbox = {
     },
     {
       'kind': 'block',
-      'type': 'is_equal',
+      'type': 'particle_in_direction',
       'inputs': {
         'DIRECTION': {
           'shadow': {

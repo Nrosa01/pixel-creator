@@ -210,8 +210,8 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
 
   },
   {
-    type: "move",
-    message0: "move %1",
+    type: "swap",
+    message0: "swap %1",
     args0: [
       {
         "type": "input_value",
@@ -227,7 +227,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
 
   },
   {
-    type: "is_equal",
+    type: "particle_in_direction",
     message0: "%1 is %2",
     args0: [
       {
