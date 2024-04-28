@@ -37,13 +37,19 @@ export const toolbox = {
         'OTHER': {
           'shadow': {
             'type': 'cell',
+            "fields": {
+              "DIRECTION": "DOWN"
+            }
           },
         },
       },
     },
     {
       'kind': 'block',
-      'type': 'cell'
+      'type': 'cell',
+      "fields": {
+        "DIRECTION": "DOWN"
+      }
     },
     {
       'kind': 'block',
@@ -56,6 +62,9 @@ export const toolbox = {
         'DIRECTION': {
           'shadow': {
             'type': 'cell',
+            "fields": {
+              "DIRECTION": "DOWN"
+            }
           },
         },
         'TYPE_PARTICLE': {

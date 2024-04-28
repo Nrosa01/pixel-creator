@@ -7,6 +7,7 @@ import { PlusMinus } from '@blockly/block-plus-minus';
 
 import { createMinusField } from './field_minus';
 import { createPlusField } from './field_plus';
+//import { MutatorIcon } from 'blockly/core/icons';
 
 Blockly.Blocks['particle_base'] = {
   init: function () {
@@ -98,6 +99,8 @@ var directionOptions = [
 
 const controlsIfMutator =
 {
+
+
   has_else: false,
 
   //mutationToDom
@@ -140,7 +143,9 @@ const controlsIfMutator =
  * Adds the initial plus button to the if block.
  */
 const controlsIfHelper = function () {
+
   this.inputList[0].insertFieldAt(0, createPlusField(), 'PLUS');
+  this.inputList[1].insertFieldAt(0, createMinusField(), 'MINUS');
 };
 
 if (Blockly.Extensions.isRegistered('controls_if_mutator')) {
@@ -169,7 +174,7 @@ Blockly.Blocks['if'] = {
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setColour(330);
-    //this.setMutator("controls_if_mutator")
+    this.setMutator(new Blockly.icons.MutatorIcon(['controls_if_mutator'], this))
   }
 };
 
@@ -185,6 +190,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         type: "field_dropdown",
         name: "DIRECTION",
         options: directionOptions,
+        defaultOption: 3
       }
 
     ],
@@ -289,46 +295,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
 
   },
 
-  //#region tutorial
-  {
-    type: "object",
-    message0: "{ %1 %2 }",
-    args0: [
-      {
-        type: "input_dummy"
-      },
-      {
-        type: "input_statement",
-        name: "MEMBERS"
-      }
-    ],
-    output: null,
-    colour: 230,
-  },
-  {
-    type: "member",
-    message0: "%1 %2 %3",
-    args0: [
-      {
-        type: "field_input",
-        name: "MEMBER_NAME",
-        text: ""
-      },
-      {
-        type: "field_label",
-        name: "COLON",
-        text: ":"
-      },
-      {
-        type: "input_value",
-        name: "MEMBER_VALUE"
-      }
-    ],
-    previousStatement: null,
-    nextStatement: null,
-    colour: 230,
-  }
-  //#endregion
+
 
 ]
 );
