@@ -134,7 +134,7 @@ onMounted(() => {
     generatedCode.value = code;
     update_particle(props.selected_particle, code);
 
-    console.log(Blockly.serialization.workspaces.save(Blockly.getMainWorkspace()));
+    // console.log(Blockly.serialization.workspaces.save(Blockly.getMainWorkspace()));
   });
 
   loadWorkspace(props.selected_particle);
