@@ -22,7 +22,7 @@ onMounted(async () => {
   add_particle(new ParticleModel("Sand", sand));
   add_particle(new ParticleModel("Replicant", replicant));
   add_particle(new ParticleModel("Simplest", simplest));
-  wasm_exports.resize_simulation(js_object(Math.round(current_size.value).toString()));
+  wasm_exports.resize_simulation(js_object(Math.round(150).toString()));
   console.log(particle_array.value);
 
   window.addEventListener("resize", handleResize);
@@ -39,7 +39,6 @@ function add_particle(particle) {
 }
 
 const scriptsLoaded = ref(false);
-const current_size = ref(150);
 const particle_array = ref([]);
 const particle_buttons = ref();
 
@@ -54,8 +53,8 @@ const handleResize = () => {
 
 <template>
   <div class="flex flex-row max-h-screen">
-    <div class="antialiased box-border relative h-screen max-h-screen shrink-0 p-4 overflow-auto" :class="isDesktop ? 'w-[80vmin]' : 'w-full'">
-      <canvas class="sticky top-0 box-border z-10 w-full touch-pinch-zoom border-black border-2" id="glcanvas" height="1200" width="1200"></canvas>
+    <div class="box-border relative h-screen max-h-screen shrink-0 p-4 overflow-auto" :class="isDesktop ? 'w-[80vmin]' : 'w-full'">
+      <canvas class="sticky top-0 box-border z-10 w-full touch-pinch-zoom border-black border-2" id="glcanvas" height="800" width="800"></canvas>
 
       <div class="flex flex-col w-full pt-4 items-center px-0">
         <CanvasControls />

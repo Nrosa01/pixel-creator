@@ -24,6 +24,12 @@ watch(
       if (selection !== undefined) loadWorkspace(selection);
     } else if (particleArrayLength !== prevParticleArrayLength) {
       // console.log("Particle array length changed", particleArrayLength);
+
+      // This is needed for when a particle is added, as it modifies the particle id blocks that can get lost if not saved
+      // Sure I could also save the workspace everytime is edited but that would be too much
+      if (prevParticleArrayLength < particleArrayLength) saveWorkspace(selection);
+
+      // If the particle was deleted, the index keeps the same, but the particle is different so we need to reload the workspace
       if (selection !== undefined) loadWorkspace(selection);
     }
   }
@@ -64,6 +70,14 @@ function update_particle(index, data) {
 
 onMounted(() => {
   console.log("Blockly mounted");
+
+  Blockly.Extensions.register("particle_list_extension", function () {
+    this.getInput("DUMMY").appendField(
+      new Blockly.FieldDropdown(function () {
+        return props.particle_array.map((particle) => [particle.display_name, particle.data.name]);
+      }), "PARTICLE"
+    );
+  });
 
   // Check if blocks are already defined
   if (!Blockly.Blocks["particle"]) {
@@ -109,11 +123,13 @@ onMounted(() => {
 
     // Modify workspace so only particle_base block and its children stay
     console.log("Workspace changed");
-    
+
     const particle_base = ws.getBlocksByType("particle_base")[0];
     const code = jsonGenerator.blockToCode(particle_base);
     generatedCode.value = code;
     update_particle(props.selected_particle, code);
+
+    console.log(Blockly.serialization.workspaces.save(Blockly.getMainWorkspace()));
   });
 
   loadWorkspace(props.selected_particle);
