@@ -3,11 +3,11 @@ import { onMounted, ref } from "vue";
 import ParticleModel from "../assets/models/particle.js";
 import * as Blockly from "blockly";
 import { watch } from "vue";
-import { blocks } from "../assets/blockly/blocks/json";
-import { jsonGenerator } from "../assets/blockly/generators/json";
+import { blocks } from "../assets/blockly/blocks";
+import { jsonGenerator } from "../assets/blockly/generator";
 import { save, load } from "../assets/blockly/serialization";
 import { toolbox } from "../assets/blockly/toolbox";
-import "../assets/blockly/renderers/renderer.js";
+import "../assets/blockly/renderer.js";
 
 const props = defineProps({
   particle_array: Array,
@@ -77,6 +77,11 @@ onMounted(() => {
         return props.particle_array.map((particle) => [particle.display_name, particle.data.name]);
       }), "PARTICLE"
     );
+    if (this.rendered) {
+  this.render();
+  // This may not be necessary, but no harm in adding it.
+  this.bumpNeighbours();
+}
   });
 
   // Check if blocks are already defined

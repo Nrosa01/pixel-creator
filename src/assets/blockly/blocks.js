@@ -3,8 +3,10 @@ import * as Blockly from 'blockly';
 import { ColorWheelField } from "blockly-field-color-wheel";
 import { FieldSlider } from "@blockly/field-slider";
 
-import {PlusMinus} from '@blockly/block-plus-minus';
+import { PlusMinus } from '@blockly/block-plus-minus';
 
+import { createMinusField } from './field_minus';
+import { createPlusField } from './field_plus';
 
 Blockly.Blocks['particle_base'] = {
   init: function () {
@@ -41,8 +43,8 @@ Blockly.Blocks['particle_base'] = {
     this.setDeletable(false);
     this.setMovable(true);
     this.setColour(160);
-    
-    this.hat = 'cap'; 
+
+    this.hat = 'cap';
   }
 
 };
@@ -64,27 +66,20 @@ Blockly.Blocks['custom_input_color'] = {
   }
 };
 
+
+
 Blockly.Blocks['test_field_slider'] = {
   init: function () {
     this.appendDummyInput()
       .appendField('slider: ')
       .appendField(new FieldSlider(50), 'FIELDNAME');
 
-      this.setColour(160);
+    this.setColour(160);
 
   },
 
 };
 
-
-//placeholder
-var particlesOptions = [
-  ["empty", "empty"],
-  ["sand", "sand"],
-  ["water", "water"],
-  ["stone", "stone"],
-
-];
 
 var directionOptions = [
   ["me", "HERE"],
@@ -99,6 +94,85 @@ var directionOptions = [
   ["? Neighbor", "RAND"],
   ["Arrow Keys", "KB"],
 ];
+
+
+const controlsIfMutator =
+{
+  has_else: false,
+
+  //mutationToDom
+  saveExtraState: function () {
+    return {
+      'else': this.has_else,
+    };
+  },
+  //domToMutation
+  loadExtraState: function (state) {
+    this.has_else = state['else'];
+    this.getInput("ELSE").setVisible(this.has_else);
+  },
+
+
+  updateShape_: function () {
+    this.getInput("ELSE").setVisible(this.has_else)
+  },
+
+  /**
+  * Callback for the plus field. Makes the else visible
+  */
+  plus: function () {
+    this.has_else = true;
+    this.getInput("ELSE").setVisible(this.has_else)
+  },
+
+  /**
+   * Callback for the minus field. Triggers "removing" the input at the specific
+   */
+  minus: function () {
+    if (!this.has_else) {
+      return;
+    }
+    this.has_else = false;
+    this.getInput("ELSE").setVisible(this.has_else)
+  },
+};
+/**
+ * Adds the initial plus button to the if block.
+ */
+const controlsIfHelper = function () {
+  this.inputList[0].insertFieldAt(0, createPlusField(), 'PLUS');
+};
+
+if (Blockly.Extensions.isRegistered('controls_if_mutator')) {
+  Blockly.Extensions.unregister('controls_if_mutator');
+}
+Blockly.Extensions.registerMutator(
+  'controls_if_mutator',
+  controlsIfMutator,
+  controlsIfHelper,
+);
+
+
+//this should be possible to declare via json, but idk what arg parameter is used for the arg to be invisible,
+//and blockly documentation certainly doesn't help , visible and isVisible don't work
+Blockly.Blocks['if'] = {
+  init: function () {
+    this.appendValueInput("CONDITION")
+      .setCheck("Boolean")
+      .appendField("if");
+    this.appendStatementInput("THEN")
+
+    this.appendStatementInput("ELSE").appendField("else");
+    this.getInput("ELSE").setVisible(false);
+    this.setInputsInline(true);
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setColour(330);
+    //this.setMutator("controls_if_mutator")
+  }
+};
+
+
 
 
 export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
@@ -132,7 +206,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     extensions: ["particle_list_extension"],
     output: "Particle",
     colour: 230,
-    
+
   },
   {
     type: "move",
@@ -149,7 +223,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     previousStatement: true,
     nextStatement: true,
     colour: 160,
-    
+
   },
   {
     type: "is_equal",
@@ -170,37 +244,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     colour: 160,
     output: "Boolean"
   },
-  {
-    type: "if",
-    message0: "if %1 %2 %3 %4",
-    args0: [
 
-      {
-        type: "input_value",
-        name: "CONDITION",
-        check: "Boolean"
-      },
-      {
-        type: "input_statement",
-        name: "THEN",
-      },
-      {
-        type: "input_dummy",
-        text: "else"
-      },
-      {
-        type: "input_statement",
-        name: "ELSE",
-      }
-      
-    ],
-    inputsInline: true,
-    previousStatement: null,
-    nextStatement: null,
-    colour: 330,
-    
-    //mutator: "if_mutator"
-  },
   {
     type: "randomTransformation",
     message0: "in a random %1 %2 %3",
