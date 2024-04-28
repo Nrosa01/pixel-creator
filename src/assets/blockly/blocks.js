@@ -36,8 +36,8 @@ Blockly.Blocks['particle_base'] = {
       }),
         "COLOR")
       .appendField(" Alpha: ")
-      .appendField(new FieldSlider(1, 0, 1, 0.1, validator_min), "MIN_ALPHA")
-      .appendField(new FieldSlider(1, 0, 1, 0.1, validator_max), "MAX_ALPHA");
+      .appendField(new FieldSlider(1, 0, 1, 0.01, validator_min), "MIN_ALPHA")
+      .appendField(new FieldSlider(1, 0, 1, 0.01, validator_max), "MAX_ALPHA");
     this.appendStatementInput("THEN")
     this.setInputsInline(true);
     this.setDeletable(false);
