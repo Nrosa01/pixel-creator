@@ -7,9 +7,11 @@ const performance_mode = ref(false);
 const buttonClass = ref("bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow");
 const dropdown = ref("bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow");
 import { useSound } from "@vueuse/sound";
-import click from "../assets/sounds/click.mp3";
+import click from "../assets/sounds/select.wav";
+import hover from '../assets/sounds/hover.wav';
 
 const { play } = useSound(click, { volume: 0.5, interrupt: true });
+const { play: playHover } = useSound(hover, { volume: 0.5, interrupt: false });
 
 function togglePause() {
   console.log("Pause button clicked");
@@ -78,15 +80,15 @@ function togglePerformanceMode() {
 <template>
     <div class="flex w-full gap-2 flex-wrap justify-between items-center bg-slate-600/50 rounded-xl mb-4 p-2">
       <div class="flex gap-2 flex-wrap justify-start items-center grow">
-        <button :class="buttonClass" @click="togglePause">
+        <button @mouseenter="playHover" :class="buttonClass" @click="togglePause">
           <i :class="['ph-duotone', paused ? 'ph-play' : 'ph-pause']"></i>
         </button>
-        <button :class="buttonClass" title="Clear all the particles" @click="clear"><i class="ph-duotone ph-broom"></i></button>
-        <button :class="buttonClass" title="Save the current state of the simulation as a file" @click="save"><i class="ph-duotone ph-floppy-disk"></i></button>
-        <button :class="buttonClass" title="Load a state from disk" @click="loadState"><i class="ph-duotone ph-upload"></i></button>
-        <button :class="buttonClass + ' transition-colors' + (performance_mode ? ' text-red-500' : '')" title="Toggle performance mode. Performance mode disables realtime particle editing updates and animations when resizing the world" @click="togglePerformanceMode"><i class="ph-duotone ph-fire"></i></button>
+        <button @mouseenter="playHover" :class="buttonClass" title="Clear all the particles" @click="clear"><i class="ph-duotone ph-broom"></i></button>
+        <button @mouseenter="playHover" :class="buttonClass" title="Save the current state of the simulation as a file" @click="save"><i class="ph-duotone ph-floppy-disk"></i></button>
+        <button @mouseenter="playHover" :class="buttonClass" title="Load a state from disk" @click="loadState"><i class="ph-duotone ph-upload"></i></button>
+        <button @mouseenter="playHover" :class="buttonClass + ' transition-colors' + (performance_mode ? ' text-red-500' : '')" title="Toggle performance mode. Performance mode disables realtime particle editing updates and animations when resizing the world" @click="togglePerformanceMode"><i class="ph-duotone ph-fire"></i></button>
 
-        <select title="Change the simulation size. Tiny is 75*75, normal 150*150 and big is 300*300" :class="dropdown" @change="handleNewSizeChange">
+        <select @mouseenter="playHover" title="Change the simulation size. Tiny is 75*75, normal 150*150 and big is 300*300" :class="dropdown" @change="handleNewSizeChange">
           <option value="75">Tiny</option>
           <option value="150" selected>Normal</option>
           <option value="300">Big</option>
