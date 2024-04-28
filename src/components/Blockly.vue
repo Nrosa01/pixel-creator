@@ -58,6 +58,8 @@ function loadWorkspace(index) {
     block.render();
   }
   Blockly.Events.enable();
+
+  regenerateCode();
 }
 
 function saveWorkspace(index) {
@@ -126,10 +128,8 @@ onMounted(() => {
     // Modify workspace so only particle_base block and its children stay
     console.log("Workspace changed");
 
-    const particle_base = ws.getBlocksByType("particle_base")[0];
-    const code = jsonGenerator.blockToCode(particle_base);
-    generatedCode.value = code;
-    update_particle(props.selected_particle, code);
+    regenerateCode();
+    update_particle(props.selected_particle, generatedCode.value);
 
     // console.log(Blockly.serialization.workspaces.save(Blockly.getMainWorkspace()));
   });
@@ -137,13 +137,19 @@ onMounted(() => {
   loadWorkspace(props.selected_particle);
 });
 
+function regenerateCode() {
+  const ws = Blockly.getMainWorkspace();
+  const particle_base = ws.getBlocksByType("particle_base")[0];
+  generatedCode.value = jsonGenerator.blockToCode(particle_base);
+}
+
 const generatedCode = ref(""); // For debugging purposes
 </script>
 
 <template>
   <Draggable>
-  <!-- For some reason, tailwind z index class dont work well -->
-    <pre style="z-index: 300;" class="select-none backdrop-blur-md max-h-[80vmin] overflow-scroll absolute text-xs origin-top-left scale-75 pivo top-0 left-0 m-4 p-4 bg-slate-400/75 resize-y rounded-xl">{{ generatedCode }}</pre>
+    <!-- For some reason, tailwind z index class dont work well -->
+    <pre style="z-index: 300" class="select-none backdrop-blur-md max-h-[80vmin] overflow-scroll absolute text-xs origin-top-left scale-75 pivo top-0 left-0 m-4 p-4 bg-slate-400/75 resize-y rounded-xl">{{ generatedCode }}</pre>
   </Draggable>
 
   <div class="w-full m-4 bg-slate-600/50 rounded-xl box-content overflow-clip">
