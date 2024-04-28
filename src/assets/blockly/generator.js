@@ -224,7 +224,7 @@ jsonGenerator.forBlock['particle'] = function (block) {
 },
 */
 
-jsonGenerator.forBlock['is_equal'] = function (block, generator) {
+jsonGenerator.forBlock['particle_in_direction'] = function (block, generator) {
 
   // const direction = block.getFieldValue('DIRECTION');
   // const type_particle = block.getFieldValue('TYPE_PARTICLE');
@@ -259,7 +259,7 @@ jsonGenerator.forBlock['is_equal'] = function (block, generator) {
   }
 },
 */
-jsonGenerator.forBlock['move'] = function (block, generator) {
+jsonGenerator.forBlock['swap'] = function (block, generator) {
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
   console.log(directions[direction]);
   const code = `{
