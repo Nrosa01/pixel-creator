@@ -198,7 +198,7 @@ const directions = {
 };
 
 
-jsonGenerator.forBlock['cell'] = function (block) {
+jsonGenerator.forBlock['direction'] = function (block) {
   const direction = block.getFieldValue('DIRECTION');
   return [direction, Order.ATOMIC]
 }

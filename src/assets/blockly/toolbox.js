@@ -36,7 +36,7 @@ export const toolbox = {
       'inputs': {
         'OTHER': {
           'shadow': {
-            'type': 'cell',
+            'type': 'direction',
             "fields": {
               "DIRECTION": "DOWN"
             }
@@ -46,7 +46,7 @@ export const toolbox = {
     },
     {
       'kind': 'block',
-      'type': 'cell',
+      'type': 'direction',
       "fields": {
         "DIRECTION": "DOWN"
       }
@@ -61,7 +61,7 @@ export const toolbox = {
       'inputs': {
         'DIRECTION': {
           'shadow': {
-            'type': 'cell',
+            'type': 'direction',
             "fields": {
               "DIRECTION": "DOWN"
             }

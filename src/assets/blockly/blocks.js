@@ -183,7 +183,7 @@ Blockly.Blocks['if'] = {
 
 export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
   {
-    type: "cell",
+    type: "direction",
     message0: "%1",
     args0: [
       {
