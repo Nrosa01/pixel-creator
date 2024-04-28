@@ -185,15 +185,16 @@ ${statementMembers}
 //IMPORTANT:
 //get this out of here my man
 const directions = {
-  "HERE": [0, 0],
-  "UP": [0, 1],
-  "DOWN": [0, -1],
-  "LEFT": [-1, 0],
-  "RIGHT": [1, 0],
-  "UPLEFT": [-1, 1],
-  "UPRIGHT": [1, 1],
-  "DOWNLEFT": [-1, -1],
-  "DOWNRIGHT": [1, -1]
+  "HERE": '{ "direction": "constant", "data": [0, 0] }',
+  "UP": '{ "direction": "constant", "data": [0, 1] }',
+  "DOWN": '{ "direction": "constant", "data": [0, -1] }',
+  "LEFT": '{ "direction": "constant", "data": [-1, 0] }',
+  "RIGHT": '{ "direction": "constant", "data": [1, 0] }',
+  "UPLEFT": '{ "direction": "constant", "data": [-1, 1] }',
+  "UPRIGHT": '{ "direction": "constant", "data": [1, 1] }',
+  "DOWNLEFT": '{ "direction": "constant", "data": [-1, -1] }',
+  "DOWNRIGHT": '{ "direction": "constant", "data": [1, -1] }',
+  "RAND":  '{ "direction": "random" }'
   //randa and keyboard ¿?
 };
 
@@ -239,7 +240,7 @@ jsonGenerator.forBlock['particle_in_direction'] = function (block, generator) {
     `{
     "block": "checkTypesInDirection",
     "data": {
-      "direction": { "direction": "constant", "data": [${directions[direction]}] },
+      "direction": ${directions[direction]},
       "types": [
         { "particle_type": "fromName", "data": "${type_particle}" }
       ]
@@ -263,7 +264,7 @@ jsonGenerator.forBlock['swap'] = function (block, generator) {
   const code = `{
     "action": "swap",
     "data": {
-      "direction": { "direction": "constant", "data": [${directions[direction]}] }
+      "direction": ${directions[direction]}
     }
   }` ;
 

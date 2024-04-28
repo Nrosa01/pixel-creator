@@ -93,7 +93,7 @@ var directionOptions = [
   ["⬋ SW", "DOWNLEFT"],
   ["⬉ NW", "UPLEFT"],
   ["? Neighbor", "RAND"],
-  ["Arrow Keys", "KB"],
+  // ["Arrow Keys", "KB"],
 ];
 
 
