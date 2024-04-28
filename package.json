@@ -10,6 +10,7 @@
     "@blockly/block-plus-minus": "^7.0.4",
     "@blockly/field-slider": "^6.1.7",
     "@formkit/auto-animate": "^0.8.2",
+    "@vueuse/sound": "^2.0.1",
     "blockly": "^10.0.0",
     "blockly-field-color-wheel": "^1.0.2",
     "vue": "^3.4.13"

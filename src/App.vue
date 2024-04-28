@@ -1,7 +1,7 @@
 <script setup>
-import Canvas from "./components/Canvas.vue";
+import Simulation from "./components/Simulation.vue";
 </script>
 
 <template>
-  <Canvas></Canvas>
+  <Simulation></Simulation>
 </template>

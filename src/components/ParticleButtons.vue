@@ -1,11 +1,14 @@
 <script setup>
 import { ref } from "vue";
 import ParticleModel from "../assets/models/particle.js";
+import { useSound } from '@vueuse/sound' 
+import click from '../assets/sounds/click.mp3';
 
 const props = defineProps({
   particle_array: Array,
 });
 
+const {play, stop} = useSound(click, {volume: 0.5})
 let buttonClass = "bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow";
 const selected = ref(1);
 
@@ -15,6 +18,7 @@ function selectParticle(particleId) {
   console.log("Particle selected:", particleId);
   selected.value = particleId;
   wasm_exports.select_particle(js_object(particleId.toString()));
+  play(); 
 }
 
 function removeSelected() {

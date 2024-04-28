@@ -6,24 +6,32 @@ const paused = ref(false);
 const performance_mode = ref(false);
 const buttonClass = ref("bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow");
 const dropdown = ref("bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow");
+import { useSound } from "@vueuse/sound";
+import click from "../assets/sounds/click.mp3";
+
+const { play } = useSound(click, { volume: 0.5, interrupt: true });
 
 function togglePause() {
   console.log("Pause button clicked");
   paused.value = !paused.value;
   wasm_exports.pause(js_object(paused.value.toString()));
+  play();
 }
 
 function clear() {
   console.log("Clear button clicked");
   wasm_exports.clear();
+  play();
 }
 
 function loadState() {
   console.log("Load button clicked");
+  play();
 }
 
 function save() {
   console.log("Save button clicked");
+  play();
 }
 
 function lerp(a, b, t) {
@@ -56,11 +64,14 @@ function handleNewSizeChange(event) {
   } else {
     wasm_exports.resize_simulation(js_object(event.target.value));
   }
+
+  play();
 }
 
 function togglePerformanceMode() {
   console.log("Performance button clicked");
   performance_mode.value = !performance_mode.value;
+  play();
 }
 </script>
 
