@@ -25,3 +25,7 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.blocklyFlyoutScrollbar {
+  display: none;
+}

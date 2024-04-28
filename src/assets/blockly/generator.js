@@ -143,8 +143,7 @@ jsonGenerator.forBlock['if'] = function (block, generator) {
   const condition =
     generator.statementToCode(block, 'CONDITION');
   const else_code = generator.statementToCode(block, 'ELSE');
-  console.log(condition);
-  console.log(else_code);
+
 
   const code =
     `{

@@ -77,11 +77,7 @@ onMounted(() => {
         return props.particle_array.map((particle) => [particle.display_name, particle.data.name]);
       }), "PARTICLE"
     );
-    if (this.rendered) {
-  this.render();
-  // This may not be necessary, but no harm in adding it.
-  this.bumpNeighbours();
-}
+
   });
 
   // Check if blocks are already defined
