@@ -103,13 +103,13 @@ jsonGenerator.forBlock['particle_base'] = function (block, generator) {
 "color": [${color.r},${color.g}, ${color.b}],
 "alpha": [${min_alpha}, ${max_alpha}],
 "update": [
+  
 ${statementMembers}
-]
+  
+  ]
 }`;
   return code;
 };
-
-
 jsonGenerator.forBlock['custom_input_color'] = function (block, generator) {
   const min_alpha = block.getFieldValue('MIN_ALPHA');
   const code = `"alpha": ${min_alpha}`
@@ -123,42 +123,33 @@ jsonGenerator.forBlock['randomTransformation'] = function (block, generator) {
   const statementMembers =
     generator.statementToCode(block, 'THEN');
 
-  const code =
-    `"action": "randomTransformation",
+  const code = 
+  
+`{
+"action": "randomTransformation",
 "data": {
   "transformation": "${action}",
 ${statementMembers}
-  }`;
-
-  return code;
-
-};
-
-jsonGenerator.forBlock['update'] = function (block, generator) {
-  const statementMembers =
-    generator.statementToCode(block, 'THEN');
-  const code =
-    `"update": [
-  {
-${statementMembers}
   }
-]`;
-  return code;
-};
+}`;
 
+  return code;
+
+};
 
 jsonGenerator.forBlock['if'] = function (block, generator) {
   const statementMembers =
     generator.statementToCode(block, 'THEN');
-  const condition =
+    const condition =
     generator.statementToCode(block, 'CONDITION');
   const code =
-    `"block": {
+`"block": {
   "action": "if",
-  "data": {
+  "data": 
   ${condition}
+},
   ${statementMembers}
-  }
+}
 }`;
   return code;
 
@@ -166,52 +157,55 @@ jsonGenerator.forBlock['if'] = function (block, generator) {
 var lastBlock = null;
 jsonGenerator.forBlock['controls_if'] = function (block, generator) {
   // Assuming 'block' is your Blockly block
-  console.log(lastBlock == block);
+  console.log(lastBlock == block); 
   lastBlock = block;
-  // if (mutator) {
-  //     // Access the value of elseifCount_
-  //     const elseifCount = mutator.getFieldValue('elseifCount_');
-  //     console.log('Number of elseifs:', elseifCount);
-  // }
+// if (mutator) {
+//     // Access the value of elseifCount_
+//     const elseifCount = mutator.getFieldValue('elseifCount_');
+//     console.log('Number of elseifs:', elseifCount);
+// }
 
   const statementMembers =
-    generator.statementToCode(block, 'DO0');
+  generator.statementToCode(block, 'DO0');
   const condition =
-    generator.statementToCode(block, 'IF0');
-  const code =
-    `"block": {
+  generator.statementToCode(block, 'IF0');
+const code =
+`"block": {
 "action": "if",
 "data": {
 ${condition}
+},
 ${statementMembers}
 }
+}
 }`;
-  return code;
+return code;
 }
 
 
 //IMPORTANT:
 //get this out of here my man
 const directions = {
-  "up": [0, 1],
-  "down": [0, -1],
-  "left": [-1, 0],
-  "right": [1, 0],
-  "upleft": [-1, 1],
-  "upright": [1, 1],
-  "downleft": [-1, -1],
-  "downright": [1, -1]
+  "HERE": [0, 0],
+"UP": [0, 1],
+"DOWN": [0, -1],
+"LEFT": [-1, 0],
+"RIGHT": [1, 0],
+"UPLEFT": [-1, 1],
+"UPRIGHT": [1, 1],
+"DOWNLEFT": [-1, -1],
+"DOWNRIGHT": [1, -1]
+  //randa and keyboard ¿?
 };
 
 
-
-jsonGenerator.forBlock['cell'] = function (block) {
-  const direction = block.getFieldValue('TRANSFORMATION');
+jsonGenerator.forBlock['cell'] = function (block){
+  const direction = block.getFieldValue('DIRECTION');
   return [direction, Order.ATOMIC]
 }
 
 
-jsonGenerator.forBlock['particle'] = function (block) {
+jsonGenerator.forBlock['particle'] = function (block){
   const particle = block.getFieldValue('PARTICLE');
   return [particle, Order.ATOMIC]
 }
@@ -230,7 +224,7 @@ jsonGenerator.forBlock['particle'] = function (block) {
 */
 
 jsonGenerator.forBlock['is_equal'] = function (block, generator) {
-
+  
   // const direction = block.getFieldValue('DIRECTION');
   // const type_particle = block.getFieldValue('TYPE_PARTICLE');
 
@@ -238,23 +232,22 @@ jsonGenerator.forBlock['is_equal'] = function (block, generator) {
   const type_particle = generator.valueToCode(block, 'TYPE_PARTICLE', Order.ATOMIC);
 
   console.log(direction);
-  //result code
-  const statementMembers =
-    generator.statementToCode(block, 'THEN');
 
-  //TODO: Create a for that writes the types content depending on the number of types
-  //gotta create or block before
+//TODO: Create a for that writes the types content depending on the number of types
+//gotta create or block before
 
-  const code =
-    `"condition": {
+  const code = 
+`{
+    "condition": {
     "block": "checkTypesInDirection",
     "data": {
       "direction": { "direction": "constant", "data": [${directions[direction]}] },
       "types": [
-        { "constant_number": "particleIdFromName", "data": "${type_particle}" }
+        { "particle_type": "fromName", "data": "${type_particle}" }
       ]
     }
-  },${statementMembers}`
+  
+`
 
   return code;
 
@@ -269,6 +262,7 @@ jsonGenerator.forBlock['is_equal'] = function (block, generator) {
 */
 jsonGenerator.forBlock['move'] = function (block, generator) {
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
+  console.log(directions[direction]);
   const code = `"result": {
     "action": "swap",
     "data": {

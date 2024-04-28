@@ -29,6 +29,7 @@ export const toolbox = {
       'kind': 'block',
       'type': 'randomTransformation'
     },
+
     {
       'kind': 'block',
       'type': 'move',
@@ -63,7 +64,16 @@ export const toolbox = {
           },
         }
       },
+    },
+    {
+      'kind': 'block',
+      'type': 'controls_if'
+    },
+    {
+      'kind': 'block',
+      'type': 'if'
     }
+
   ]
 
 

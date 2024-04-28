@@ -37,10 +37,8 @@ Blockly.Blocks['particle_base'] = {
       .appendField(new FieldSlider(1, 0, 1, 0.1, validator_min), "MIN_ALPHA")
       .appendField(new FieldSlider(1, 0, 1, 0.1, validator_max), "MAX_ALPHA");
     this.appendStatementInput("THEN")
-
-
     this.setInputsInline(true);
-    this.setDeletable(true);
+    this.setDeletable(false);
     this.setMovable(true);
     this.setColour(160);
     
@@ -71,7 +69,11 @@ Blockly.Blocks['test_field_slider'] = {
     this.appendDummyInput()
       .appendField('slider: ')
       .appendField(new FieldSlider(50), 'FIELDNAME');
+
+      this.setColour(160);
+
   },
+
 };
 
 
@@ -84,18 +86,18 @@ var particlesOptions = [
 
 ];
 
-var transformationOptions = [
+var directionOptions = [
   ["me", "HERE"],
-        ["➡ right", "RIGHT"],
-        ["⬅ left", "LEFT"],
-        ["⬆ up", "UP"],
-        ["⬇ down", "DOWN"],
-        ["⬈ NE ", "NE"],
-        ["⬊ SE", "SE"],
-        ["⬋ SW", "SW"],
-        ["⬉ NW", "NW"],
-        ["? Neighbor", "RAND"],
-        ["Arrow Keys", "KB"],
+  ["➡ right", "RIGHT"],
+  ["⬅ left", "LEFT"],
+  ["⬆ up", "UP"],
+  ["⬇ down", "DOWN"],
+  ["⬈ NE ", "UPRIGHT"],
+  ["⬊ SE", "DOWNRIGHT"],
+  ["⬋ SW", "DOWNLEFT"],
+  ["⬉ NW", "UPLEFT"],
+  ["? Neighbor", "RAND"],
+  ["Arrow Keys", "KB"],
 ];
 
 // Blockly.Extensions.registerMutator(
@@ -115,8 +117,8 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     args0: [
       {
         type: "field_dropdown",
-        name: "TRANSFORMATION",
-        options: transformationOptions
+        name: "DIRECTION",
+        options: directionOptions,
       }
 
     ],
@@ -180,7 +182,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
   },
   {
     type: "if",
-    message0: "if %1 %2",
+    message0: "if %1 %2 %3 %4",
     args0: [
 
       {
@@ -192,6 +194,14 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         type: "input_statement",
         name: "THEN",
       },
+      {
+        type: "input_dummy",
+        text: "else"
+      },
+      {
+        type: "input_statement",
+        name: "ELSE",
+      }
       
     ],
     inputsInline: true,
@@ -200,25 +210,6 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     colour: 330,
     
     //mutator: "if_mutator"
-  },
-   
-  {
-    type: "update",
-    message0: "update logic %1 %2",
-    args0: [
-      {
-        type: "input_dummy"
-      },
-      {
-        type: "input_statement",
-        name: "THEN",
-      },
-
-    ],
-    inputsInline: true,
-    previousStatement: null,
-    nextStatement: null,
-    colour: 100
   },
   {
     type: "randomTransformation",
@@ -244,7 +235,6 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
           ],
           [
             "↕ VerticalReflection",
-           
             "VerticalReflection",
           ]
         ]
