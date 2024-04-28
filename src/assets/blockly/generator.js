@@ -129,7 +129,7 @@ jsonGenerator.forBlock['randomTransformation'] = function (block, generator) {
 "action": "randomTransformation",
 "data": {
   "transformation": "${action}",
-  "block": ${statementMembers}
+  "block": ${statementMembers === '' ? 'null' : statementMembers}
   }
 }`;
 
@@ -143,13 +143,13 @@ jsonGenerator.forBlock['if'] = function (block, generator) {
   const condition =
     generator.statementToCode(block, 'CONDITION');
   const code =
-    `{
+`{
   "action": "if",
   "data": 
   {
-   "result": ${condition}
-  "block": ${statementMembers}
-  "else": null
+    "condition": ${condition},
+    "result": ${statementMembers},
+    "else": null
   }
 }`;
   return code;
@@ -239,7 +239,6 @@ jsonGenerator.forBlock['is_equal'] = function (block, generator) {
 
   const code =
     `{
-    "condition": {
     "block": "checkTypesInDirection",
     "data": {
       "direction": { "direction": "constant", "data": [${directions[direction]}] },
@@ -247,8 +246,7 @@ jsonGenerator.forBlock['is_equal'] = function (block, generator) {
         { "particle_type": "fromName", "data": "${type_particle}" }
       ]
     }
-  
-`
+  }`
 
   return code;
 

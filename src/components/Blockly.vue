@@ -144,7 +144,7 @@ const generatedCode = ref(""); // For debugging purposes
 </script>
 
 <template>
-  <pre class="absolute top-0 left-0 z-10 m-4 p-4 bg-slate-400 rounded-xl">{{ generatedCode }}</pre>
+  <pre class="absolute text-xs origin-top-left scale-75 pivo top-0 left-0 z-10 m-4 p-4 bg-slate-400 rounded-xl opacity-75 pointer-events-none">{{ generatedCode }}</pre>
   <div class="w-full m-4 bg-slate-600/50 rounded-xl box-content overflow-clip">
     <div class="w-full h-full" id="blocklyDiv"></div>
   </div>

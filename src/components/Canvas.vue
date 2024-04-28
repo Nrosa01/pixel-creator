@@ -9,6 +9,7 @@ import sand from "../assets/particles/sand.json";
 import simplest from "../assets/particles/simplest.json";
 import replicant from "../assets/particles/replicant.json";
 import empty from "../assets/particles/empty.json";
+import test from "../assets/particles/test.json";
 import ParticleModel from "../assets/models/particle.js";
 import ParticleButtons from "./ParticleButtons.vue";
 import Blockly from "./Blockly.vue";
@@ -22,6 +23,7 @@ onMounted(async () => {
   add_particle(new ParticleModel("Sand", sand));
   add_particle(new ParticleModel("Replicant", replicant));
   add_particle(new ParticleModel("Simplest", simplest));
+  add_particle(new ParticleModel("Test", test));
   wasm_exports.resize_simulation(js_object(Math.round(150).toString()));
   console.log(particle_array.value);
 
