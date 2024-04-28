@@ -142,14 +142,18 @@ jsonGenerator.forBlock['if'] = function (block, generator) {
     generator.statementToCode(block, 'THEN');
   const condition =
     generator.statementToCode(block, 'CONDITION');
+  const else_code = generator.statementToCode(block, 'ELSE');
+  console.log(condition);
+  console.log(else_code);
+
   const code =
-`{
+    `{
   "action": "if",
   "data": 
   {
     "condition": ${condition},
     "result": ${statementMembers},
-    "else": null
+    "else": ${else_code === '' ? 'null' : else_code}
   }
 }`;
   return code;
@@ -160,11 +164,6 @@ jsonGenerator.forBlock['controls_if'] = function (block, generator) {
   // Assuming 'block' is your Blockly block
   console.log(lastBlock == block);
   lastBlock = block;
-  // if (mutator) {
-  //     // Access the value of elseifCount_
-  //     const elseifCount = mutator.getFieldValue('elseifCount_');
-  //     console.log('Number of elseifs:', elseifCount);
-  // }
 
   const statementMembers =
     generator.statementToCode(block, 'DO0');

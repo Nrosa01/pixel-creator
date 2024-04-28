@@ -163,7 +163,8 @@ Blockly.Blocks['if'] = {
     this.appendStatementInput("THEN")
 
     this.appendStatementInput("ELSE").appendField("else");
-    this.getInput("ELSE").setVisible(false);
+    //in the forum they said this it is not recommended to modify visibility of specific fields (2017)
+    this.getInput("ELSE").setVisible(true);
     this.setInputsInline(true);
     this.setPreviousStatement(true);
     this.setNextStatement(true);
