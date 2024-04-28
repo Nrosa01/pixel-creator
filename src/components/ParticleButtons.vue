@@ -14,7 +14,7 @@ const props = defineProps({
 const { play } = useSound(click, {volume: 0.5})
 const {play: playAdd } = useSound(click, {volume: 0.5, playbackRate: 1.2})
 const {play: playRemove } = useSound(remove, {volume: 2})
-const {play: playHover } = useSound(hover, {volume: 1, interrupt: false})
+const {play: playHover } = useSound(hover, {volume: 0.5, interrupt: false})
 
 let buttonClass = "bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow";
 const selected = ref(1);
