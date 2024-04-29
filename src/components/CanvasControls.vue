@@ -66,8 +66,6 @@ function handleNewSizeChange(event) {
   } else {
     wasm_exports.resize_simulation(js_object(event.target.value));
   }
-
-  play();
 }
 
 function togglePerformanceMode() {
@@ -88,7 +86,7 @@ function togglePerformanceMode() {
         <button @mouseenter="playHover" :class="buttonClass" title="Load a state from disk" @click="loadState"><i class="ph-duotone ph-upload"></i></button>
         <button @mouseenter="playHover" :class="buttonClass + ' transition-colors' + (performance_mode ? ' text-red-500' : '')" title="Toggle performance mode. Performance mode disables realtime particle editing updates and animations when resizing the world" @click="togglePerformanceMode"><i class="ph-duotone ph-fire"></i></button>
 
-        <select @mouseenter="playHover" title="Change the simulation size. Tiny is 75*75, normal 150*150 and big is 300*300" :class="dropdown" @change="handleNewSizeChange">
+        <select @mouseenter="playHover" @click="play" title="Change the simulation size. Tiny is 75*75, normal 150*150 and big is 300*300" :class="dropdown" @change="handleNewSizeChange">
           <option value="75">Tiny</option>
           <option value="150" selected>Normal</option>
           <option value="300">Big</option>

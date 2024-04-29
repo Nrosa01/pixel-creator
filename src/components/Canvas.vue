@@ -2,9 +2,11 @@
 import { ref } from "vue";
 import { useSound } from "@vueuse/sound";
 import click from "../assets/sounds/add_particle.wav";
+import slider from "../assets/sounds/hover.wav";
 
 const playbackRate = ref(1.0);
-const { play, stop } = useSound(click, { volume: 0.5, playbackRate, interrupt: false });
+const { play } = useSound(click, { volume: 0.5, playbackRate, interrupt: false });
+const { play: playSlider } = useSound(slider, { volume: 0.5, interrupt: false });
 
 let timer = null;
 
@@ -69,14 +71,36 @@ const onMouseUp = () => {
 
 const onMouseOut = () => {
   onMouseUp();
-  wasm_exports?.set_mouse_hidden(js_object("true"));
+
+  if (typeof wasm_exports !== "undefined") {
+    wasm_exports.set_mouse_hidden(js_object("true"));
+  }
 };
 
 const onMouseEnter = () => {
-  wasm_exports?.set_mouse_hidden(js_object("false"));
+  if (typeof wasm_exports !== "undefined") {
+    wasm_exports.set_mouse_hidden(js_object("false"));
+  }
+};
+
+let mouseWheelTimer = null;
+
+const onMouseWheel = (event) => {
+  const delta = Math.max(-1, Math.min(1, event.deltaY));
+
+  // If a timer is already running, don't start another one
+  if (mouseWheelTimer) return;
+
+  // Start a timer to play the slider after 75ms
+  mouseWheelTimer = setTimeout(() => {
+    playSlider({ playbackRate: delta > 0 ? 0.8 : 0.75 });
+
+    // Clear the timer
+    mouseWheelTimer = null;
+  }, 15);
 };
 </script>
 
 <template>
-  <canvas ref="canvas" @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseOut" @mouseenter="onMouseEnter" class="sticky top-0 box-border z-10 w-full touch-pinch-zoom border-black border-2" id="glcanvas" height="800" width="800"></canvas>
+  <canvas ref="canvas" @wheel="onMouseWheel" @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseOut" @mouseenter="onMouseEnter" class="sticky top-0 box-border z-10 w-full touch-pinch-zoom border-black border-2" id="glcanvas" height="800" width="800"></canvas>
 </template>
