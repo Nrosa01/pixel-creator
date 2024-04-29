@@ -9,15 +9,13 @@ import { jsonGenerator } from "../assets/blockly/generator";
 import { save, load } from "../assets/blockly/serialization";
 import { toolbox } from "../assets/blockly/toolbox";
 import "../assets/blockly/renderer.js";
+import { useSimulationStore } from "../stores/simulation";
 
-const props = defineProps({
-  particle_array: Array,
-  selected_particle: Number,
-});
+const store = useSimulationStore();
 
 // computed property to handle the selected particle
 watch(
-  () => [props.selected_particle, props.particle_array.length],
+  () => [store.selected_particle, store.particle_array.length],
   ([selection, particleArrayLength], [prevSelection, prevParticleArrayLength]) => {
     if (selection !== prevSelection) {
       // console.log("Selected particle changed", selection);
@@ -38,22 +36,22 @@ watch(
 function loadWorkspace(index) {
   Blockly.Events.disable();
   const workspace = Blockly.getMainWorkspace();
-  const data = props.particle_array[index]?.blockly_workspace;
+  const data = store.particle_array[index]?.blockly_workspace;
   if (data) {
     Blockly.serialization.workspaces.load(data, workspace);
   } else {
     workspace.clear();
 
     const block = workspace.newBlock("particle_base");
-    console.log("Loading index", index, props.particle_array[index]?.display_name);
-    block.setFieldValue(props.particle_array[index]?.display_name, "NAME");
-    const color = props.particle_array[index]?.data.color;
+    console.log("Loading index", index, store.particle_array[index]?.display_name);
+    block.setFieldValue(store.particle_array[index]?.display_name, "NAME");
+    const color = store.particle_array[index]?.data.color;
     const colorToHex = (color) => {
       return "#" + color.map((c) => c.toString(16).padStart(2, "0")).join("");
     };
     block.setFieldValue(colorToHex(color), "COLOR");
-    block.setFieldValue(props.particle_array[index]?.data.alpha[0], "MIN_ALPHA");
-    block.setFieldValue(props.particle_array[index]?.data.alpha[1], "MAX_ALPHA");
+    block.setFieldValue(store.particle_array[index]?.data.alpha[0], "MIN_ALPHA");
+    block.setFieldValue(store.particle_array[index]?.data.alpha[1], "MAX_ALPHA");
     block.initSvg();
     block.render();
   }
@@ -64,11 +62,11 @@ function loadWorkspace(index) {
 
 function saveWorkspace(index) {
   const json = Blockly.serialization.workspaces.save(Blockly.getMainWorkspace());
-  props.particle_array[index].blockly_workspace = json;
+  store.particle_array[index].blockly_workspace = json;
 }
 
 function update_particle(index, data) {
-  props.particle_array[index].update_data(JSON.parse(data));
+  store.particle_array[index].update_data(JSON.parse(data));
 }
 
 onMounted(() => {
@@ -77,7 +75,7 @@ onMounted(() => {
   Blockly.Extensions.register("particle_list_extension", function () {
     this.getInput("DUMMY").appendField(
       new Blockly.FieldDropdown(function () {
-        return props.particle_array.map((particle) => [particle.display_name, particle.data.name]);
+        return store.particle_array.map((particle) => [particle.display_name, particle.data.name]);
       }),
       "PARTICLE"
     );
@@ -129,12 +127,12 @@ onMounted(() => {
     console.log("Workspace changed");
 
     regenerateCode();
-    update_particle(props.selected_particle, generatedCode.value);
+    update_particle(store.selected_particle, generatedCode.value);
 
     // console.log(Blockly.serialization.workspaces.save(Blockly.getMainWorkspace()));
   });
 
-  loadWorkspace(props.selected_particle);
+  loadWorkspace(store.selected_particle);
 });
 
 function regenerateCode() {

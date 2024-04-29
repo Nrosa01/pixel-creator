@@ -15,18 +15,18 @@ import ParticleButtons from "./ParticleButtons.vue";
 import Blockly from "./Blockly.vue";
 import CanvasControls from "./CanvasControls.vue";
 import Canvas from "./Canvas.vue";
+import { useSimulationStore } from "../stores/simulation";
 
 onMounted(async () => {
   await loadScript(loader);
   await loadScript(sapp_utils);
   await load(wasm);
-  add_particle(new ParticleModel("Empty", empty));
-  add_particle(new ParticleModel("Sand", sand));
-  add_particle(new ParticleModel("Replicant", replicant));
-  add_particle(new ParticleModel("Simplest", simplest));
-  add_particle(new ParticleModel("Test", test));
+  store.addParticle(new ParticleModel("Empty", empty));
+  store.addParticle(new ParticleModel("Sand", sand));
+  store.addParticle(new ParticleModel("Replicant", replicant));
+  store.addParticle(new ParticleModel("Simplest", simplest));
+  store.addParticle(new ParticleModel("Test", test));
   wasm_exports.resize_simulation(js_object(Math.round(150).toString()));
-  console.log(particle_array.value);
 
   window.addEventListener("resize", handleResize);
 
@@ -37,16 +37,10 @@ onUnmounted(() => {
   window.removeEventListener("resize", handleResize);
 });
 
-function add_particle(particle) {
-  particle_array.value.push(particle);
-}
+const store = useSimulationStore();
 
 const scriptsLoaded = ref(false);
-const particle_array = ref([]);
-const particle_buttons = ref();
-
 const windowWidth = ref(window.innerWidth);
-
 const isDesktop = computed(() => windowWidth.value > 1024);
 
 const handleResize = () => {
@@ -60,10 +54,10 @@ const handleResize = () => {
       <Canvas />
       <div class="flex flex-col w-full pt-4 items-center px-0">
         <CanvasControls />
-        <ParticleButtons ref="particle_buttons" :particle_array />
+        <ParticleButtons />
         <p v-if="!isDesktop" class="text-2xl font-bold text-red-500 py-2">Use a bigger screen to edit particles</p>
       </div>
     </div>
-    <Blockly v-if="isDesktop && scriptsLoaded" :particle_array :selected_particle="particle_buttons?.selected"></Blockly>
+    <Blockly v-if="isDesktop && scriptsLoaded"></Blockly>
   </div>
 </template>
