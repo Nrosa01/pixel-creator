@@ -205,7 +205,8 @@ jsonGenerator.forBlock['direction'] = function (block) {
 
 jsonGenerator.forBlock['particle'] = function (block) {
   const particle = block.getFieldValue('PARTICLE');
-  return [particle, Order.ATOMIC]
+  const code = `{ "particle_type": "fromName", "data": "${particle}" }`;
+  return [code, Order.ATOMIC]
 }
 
 /*
@@ -223,16 +224,8 @@ jsonGenerator.forBlock['particle'] = function (block) {
 
 jsonGenerator.forBlock['particle_in_direction'] = function (block, generator) {
 
-  // const direction = block.getFieldValue('DIRECTION');
-  // const type_particle = block.getFieldValue('TYPE_PARTICLE');
-
   const direction = generator.valueToCode(block, 'DIRECTION', Order.ATOMIC);
-  const type_particle = generator.valueToCode(block, 'TYPE_PARTICLE', Order.ATOMIC);
-
-  console.log(direction);
-
-  //TODO: Create a for that writes the types content depending on the number of types
-  //gotta create or block before
+  const particle = generator.valueToCode(block, 'TYPE_PARTICLE', Order.ATOMIC);
 
   const code =
     `{
@@ -240,7 +233,7 @@ jsonGenerator.forBlock['particle_in_direction'] = function (block, generator) {
     "data": {
       "direction": ${directions[direction]},
       "types": [
-        { "particle_type": "fromName", "data": "${type_particle}" }
+        ${particle}
       ]
     }
   }`
@@ -267,4 +260,16 @@ jsonGenerator.forBlock['swap'] = function (block, generator) {
   }` ;
 
   return code
+}
+
+jsonGenerator.forBlock['group_particle'] = function (block, generator) {
+  var code = "";
+  var i = 0;
+  while (block.getInput(`ITEM${i}`) !== null) {
+    const particleType = generator.valueToCode(block, `ITEM${i}`, Order.ATOMIC);
+    code += '\n\t' + particleType;
+    i++;
+  }
+
+  return [code, Order.ATOMIC];
 }

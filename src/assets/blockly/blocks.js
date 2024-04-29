@@ -346,7 +346,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: "input_value",
         name: "TYPE_PARTICLE",
-        check: "Particle"
+        check: ["Particle", "Group"]
       },
     ],
     inputsInline: true,
