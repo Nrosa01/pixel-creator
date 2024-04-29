@@ -102,5 +102,5 @@ const onMouseWheel = (event) => {
 </script>
 
 <template>
-  <canvas ref="canvas" @wheel="onMouseWheel" @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseOut" @mouseenter="onMouseEnter" class="sticky top-0 box-border z-10 w-full touch-pinch-zoom border-black border-2" id="glcanvas" height="800" width="800"></canvas>
+  <canvas ref="canvas" @wheel="onMouseWheel" @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseOut" @mouseenter="onMouseEnter" class="cursor-none sticky top-0 box-border z-10 w-full touch-pinch-zoom border-black border-2" id="glcanvas" height="800" width="800"></canvas>
 </template>
