@@ -275,3 +275,115 @@ jsonGenerator.forBlock['group_particle'] = function (block, generator) {
 
   return [code, Order.ATOMIC];
 }
+
+jsonGenerator.forBlock['copy_myself'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+
+jsonGenerator.forBlock['change_into'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+
+jsonGenerator.forBlock['touching'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+
+jsonGenerator.forBlock['number_of'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+
+jsonGenerator.forBlock['type_of'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+
+jsonGenerator.forBlock['one_in_chance'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+
+jsonGenerator.forBlock['bool_comparison'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+
+jsonGenerator.forBlock['boolean'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+
+jsonGenerator.forBlock['for_each_transformation'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+
+jsonGenerator.forBlock['rotated_by'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+
+jsonGenerator.forBlock['math_operation'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+
+jsonGenerator.forBlock['random_from'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+jsonGenerator.forBlock['particle_proterties'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+jsonGenerator.forBlock['increase_by'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+jsonGenerator.forBlock['set_to'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+jsonGenerator.forBlock['repeat_n_times'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}
+
+jsonGenerator.forBlock['every_n_frames'] = function (block, generator) {
+
+  const code = "";
+  return [code, Order.ATOMIC];
+}

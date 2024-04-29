@@ -70,18 +70,6 @@ Blockly.Blocks['custom_input_color'] = {
 
 
 
-Blockly.Blocks['test_field_slider'] = {
-  init: function () {
-    this.appendDummyInput()
-      .appendField('slider: ')
-      .appendField(new FieldSlider(50), 'FIELDNAME');
-
-    this.setColour(160);
-
-  },
-
-};
-
 
 var directionOptions = [
   ["me", "HERE"],
@@ -97,6 +85,25 @@ var directionOptions = [
   // ["Arrow Keys", "KB"],
 ];
 
+
+var transformationOptions = [
+  [
+    "↻ Rotation",
+    "Rotation"
+  ],
+  [
+    "✥ Reflection",
+    "Reflection",
+  ],
+  [
+    "⟷ HorizontalReflection",
+    "HorizontalReflection",
+  ],
+  [
+    "↕ VerticalReflection",
+    "VerticalReflection",
+  ]
+]
 
 
 
@@ -269,6 +276,20 @@ Blockly.Blocks['if'] = {
 
 
 export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
+
+  {
+    type: "custom_field_slider",
+    message0: "%1",
+    args0: [
+      {
+        type: 'field_slider',
+        name: 'NUMBER',
+        value: 0,
+      }
+    ],
+    output: "Number",
+    colour: 160
+  },
   {
     type: "direction",
     message0: "%1",
@@ -282,7 +303,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
 
     ],
     output: "Vector",
-    colour: 230,
+    colour: 70,
   },
   {
     type: "particle",
@@ -296,7 +317,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     ],
     extensions: ["particle_list_extension"],
     output: "Particle",
-    colour: 230,
+    colour: 255,
 
   },
   {
@@ -304,16 +325,14 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     message0: "%1",
     args0: [
       {
-
         type: "input_value",
         name: "ITEM0",
         check: "Particle",
-
       }
     ],
     inputsInline: true,
     output: "Group",
-    colour: 160,
+    colour: 255,
     mutator: "particle_group_mutator",
   },
 
@@ -322,9 +341,9 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     message0: "swap %1",
     args0: [
       {
-        "type": "input_value",
-        "name": "OTHER",
-        "check": "Vector"
+        type: "input_value",
+        name: "OTHER",
+        check: "Vector"
       },
 
     ],
@@ -362,25 +381,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: "field_dropdown",
         name: "TRANSFORMATION",
-        options: [
-
-          [
-            "↻ Rotation",
-            "Rotation"
-          ],
-          [
-            "✥ Reflection",
-            "Reflection",
-          ],
-          [
-            "⟷ HorizontalReflection",
-            "HorizontalReflection",
-          ],
-          [
-            "↕ VerticalReflection",
-            "VerticalReflection",
-          ]
-        ]
+        options: transformationOptions,
       },
       {
         type: "input_dummy"
@@ -397,6 +398,424 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
 
   },
 
+  {
+    type: "copy_myself",
+    message0: "copy myself %1",
+    args0: [
+      {
+        type: "input_value",
+        name: "OTHER",
+        check: "Vector"
+      },
+
+    ],
+    inputsInline: true,
+    previousStatement: true,
+    nextStatement: true,
+    colour: 160,
+
+  },
+
+  {
+    type: "change_into",
+    message0: "change %1 into %2",
+    args0: [
+      {
+        type: "input_value",
+        name: "OTHER",
+        check: "Vector"
+      },
+      {
+        type: "input_value",
+        name: "TYPE_PARTICLE",
+        check: "Particle",
+      }
+
+    ],
+    inputsInline: true,
+    previousStatement: true,
+    nextStatement: true,
+    colour: 160,
+
+  },
+  {
+    type: "touching",
+    message0: "touching %1",
+    args0: [
+      {
+        type: "input_value",
+        name: "TYPE_PARTICLE",
+        check: ["Particle", "Group"]
+      },
+    ],
+    inputsInline: true,
+    colour: 160,
+    output: "Boolean"
+  },
+  {
+    type: "number_of",
+    message0: "number of %1 touching",
+    args0: [
+      {
+        type: "input_value",
+        name: "TYPE_PARTICLE",
+        check: ["Particle", "Group"]
+      },
+    ],
+    inputsInline: true,
+    colour: 160,
+    output: "Number"
+  },
+  {
+    type: "type_of",
+    message0: "type of %1",
+    args0: [
+      {
+        type: "input_value",
+        name: "OTHER",
+        check: "Vector"
+      },
+    ],
+    inputsInline: true,
+    colour: 160,
+    output: "Particle"
+  },
+  {
+    type: "one_in_chance",
+    message0: "one in %1 chance",
+    args0: [
+      {
+        type: 'input_value',
+        name: 'CHANCE',
+        check: "Number"
+      },
+    ],
+    inputsInline: true,
+    colour: 10,
+    output: "Boolean",
+
+  },
+  {
+    type: "comparison",
+    message0: "%1 %2 %3",
+    args0: [
+      {
+        type: 'input_value',
+        name: 'LEFT',
+        check: "Number"
+      },
+      {
+        type: "field_dropdown",
+        name: "DROPDOWN",
+        options: [
+          [
+            "is", "IS"
+          ],
+          [
+            "is bigger than", "IS_BIGGER_THAN"
+          ],
+          [
+            "is smaller than", "IS_SMALLER_THAN"
+          ]
+        ]
+      },
+      {
+        type: 'input_value',
+        name: 'RIGHT',
+        check: "Number"
+      },
+      // {
+      //   type: 'field_slider',
+      //   name: 'RIGHT',
+      //   min: 1,
+      //   max: 100,
+      //   precision: 1,
+      //   init: 1,
+      // },
+    ],
+    inputsInline: true,
+    colour: 10,
+    output: "Boolean",
+  },
+  {
+    type: "bool_comparison",
+    message0: "%1 %2 %3",
+    args0: [
+      {
+        type: 'input_value',
+        name: 'LEFT',
+        check: "Boolean"
+      },
+      {
+        type: "field_dropdown",
+        name: "DROPDOWN",
+        options: [
+          [
+            "and", "AND"
+          ],
+          [
+            "or", "OR"
+          ],
+        ]
+      },
+      {
+        type: 'input_value',
+        name: 'RIGHT',
+        check: "Boolean"
+      }
+    ],
+    inputsInline: true,
+    colour: 10,
+    output: "Boolean",
+  },
+  {
+    type: "boolean",
+    message0: "%1",
+    args0: [
+      {
+        type: "field_dropdown",
+        name: "BOOLEAN",
+        options: [
+          [
+            "true", "TRUE"
+          ],
+          [
+            "false", "FALSE"
+          ]
+        ]
+      },
+    ],
+    inputsInline: true,
+    colour: 10,
+    output: "Boolean",
+  },
+  {
+    type: "not",
+    message0: "not %1",
+    args0: [
+      {
+        type: 'input_value',
+        name: 'BOOLEAN',
+        check: "Boolean"
+      },
+    ],
+    colour: 10,
+    output: "Boolean",
+  },
+  {
+    type: "for_each_transformation",
+    message0: "for each %1 %2 %3",
+    args0: [
+
+      {
+        type: "field_dropdown",
+        name: "TRANSFORMATION",
+        options: transformationOptions,
+      },
+      {
+        type: "input_dummy"
+      },
+      {
+        type: "input_statement",
+        name: "THEN",
+      },
+    ],
+    inputsInline: true,
+    previousStatement: null,
+    nextStatement: null,
+    colour: 230,
+
+  },
+  {
+    type: "rotated_by",
+    message0: "rotated by %1 %2",
+    args0: [
+      {
+        type: 'input_value',
+        name: 'NUMBER',
+        check: "Number"
+      },
+
+      {
+        type: "input_statement",
+        name: "THEN",
+      },
+    ],
+    inputsInline: true,
+    previousStatement: null,
+    nextStatement: null,
+    colour: 230,
+  },
+  {
+    type: "math_operation",
+    message0: "%1 %2 %3",
+    args0: [
+      {
+        type: 'input_value',
+        name: 'NUMBER',
+        check: "Number"
+      },
+      {
+        type: "field_dropdown",
+        name: "OPERATOR",
+        options: [
+          [
+            "+", "ADD"
+          ],
+          [
+            "-", "SUBTRACT"
+          ],
+          [
+            "*", "MULTIPLY"
+          ],
+          [
+            "/", "DIVIDE"
+          ],
+          [
+            "%", "MODULO"
+          ],
+          [
+            "difference", "DIFFERENCE"
+          ],
+        ]
+      },
+      {
+        type: 'input_value',
+        name: 'NUMBER',
+        check: "Number"
+      },
+    ],
+    inputsInline: true,
+    colour: 200,
+    output: "Number",
+  },
+  {
+    type: "random_from",
+    message0: "random from %1 to %2",
+    args0: [
+      {
+        type: 'input_value',
+        name: 'LEFT',
+        check: "Number"
+      },
+      {
+        type: 'input_value',
+        name: 'RIGHT',
+        check: "Number"
+      }
+    ],
+    inputsInline: true,
+    colour: 200,
+    output: "Number",
+  },
+  {
+    type: "particle_proterties",
+    message0: "%1 of %2",
+    args0: [
+      {
+        type: "field_dropdown",
+        name: "TYPE",
+        options: [
+          ["light", "LIGHT"],
+          ["extra", "EXTRA"]
+        ]
+      },
+      {
+        type: "input_value",
+        name: "OTHER",
+        check: "Vector"
+      }
+    ],
+
+    colour: 200,
+    output: "ParticleProperties",
+  },
+  {
+    type: "increase_by",
+    message0: "increase %1 by %2",
+    args0: [
+      {
+        type: 'input_value',
+        name: 'PROPERTY',
+        check: "ParticleProperties"
+      },
+
+      {
+        type: 'input_value',
+        name: 'NUMBER',
+        check: "Number"
+      },
+    ],
+    inputsInline: true,
+    previousStatement: null,
+    nextStatement: null,
+    colour: 200,
+  },
+  {
+    type: "set_to",
+    message0: "set %1 to %2",
+    args0: [
+      {
+        type: 'input_value',
+        name: 'PROPERTY',
+        check: "ParticleProperties"
+      },
+      {
+        type: 'input_value',
+        name: 'NUMBER',
+        check: "Number"
+      },
+    ],
+    inputsInline: true,
+    previousStatement: null,
+    nextStatement: null,
+    colour: 200,
+  },
+  //this block doesnt show for some reason
+  {
+    type: "repeat_n_times",
+    message0: "repeat %1 times %2 %3",
+    args0: [
+      {
+        type: 'input_value',
+        name: 'NUMBER',
+        check: "Number"
+      },
+      {
+        type: "input_dummy"
+      },
+      {
+        type: "input_statement",
+        name: "THEN",
+      },
+    ],
+    inputsInline: true,
+    previousStatement: null,
+    nextStatement: null,
+    colour: 350,
+  },
+  {
+    type: "every_n_frames",
+    message0: "every %1 frames %2 %3",
+    args0: [
+      {
+        type: 'input_value',
+        name: 'NUMBER',
+        check: "Number"
+      },
+      {
+        type: "input_dummy"
+      },
+      {
+        type: "input_statement",
+        name: "THEN",
+      },
+    ],
+    inputsInline: true,
+    previousStatement: null,
+    nextStatement: null,
+    colour: 350,
+  },
 
 
 ]
