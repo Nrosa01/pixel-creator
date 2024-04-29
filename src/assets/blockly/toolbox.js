@@ -32,18 +32,6 @@ export const toolbox = {
       'kind': 'block',
       'type': 'particle'
     },
-    {
-      'kind': 'block',
-      'type': 'custom_input_color'
-    },
-    {
-      'kind': 'block',
-      'type': 'test_field_slider'
-    },
-    {
-      'kind': 'block',
-      'type': 'randomTransformation'
-    },
 
     {
       'kind': 'block',
@@ -61,10 +49,72 @@ export const toolbox = {
     },
     {
       'kind': 'block',
-      'type': 'direction',
-      "fields": {
-        "DIRECTION": "DOWN"
+      'type': 'copy_myself',
+      'inputs': {
+        'OTHER': {
+          'shadow': {
+            'type': 'direction',
+            "fields": {
+              "DIRECTION": "DOWN"
+            }
+          },
+        },
+      },
+    },
+    {
+      'kind': 'block',
+      'type': 'change_into',
+      'inputs': {
+        'OTHER': {
+          'shadow': {
+            'type': 'direction',
+            "fields": {
+              "DIRECTION": "ME"
+            }
+          },
+        },
+        'TYPE_PARTICLE': {
+          'shadow': {
+            'type': 'particle',
+          },
+        },
+      },
+    },
+    {
+      'kind': 'block',
+      'type': 'touching',
+      'inputs': {
+        'TYPE_PARTICLE': {
+          'shadow': {
+            'type': 'particle',
+          },
+        },
       }
+    },
+    {
+      'kind': 'block',
+      'type': 'number_of',
+      'inputs': {
+        'TYPE_PARTICLE': {
+          'shadow': {
+            'type': 'particle',
+          },
+        },
+      }
+    },
+    {
+      'kind': 'block',
+      'type': 'type_of',
+      'inputs': {
+        'OTHER': {
+          'shadow': {
+            'type': 'direction',
+            "fields": {
+              "DIRECTION": "DOWN"
+            }
+          },
+        },
+      },
     },
     {
       'kind': 'block',
@@ -87,12 +137,186 @@ export const toolbox = {
     },
     {
       'kind': 'block',
-      'type': 'controls_if'
+      'type': 'direction',
+      "fields": {
+        "DIRECTION": "DOWN"
+      }
+    },
+    //----------------------------------------------------------------
+    {
+      'kind': 'block',
+      'type': 'randomTransformation'
     },
     {
       'kind': 'block',
+      'type': 'for_each_transformation',
+    },
+    {
+      'kind': 'block',
+      'type': 'rotated_by',
+      'inputs': {
+        'NUMBER': {
+          'shadow': {
+            'type': 'math_number',
+          },
+        },
+      }
+    },
+
+    {
+      'kind': 'block',
+      'type': 'controls_if'
+    },
+
+
+
+    {
+      'kind': 'block',
       'type': 'if'
-    }
+    },
+
+
+    {
+      'kind': 'block',
+      'type': 'one_in_chance',
+      'inputs': {
+        'CHANCE': {
+          'shadow': {
+            'type': 'custom_field_slider',
+          },
+        }
+      }
+    },
+    {
+      'kind': 'block',
+      'type': 'comparison',
+      'inputs': {
+        'LEFT': {
+          'shadow': {
+            'type': 'custom_field_slider',
+          },
+        },
+        'RIGHT': {
+          'shadow': {
+            'type': 'custom_field_slider',
+          },
+        },
+      }
+    },
+    {
+      'kind': 'block',
+      'type': 'bool_comparison',
+    },
+    {
+      'kind': 'block',
+      'type': 'boolean',
+    },
+    {
+      'kind': 'block',
+      'type': 'not',
+    },
+
+    //----------------------------------------------------------------
+    {
+      'kind': 'block',
+      'type': 'custom_field_slider'
+    },
+    {
+      'kind': 'block',
+      'type': 'random_from',
+      'inputs': {
+        'LEFT': {
+          'shadow': {
+            'type': 'custom_field_slider',
+          },
+        },
+        'RIGHT': {
+          'shadow': {
+            'type': 'custom_field_slider',
+          },
+        },
+      }
+    },
+
+
+    {
+      'kind': 'block',
+      'type': 'particle_proterties',
+
+    },
+    {
+      'kind': 'block',
+      'type': 'increase_by',
+      'inputs': {
+        'PROPERTY': {
+          'shadow': {
+            'type': 'particle_proterties'
+          }
+        },
+        'DIRECTION': {
+          'shadow': {
+            'type': 'direction',
+          },
+        },
+        'NUMBER': {
+          'shadow': {
+            'type': 'custom_field_slider',
+          },
+        },
+      }
+    },
+    {
+      'kind': 'block',
+      'type': 'set_to',
+      'inputs': {
+        'PROPERTY': {
+          'shadow': {
+            'type': 'particle_proterties'
+          }
+        },
+        'DIRECTION': {
+          'shadow': {
+            'type': 'direction',
+          },
+        },
+        'NUMBER': {
+          'shadow': {
+            'type': 'custom_field_slider',
+          },
+        },
+
+      }
+    },
+    //----------------------------------------------------------------
+    {
+      'kind': 'block',
+      'type': 'repeat_n_times',
+      'inputs': {
+        'NUMBER': {
+          'shadow': {
+            'type': 'custom_field_slider',
+          },
+        }
+      }
+    },
+    {
+      'kind': 'block',
+      'type': 'every_n_frames',
+      'inputs': {
+        'NUMBER': {
+          'shadow': {
+            'type': 'custom_field_slider',
+          },
+        }
+      }
+    },
+
+    {
+      'kind': 'block',
+      'type': 'custom_input_color'
+    },
+
+
 
   ]
 
