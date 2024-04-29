@@ -263,13 +263,15 @@ jsonGenerator.forBlock['swap'] = function (block, generator) {
 }
 
 jsonGenerator.forBlock['group_particle'] = function (block, generator) {
-  var code = "";
+  var particleTypes = [];
   var i = 0;
   while (block.getInput(`ITEM${i}`) !== null) {
     const particleType = generator.valueToCode(block, `ITEM${i}`, Order.ATOMIC);
-    code += '\n\t' + particleType;
+    particleTypes.push(particleType);
     i++;
   }
+
+  var code = particleTypes.join(',\n\t');
 
   return [code, Order.ATOMIC];
 }
