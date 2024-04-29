@@ -710,7 +710,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
   },
   {
     type: "particle_proterties",
-    message0: "%1",
+    message0: "%1 of %2",
     args0: [
       {
         type: "field_dropdown",
@@ -719,6 +719,11 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
           ["light", "LIGHT"],
           ["extra", "EXTRA"]
         ]
+      },
+      {
+        type: "input_value",
+        name: "OTHER",
+        check: "Vector"
       }
     ],
 
@@ -727,18 +732,14 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
   },
   {
     type: "increase_by",
-    message0: "increase %1 of %2 by %3",
+    message0: "increase %1 by %2",
     args0: [
       {
         type: 'input_value',
         name: 'PROPERTY',
         check: "ParticleProperties"
       },
-      {
-        type: 'input_value',
-        name: 'DIRECTION',
-        check: "Vector"
-      },
+
       {
         type: 'input_value',
         name: 'NUMBER',
@@ -752,17 +753,12 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
   },
   {
     type: "set_to",
-    message0: "set %1 of %2 to %3",
+    message0: "set %1 to %2",
     args0: [
       {
         type: 'input_value',
         name: 'PROPERTY',
         check: "ParticleProperties"
-      },
-      {
-        type: 'input_value',
-        name: 'DIRECTION',
-        check: "Vector"
       },
       {
         type: 'input_value',

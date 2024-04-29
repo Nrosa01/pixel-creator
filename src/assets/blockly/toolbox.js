@@ -242,7 +242,13 @@ export const toolbox = {
     {
       'kind': 'block',
       'type': 'particle_proterties',
-
+      'inputs': {
+        'OTHER': {
+          'shadow': {
+            'type': 'direction',
+          }
+        },
+      }
     },
     {
       'kind': 'block',
@@ -252,11 +258,6 @@ export const toolbox = {
           'shadow': {
             'type': 'particle_proterties'
           }
-        },
-        'DIRECTION': {
-          'shadow': {
-            'type': 'direction',
-          },
         },
         'NUMBER': {
           'shadow': {
@@ -274,11 +275,7 @@ export const toolbox = {
             'type': 'particle_proterties'
           }
         },
-        'DIRECTION': {
-          'shadow': {
-            'type': 'direction',
-          },
-        },
+
         'NUMBER': {
           'shadow': {
             'type': 'custom_field_slider',
