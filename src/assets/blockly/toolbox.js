@@ -69,7 +69,7 @@ export const toolbox = {
           'shadow': {
             'type': 'direction',
             "fields": {
-              "DIRECTION": "ME"
+              "DIRECTION": "HERE"
             }
           },
         },
