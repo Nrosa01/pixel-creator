@@ -31,16 +31,14 @@ function clear() {
 
 function loadState() {
   console.log("Load button clicked");
-  loadFile(".json").then((file) => {
-    store.particle_array = JSON.parse(file);
-  });
+  store.loadFromFile();
 
   play();
 }
 
 function save() {
   console.log("Save button clicked");
-  saveToFile("particles.json", JSON.stringify(store.particle_array));
+  store.saveToFile("particles.json");
   play();
 }
 

@@ -1,69 +1,13 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import Draggable from "./Draggable.vue";
-import ParticleModel from "../assets/models/particle.js";
 import * as Blockly from "blockly";
-import { watch } from "vue";
 import { blocks } from "../assets/blockly/blocks";
-import { jsonGenerator } from "../assets/blockly/generator";
-import { save, load } from "../assets/blockly/serialization";
 import { toolbox } from "../assets/blockly/toolbox";
 import "../assets/blockly/renderer.js";
 import { useSimulationStore } from "../stores/simulation";
 
 const store = useSimulationStore();
-
-// computed property to handle the selected particle
-watch(
-  () => [store.selected_particle, store.particle_array.length],
-  ([selection, particleArrayLength], [prevSelection, prevParticleArrayLength]) => {
-    if (selection !== prevSelection) {
-      // console.log("Selected particle changed", selection);
-      if (prevSelection !== undefined && prevSelection < particleArrayLength) saveWorkspace(prevSelection);
-      if (selection !== undefined) loadWorkspace(selection);
-    } else if (particleArrayLength !== prevParticleArrayLength) {
-      // console.log("Particle array length changed", particleArrayLength);
-
-      // This is needed for when a particle is added, as it modifies the particle id blocks that can get lost if not saved
-      // Sure I could also save the workspace everytime is edited but that would be too much
-      if (prevParticleArrayLength < particleArrayLength) saveWorkspace(selection);
-
-      // If the particle was deleted, the index keeps the same, but the particle is different so we need to reload the workspace
-      if (selection !== undefined) loadWorkspace(selection);
-    }
-  }
-);
-function loadWorkspace(index) {
-  Blockly.Events.disable();
-  const workspace = Blockly.getMainWorkspace();
-  const data = store.particle_array[index]?.blockly_workspace;
-  if (data) {
-    Blockly.serialization.workspaces.load(data, workspace);
-  } else {
-    workspace.clear();
-
-    const block = workspace.newBlock("particle_base");
-    console.log("Loading index", index, store.particle_array[index]?.display_name);
-    block.setFieldValue(store.particle_array[index]?.display_name, "NAME");
-    const color = store.particle_array[index]?.data.color;
-    const colorToHex = (color) => {
-      return "#" + color.map((c) => c.toString(16).padStart(2, "0")).join("");
-    };
-    block.setFieldValue(colorToHex(color), "COLOR");
-    block.setFieldValue(store.particle_array[index]?.data.alpha[0], "MIN_ALPHA");
-    block.setFieldValue(store.particle_array[index]?.data.alpha[1], "MAX_ALPHA");
-    block.initSvg();
-    block.render();
-  }
-  Blockly.Events.enable();
-
-  regenerateCode();
-}
-
-function saveWorkspace(index) {
-  const json = Blockly.serialization.workspaces.save(Blockly.getMainWorkspace());
-  store.particle_array[index].blockly_workspace = json;
-}
 
 function update_particle(index, data) {
   store.particle_array[index].update_data(JSON.parse(data));
@@ -126,28 +70,20 @@ onMounted(() => {
     // Modify workspace so only particle_base block and its children stay
     console.log("Workspace changed");
 
-    regenerateCode();
-    update_particle(store.selected_particle, generatedCode.value);
+    store.regenerateCode();
+    update_particle(store.selected_particle, store.generated_code);
 
     // console.log(Blockly.serialization.workspaces.save(Blockly.getMainWorkspace()));
   });
 
-  loadWorkspace(store.selected_particle);
+  store.loadWorkspace(store.selected_particle);
 });
-
-function regenerateCode() {
-  const ws = Blockly.getMainWorkspace();
-  const particle_base = ws.getBlocksByType("particle_base")[0];
-  generatedCode.value = jsonGenerator.blockToCode(particle_base);
-}
-
-const generatedCode = ref(""); // For debugging purposes
 </script>
 
 <template>
   <Draggable>
     <!-- For some reason, tailwind z index class dont work well -->
-    <pre style="z-index: 300" class="select-none backdrop-blur-md max-h-[80vmin] overflow-scroll absolute text-xs origin-top-left scale-75 pivo top-0 left-0 m-4 p-4 bg-slate-400/75 resize-y rounded-xl">{{ generatedCode }}</pre>
+    <pre style="z-index: 300" class="select-none backdrop-blur-md max-h-[80vmin] overflow-scroll absolute text-xs origin-top-left scale-75 pivo top-0 left-0 m-4 p-4 bg-slate-400/75 resize-y rounded-xl">{{ store.generated_code }}</pre>
   </Draggable>
 
   <div class="w-full m-4 bg-slate-600/50 rounded-xl box-content overflow-clip">
