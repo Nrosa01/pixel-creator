@@ -73,20 +73,26 @@ function togglePerformanceMode() {
   performance_mode.value = !performance_mode.value;
   play();
 }
+
+function playHoverSound() {
+  if (Howler.ctx.state !== "suspended") {
+    playHover();
+  }
+}
 </script>
 
 <template>
     <div class="flex w-full gap-2 flex-wrap justify-between items-center bg-slate-600/50 rounded-xl mb-4 p-2">
       <div class="flex gap-2 flex-wrap justify-start items-center grow">
-        <button @mouseenter="playHover" :class="buttonClass" @click="togglePause">
+        <button @mouseenter="playHoverSound" :class="buttonClass" @click="togglePause">
           <i :class="['ph-duotone', paused ? 'ph-play' : 'ph-pause']"></i>
         </button>
-        <button @mouseenter="playHover" :class="buttonClass" title="Clear all the particles" @click="clear"><i class="ph-duotone ph-broom"></i></button>
-        <button @mouseenter="playHover" :class="buttonClass" title="Save the current state of the simulation as a file" @click="save"><i class="ph-duotone ph-floppy-disk"></i></button>
-        <button @mouseenter="playHover" :class="buttonClass" title="Load a state from disk" @click="loadState"><i class="ph-duotone ph-upload"></i></button>
-        <button @mouseenter="playHover" :class="buttonClass + ' transition-colors' + (performance_mode ? ' text-red-500' : '')" title="Toggle performance mode. Performance mode disables realtime particle editing updates and animations when resizing the world" @click="togglePerformanceMode"><i class="ph-duotone ph-fire"></i></button>
+        <button @mouseenter="playHoverSound" :class="buttonClass" title="Clear all the particles" @click="clear"><i class="ph-duotone ph-broom"></i></button>
+        <button @mouseenter="playHoverSound" :class="buttonClass" title="Save the current state of the simulation as a file" @click="save"><i class="ph-duotone ph-floppy-disk"></i></button>
+        <button @mouseenter="playHoverSound" :class="buttonClass" title="Load a state from disk" @click="loadState"><i class="ph-duotone ph-upload"></i></button>
+        <button @mouseenter="playHoverSound" :class="buttonClass + ' transition-colors' + (performance_mode ? ' text-red-500' : '')" title="Toggle performance mode. Performance mode disables realtime particle editing updates and animations when resizing the world" @click="togglePerformanceMode"><i class="ph-duotone ph-fire"></i></button>
 
-        <select @mouseenter="playHover" @click="play" title="Change the simulation size. Tiny is 75*75, normal 150*150 and big is 300*300" :class="dropdown" @change="handleNewSizeChange">
+        <select @mouseenter="playHoverSound" @click="play" title="Change the simulation size. Tiny is 75*75, normal 150*150 and big is 300*300" :class="dropdown" @change="handleNewSizeChange">
           <option value="75">Tiny</option>
           <option value="150" selected>Normal</option>
           <option value="300">Big</option>
