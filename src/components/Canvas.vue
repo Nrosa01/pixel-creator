@@ -20,6 +20,9 @@ const gridPitchStrategy = (event, canvas) => {
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
 
+  // Ignore if the mouse is outside the canvas
+  if (x < 0 || y < 0 || x > rect.width || y > rect.height) return 1.0;
+
   // Calculate which cell the mouse is in. I've written this so many times I'm tired
   const cellX = Math.floor((x / rect.width) * 50);
   const cellY = Math.floor((y / rect.height) * 50);
@@ -46,25 +49,34 @@ const borderPitchStrategy = (event, canvas) => {
   return Math.min(Math.max(pitch, 0.8), 1.6); // Change pitch based on position, clamped between 0.5 and 2
 };
 
-const pitchStrategy = borderPitchStrategy;
+const pitchStrategy = gridPitchStrategy;
 
 const onMouseMove = (event) => {
-  playbackRate.value = gridPitchStrategy(event, canvas.value);
+  playbackRate.value = pitchStrategy(event, canvas.value);
 };
 
 const onMouseDown = () => {
   if (timer) return; // Don't start multiple timers
   timer = setInterval(play, 75); // Play sound every 75ms
-  canvas.value.requestPointerLock();
+  canvas.value.addEventListener("mousemove", onMouseMove); // Listen to mouse move events
 };
 
 const onMouseUp = () => {
   clearInterval(timer); // Stop playing sound
+  canvas.value.removeEventListener("mousemove", onMouseMove); // Stop listening to mouse move events
   timer = null;
-    document.exitPointerLock();
+};
+
+const onMouseOut = () => {
+  onMouseUp();
+  wasm_exports?.set_mouse_hidden(js_object("true"));
+};
+
+const onMouseEnter = () => {
+  wasm_exports?.set_mouse_hidden(js_object("false"));
 };
 </script>
 
 <template>
-  <canvas ref="canvas" @mousemove="onMouseMove" @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseUp" class="sticky top-0 box-border z-10 w-full touch-pinch-zoom border-black border-2" id="glcanvas" height="800" width="800"></canvas>
+  <canvas ref="canvas" @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseOut" @mouseenter="onMouseEnter" class="sticky top-0 box-border z-10 w-full touch-pinch-zoom border-black border-2" id="glcanvas" height="800" width="800"></canvas>
 </template>

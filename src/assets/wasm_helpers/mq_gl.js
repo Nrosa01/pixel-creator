@@ -1128,6 +1128,14 @@ var importObject = {
                 var btn = into_sapp_mousebutton(event.button);
                 wasm_exports.mouse_up(x, y, btn);
             };
+            canvas.onmouseleave = function (event) {
+                var relative_position = mouse_relative_position(event.clientX, event.clientY);
+                var x = relative_position.x;
+                var y = relative_position.y;
+
+                var btn = into_sapp_mousebutton(event.button);
+                wasm_exports.mouse_up(x, y, btn);
+            }
             canvas.onkeydown = function (event) {
                 var sapp_key_code = into_sapp_keycode(event.code);
                 switch (sapp_key_code) {
