@@ -9,10 +9,11 @@ import { createMinusField } from './field_minus';
 import { createPlusField } from './field_plus';
 //import { MutatorIcon } from 'blockly/core/icons';
 
+const minusImage = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBkPSJNMTggMTFoLTEyYy0xLjEwNCAwLTIgLjg5Ni0yIDJzLjg5NiAyIDIgMmgxMmMxLjEwNCAwIDItLjg5NiAyLTJzLS44OTYtMi0yLTJ6IiBmaWxsPSJ3aGl0ZSIgLz48L3N2Zz4K";
+const plusImage = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBkPSJNMTggMTBoLTR2LTRjMC0xLjEwNC0uODk2LTItMi0ycy0yIC44OTYtMiAybC4wNzEgNGgtNC4wNzFjLTEuMTA0IDAtMiAuODk2LTIgMnMuODk2IDIgMiAybDQuMDcxLS4wNzEtLjA3MSA0LjA3MWMwIDEuMTA0Ljg5NiAyIDIgMnMyLS44OTYgMi0ydi00LjA3MWw0IC4wNzFjMS4xMDQgMCAyLS44OTYgMi0ycy0uODk2LTItMi0yeiIgZmlsbD0id2hpdGUiIC8+PC9zdmc+Cg==";
+
 Blockly.Blocks['particle_base'] = {
   init: function () {
-    // if (globalState.workspace === undefined) return;
-    // const blocks = globalState.workspace.getAllBlocks();
 
     const validator_max = function (newValue) {
 
@@ -97,10 +98,96 @@ var directionOptions = [
 ];
 
 
-const controlsIfMutator =
+
+
+const particleGroupMutator = {
+
+  saveExtraState: function () {
+    return {
+      'itemCount': this.itemCount
+    }
+  },
+
+  loadExtraState: function (state) {
+    this.itemCount = state['itemCount'];
+    this.updateShape_();
+  },
+  updateShape_: function () {
+    const block = this;
+
+    block.removeInput("PLUS", true);
+    block.removeInput("MINUS", true);
+
+
+    let itemId = 1;
+    while (block.getInput(`ITEM${itemId}`) !== null) {
+      if (itemId >= this.itemCount) {
+        block.removeInput(`ITEM_OR${itemId}`);
+        block.removeInput(`ITEM${itemId}`);
+      }
+      itemId++;
+    }
+
+    for (let i = 1; i < block.itemCount; i++) {
+      if (block.getInput(`ITEM${i}`) !== null) continue;
+
+      block.appendDummyInput(`ITEM_OR${i}`).appendField("or");
+      block.appendValueInput(`ITEM${i}`);
+
+      const shadow = Blockly.getMainWorkspace().newBlock("particle");
+      const input = block.getInput(`ITEM${i}`);
+      shadow.setShadow(true);
+      shadow.initSvg();
+      shadow.render();
+
+      input.connection.connect(shadow.outputConnection);
+    }
+
+    if (block.itemCount > 1) {
+      const minusField = new Blockly.FieldImage(
+        minusImage,
+        15,
+        15,
+        { alt: "*", flipRtl: "FALSE" },
+        function (e) {
+          block.itemCount--;
+          block.updateShape_();
+        }
+      );
+
+      block.appendDummyInput("MINUS").appendField(minusField);
+    }
+
+    const plusField = new Blockly.FieldImage(
+      plusImage,
+      15,
+      15,
+      { alt: "*", flipRtl: "FALSE" },
+      function (e) {
+        block.itemCount++;
+        block.updateShape_();
+      }
+    );
+    block.appendDummyInput("PLUS").appendField(plusField);
+
+  },
+}
+
+
+if (Blockly.Extensions.isRegistered('particle_group_mutator')) {
+  Blockly.Extensions.unregister('particle_group_mutator');
+}
+Blockly.Extensions.registerMutator(
+  'particle_group_mutator',
+  particleGroupMutator,
+  function () {
+    this.itemCount = 1;
+  }
+);
+
+
+const IfMutator =
 {
-
-
   has_else: false,
 
   //mutationToDom
@@ -142,19 +229,19 @@ const controlsIfMutator =
 /**
  * Adds the initial plus button to the if block.
  */
-const controlsIfHelper = function () {
+const IfHelper = function () {
 
   this.inputList[0].insertFieldAt(0, createPlusField(), 'PLUS');
   this.inputList[1].insertFieldAt(0, createMinusField(), 'MINUS');
 };
 
-if (Blockly.Extensions.isRegistered('controls_if_mutator')) {
-  Blockly.Extensions.unregister('controls_if_mutator');
+if (Blockly.Extensions.isRegistered('if_mutator')) {
+  Blockly.Extensions.unregister('if_mutator');
 }
 Blockly.Extensions.registerMutator(
-  'controls_if_mutator',
-  controlsIfMutator,
-  controlsIfHelper,
+  'if_mutator',
+  IfMutator,
+  IfHelper,
 );
 
 
@@ -174,7 +261,7 @@ Blockly.Blocks['if'] = {
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setColour(330);
-    this.setMutator(new Blockly.icons.MutatorIcon(['controls_if_mutator'], this))
+    this.setMutator(new Blockly.icons.MutatorIcon(['if_mutator'], this))
   }
 };
 
@@ -201,9 +288,6 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     type: "particle",
     message0: "%1",
     args0: [
-      //IMPORTANT
-      //this will need to fetch other particles names in order to work
-      //for the time being i will just use a list of names of particles for testing
       {
         type: "input_dummy",
         name: "DUMMY",
@@ -215,6 +299,24 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     colour: 230,
 
   },
+  {
+    type: "group_particle",
+    message0: "%1",
+    args0: [
+      {
+
+        type: "input_value",
+        name: "ITEM0",
+        check: "Particle",
+
+      }
+    ],
+    inputsInline: true,
+    output: "Group",
+    colour: 160,
+    mutator: "particle_group_mutator",
+  },
+
   {
     type: "swap",
     message0: "swap %1",

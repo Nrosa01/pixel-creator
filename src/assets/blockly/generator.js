@@ -182,8 +182,6 @@ ${statementMembers}
 }
 
 
-//IMPORTANT:
-//get this out of here my man
 const directions = {
   "HERE": '{ "direction": "constant", "data": [0, 0] }',
   "UP": '{ "direction": "constant", "data": [0, 1] }',
@@ -194,7 +192,7 @@ const directions = {
   "UPRIGHT": '{ "direction": "constant", "data": [1, 1] }',
   "DOWNLEFT": '{ "direction": "constant", "data": [-1, -1] }',
   "DOWNRIGHT": '{ "direction": "constant", "data": [1, -1] }',
-  "RAND":  '{ "direction": "random" }'
+  "RAND": '{ "direction": "random" }'
   //randa and keyboard ¿?
 };
 

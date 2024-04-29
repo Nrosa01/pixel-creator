@@ -19,6 +19,21 @@ export const toolbox = {
   "contents": [
     {
       'kind': 'block',
+      'type': 'group_particle',
+      'inputs': {
+        'ITEM0': {
+          'shadow': {
+            'type': 'particle',
+          },
+        },
+      },
+    },
+    {
+      'kind': 'block',
+      'type': 'particle'
+    },
+    {
+      'kind': 'block',
       'type': 'custom_input_color'
     },
     {
@@ -50,10 +65,6 @@ export const toolbox = {
       "fields": {
         "DIRECTION": "DOWN"
       }
-    },
-    {
-      'kind': 'block',
-      'type': 'particle'
     },
     {
       'kind': 'block',
