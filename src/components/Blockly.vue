@@ -24,7 +24,25 @@ onMounted(() => {
       }),
       "PARTICLE"
     );
+
+    this.setOnChange(function(changeEvent) {
+      if (changeEvent.type !== 'block_field_intermediate_change' || changeEvent.name !== 'NAME') {
+        return;
+      }
+      
+      let block_selection = this.getField('PARTICLE').selectedOption[1];
+      let current_particle = store.particle_array[store.selected_particle].data.name;
+      let display_name = store.particle_array[store.selected_particle].display_name;
+      if(block_selection === current_particle)
+      {
+        this.getField('PARTICLE').setValue(current_particle);
+        this.getField('PARTICLE').selectedOption[0] = display_name
+        this.initSvg();
+        this.render();
+      }
+    })
   });
+
 
   // Check if blocks are already defined
   if (!Blockly.Blocks["particle"]) {
@@ -84,7 +102,8 @@ onMounted(() => {
 <template>
   <Draggable>
     <!-- For some reason, tailwind z index class dont work well -->
-    <pre style="z-index: 300" class="select-none backdrop-blur-md max-h-[80vmin] overflow-scroll absolute text-xs origin-top-left scale-75 pivo top-0 left-0 m-4 p-4 bg-slate-400/75 resize-y rounded-xl">{{ store.generated_code }}</pre>
+    <pre style="z-index: 300"
+      class="select-none backdrop-blur-md max-h-[80vmin] overflow-scroll absolute text-xs origin-top-left scale-75 pivo top-0 left-0 m-4 p-4 bg-slate-400/75 resize-y rounded-xl">{{ store.generated_code }}</pre>
   </Draggable>
 
   <div class="w-full m-4 bg-slate-600/50 rounded-xl box-content overflow-clip">
