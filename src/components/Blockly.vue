@@ -6,7 +6,8 @@ import { blocks } from "../assets/blockly/blocks";
 import { toolbox } from "../assets/blockly/toolbox";
 import "../assets/blockly/renderer.js";
 import { useSimulationStore } from "../stores/simulation";
-import testJSON from "../assets/jsons/fails.json"
+import failJSON from "../assets/jsons/fails.json"
+import niceJSON from "../assets/jsons/nice.json"
 
 const store = useSimulationStore();
 
@@ -78,7 +79,8 @@ onMounted(() => {
   });
 
   store.loadWorkspace(store.selected_particle);
-  // store.loadFromJSON(testJSON);
+  // store.loadFromJSON(failJSON);
+  // store.loadFromJSON(niceJSON);
 });
 </script>
 
