@@ -709,7 +709,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     args0: [
       {
         type: "field_dropdown",
-        name: "PROPIERTY",
+        name: "PROPERTY",
         options: [
           ["light", "LIGHT"],
           ["extra", "EXTRA"]
