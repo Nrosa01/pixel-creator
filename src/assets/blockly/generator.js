@@ -427,7 +427,7 @@ jsonGenerator.forBlock['particle_properties'] = function (block, generator) {
 //leer esto diferente de fichero o cambiar el campo de direccion al bloque padre
 jsonGenerator.forBlock['increase_by'] = function (block, generator) {
   const property = block.getFieldValue('PROPERTY');
-  const number = block.getFieldValue('NUMBER');
+  const number = generator.valueToCode(block, 'CHANCE', Order.ATOMIC);
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
   const code = ` 
   "action": "increaseParticlePropierty",
@@ -442,7 +442,7 @@ jsonGenerator.forBlock['increase_by'] = function (block, generator) {
 
 jsonGenerator.forBlock['set_to'] = function (block, generator) {
   const property = block.getFieldValue('PROPERTY');
-  const number = block.getFieldValue('NUMBER');
+  const number = generator.valueToCode(block, 'CHANCE', Order.ATOMIC);
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
   const code = ` 
   "action": "setParticlePropierty",
