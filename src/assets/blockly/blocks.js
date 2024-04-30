@@ -145,9 +145,10 @@ const particleGroupMutator = {
       const input = block.getInput(`ITEM${i}`);
       shadow.setShadow(true);
       shadow.initSvg();
-      shadow.render();
+      // shadow.render();
 
       input.connection.connect(shadow.outputConnection);
+
     }
 
     if (block.itemCount > 1) {
