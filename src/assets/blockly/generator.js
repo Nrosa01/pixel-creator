@@ -394,7 +394,13 @@ jsonGenerator.forBlock['random_from'] = function (block, generator) {
 
 jsonGenerator.forBlock['particle_properties'] = function (block, generator) {
   const propierty = block.getFieldValue('PROPERTY');
-  const code = `{ "particle_propierty_descriptor": "${propierty}" }`;
+  const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
+  const code = `"number": "${propierty}"
+  "data": {
+    "direction": "${direction}
+  }`;
+
+  //const code = `{ "particle_propierty_descriptor": "${propierty}" }`;
   return [code, Order.ATOMIC];
 }
 
@@ -412,33 +418,33 @@ jsonGenerator.forBlock['particle_properties'] = function (block, generator) {
 //----------------------------------------------------------------
 //leer esto diferente de fichero o cambiar el campo de direccion al bloque padre
 jsonGenerator.forBlock['increase_by'] = function (block, generator) {
-  const property = generator.valueToCode(block, 'PROPERTY', Order.ATOMIC);
-  const number = generator.valueToCode(block, 'NUMBER', Order.ATOMIC);
+  const property = block.getFieldValue('PROPERTY');
+  const number = block.getFieldValue('NUMBER');
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
   const code = ` 
   "action": "increaseParticlePropierty",
     "data": {
-      "propierty": ${property},
+      "propierty": { "particle_propierty_descriptor": "${property}" },
       "number":{ "number": "constant", "data": ${number} },
       "direction": ${directions[direction]}
     }
   },`;
-  return [code, Order.ATOMIC];
+  return code;
 }
 
 jsonGenerator.forBlock['set_to'] = function (block, generator) {
-  const property = generator.valueToCode(block, 'PROPERTY', Order.ATOMIC);
-  const number = generator.valueToCode(block, 'NUMBER', Order.ATOMIC);
+  const property = block.getFieldValue('PROPERTY');
+  const number = block.getFieldValue('NUMBER');
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
   const code = ` 
   "action": "setParticlePropierty",
     "data": {
-      "propierty": ${property},
+      "propierty": { "particle_propierty_descriptor": "${property}" },
       "number": { "number": "constant", "data": ${number} },
       "direction": ${directions[direction]}
     }
   },`;
-  return [code, Order.ATOMIC];
+  return code;
 }
 jsonGenerator.forBlock['repeat_n_times'] = function (block, generator) {
 

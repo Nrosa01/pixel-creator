@@ -105,7 +105,10 @@ var transformationOptions = [
   ]
 ]
 
-
+var ParticlePropertiesOptions = [
+  ["light", "LIGHT"],
+  ["extra", "EXTRA"]
+]
 
 const particleGroupMutator = {
 
@@ -727,12 +730,17 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
   },
   {
     type: "increase_by",
-    message0: "increase %1 by %2",
+    message0: "increase %1 of %2 by %3",
     args0: [
       {
-        type: 'input_value',
+        type: 'field_dropdown',
         name: 'PROPERTY',
-        check: "ParticleProperties"
+        options: ParticlePropertiesOptions
+      },
+      {
+        type: "input_value",
+        name: "OTHER",
+        check: "Vector"
       },
       {
         type: 'field_slider',
@@ -741,7 +749,6 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         max: 100,
         precision: 1,
         init: 1,
-
       },
 
     ],
@@ -752,12 +759,17 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
   },
   {
     type: "set_to",
-    message0: "set %1 to %2",
+    message0: "set %1 of %2 to %3",
     args0: [
       {
-        type: 'input_value',
+        type: 'field_dropdown',
         name: 'PROPERTY',
-        check: "ParticleProperties"
+        options: ParticlePropertiesOptions
+      },
+      {
+        type: "input_value",
+        name: "OTHER",
+        check: "Vector"
       },
       {
         type: 'field_slider',
@@ -766,7 +778,6 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         max: 100,
         precision: 1,
         init: 1,
-
       },
     ],
     inputsInline: true,

@@ -254,17 +254,11 @@ export const toolbox = {
     {
       'kind': 'block',
       'type': 'increase_by',
+
       'inputs': {
-        'PROPERTY': {
+        'OTHER': {
           'shadow': {
-            'type': 'particle_properties',
-            'inputs': {
-              'OTHER': {
-                'shadow': {
-                  'type': 'direction',
-                }
-              },
-            }
+            'type': 'direction',
           }
         },
       }
@@ -273,17 +267,9 @@ export const toolbox = {
       'kind': 'block',
       'type': 'set_to',
       'inputs': {
-        'PROPERTY': {
+        'OTHER': {
           'shadow': {
-            'type': 'particle_properties',
-            'inputs': {
-              'OTHER': {
-                'shadow': {
-                  'type': 'direction',
-                }
-              },
-            }
-
+            'type': 'direction',
           }
         },
       }
