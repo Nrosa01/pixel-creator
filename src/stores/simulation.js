@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import { loadFile, saveToFile as save } from "../assets/utils.js";
 import * as Blockly from "blockly";
 import { jsonGenerator } from "../assets/blockly/generator";
+import ParticleModel from "../assets/models/particle";
 
 export const useSimulationStore = defineStore("simulation", () => {
     const particle_array = ref([])
@@ -29,7 +30,10 @@ export const useSimulationStore = defineStore("simulation", () => {
 
     const loadFromFile = () => {
         loadFile(".json").then((file) => {
-            particle_array.value = JSON.parse(file);
+            // Sadly we have to "parse" two times, one to get the json and other to "cast" it to ParticleModel
+            var data = JSON.parse(file);
+            particle_array.value = data.map((particle) => new ParticleModel(particle.display_name, particle.data, particle.blockly_workspace));
+
             loadWorkspace(selected_particle.value);
         });
     }
