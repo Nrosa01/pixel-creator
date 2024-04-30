@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from "vue";
 
-const current_size = ref(150);
 const paused = ref(false);
 const performance_mode = ref(false);
 const buttonClass = ref("bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow");
@@ -62,13 +61,13 @@ async function resize_simulation(previous_size, new_size, duration) {
   }
 
   wasm_exports.resize_simulation(js_object(Math.round(new_size).toString()));
-  current_size.value = new_size;
+  store.canvas_size = new_size;
 }
 
 function handleNewSizeChange(event) {
   if (!performance_mode.value) {
     var new_size = parseInt(event.target.value);
-    resize_simulation(current_size.value, new_size, 1000);
+    resize_simulation(store.canvas_size, new_size, 1000);
   } else {
     wasm_exports.resize_simulation(js_object(event.target.value));
   }

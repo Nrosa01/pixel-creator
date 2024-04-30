@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { useSound } from "@vueuse/sound";
 import click from "../assets/sounds/add_particle.wav";
 import slider from "../assets/sounds/hover.wav";
@@ -99,8 +99,35 @@ const onMouseWheel = (event) => {
     mouseWheelTimer = null;
   }, 15);
 };
+
+onMounted(() => {
+  // There is an existing canvas with id glcanvas. I want to move that canvas to this component
+  const glcanvas = document.getElementById("glcanvas");
+
+  // Make it child of this component
+  glcanvas.parentNode.removeChild(glcanvas);
+  canvas.value.appendChild(glcanvas);
+
+  canvas.value.addEventListener("mousedown", onMouseDown);
+  canvas.value.addEventListener("mouseup", onMouseUp);
+  canvas.value.addEventListener("mouseout", onMouseOut);
+  canvas.value.addEventListener("mouseenter", onMouseEnter);
+  canvas.value.addEventListener("wheel", onMouseWheel);
+
+  // Trigger windows resize event to make the canvas resize
+  window.dispatchEvent(new Event("resize"));
+});
+
+onUnmounted(() => {
+  canvas.value.removeEventListener("mousedown", onMouseDown);
+  canvas.value.removeEventListener("mouseup", onMouseUp);
+  canvas.value.removeEventListener("mouseout", onMouseOut);
+  canvas.value.removeEventListener("mouseenter", onMouseEnter);
+  canvas.value.removeEventListener("wheel", onMouseWheel);
+});
+
 </script>
 
 <template>
-  <canvas ref="canvas" @wheel="onMouseWheel" @mousedown="onMouseDown" @mouseup="onMouseUp" @mouseout="onMouseOut" @mouseenter="onMouseEnter" class="cursor-none sticky top-0 box-border z-10 w-full touch-pinch-zoom border-black border-2" id="glcanvas" height="800" width="800"></canvas>
+  <div ref="canvas" ></div>
 </template>

@@ -1,14 +1,30 @@
 import { defineStore } from 'pinia'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { loadFile, saveToFile as save } from "../assets/utils.js";
 import * as Blockly from "blockly";
 import { jsonGenerator } from "../assets/blockly/generator";
 import ParticleModel from "../assets/models/particle";
 
+// Having to import this here is ugly, this will be fixed once 
+// whe get a default array preconfigured to load from Blockly component, but well, for now this is.
+import empty from "../assets/particles/empty.json";
+import sand from "../assets/particles/sand.json";
+import replicant from "../assets/particles/replicant.json";
+import simplest from "../assets/particles/simplest.json";
+import test from "../assets/particles/test.json";
+
 export const useSimulationStore = defineStore("simulation", () => {
-    const particle_array = ref([])
+    const particle_array = ref([
+        new ParticleModel("Empty", empty),
+        new ParticleModel("Sand", sand),
+        new ParticleModel("Replicant", replicant),
+        new ParticleModel("Simplest", simplest),
+        new ParticleModel("Test", test),
+    ])
     const selected_particle = ref(1)
     const generated_code = ref("")
+    const particle_array_length = computed(() => particle_array.value.length)
+    const canvas_size = ref(150)
 
     const addParticle = (particle) => {
         particle_array.value.push(particle)
@@ -28,13 +44,14 @@ export const useSimulationStore = defineStore("simulation", () => {
         selected_particle.value = index
     }
 
+    const loadFromJSON = (json) => {
+        particle_array.value = json.map((particle) => new ParticleModel(particle.display_name, particle.data, particle.blockly_workspace));
+        loadWorkspace(selected_particle.value);
+    }
+
     const loadFromFile = () => {
         loadFile(".json").then((file) => {
-            // Sadly we have to "parse" two times, one to get the json and other to "cast" it to ParticleModel
-            var data = JSON.parse(file);
-            particle_array.value = data.map((particle) => new ParticleModel(particle.display_name, particle.data, particle.blockly_workspace));
-
-            loadWorkspace(selected_particle.value);
+            loadFromJSON(JSON.parse(file));
         });
     }
 
@@ -81,9 +98,12 @@ export const useSimulationStore = defineStore("simulation", () => {
     }
 
 
+    // This should be particle_array.length as dependency but that gives a warning error
     watch(
-        [selected_particle, particle_array.length],
+        [selected_particle, particle_array_length],
         ([selection, particleArrayLength], [prevSelection, prevParticleArrayLength]) => {
+            console.log("Watch changed", particleArrayLength, prevParticleArrayLength);
+
             console.log("Watch changed", selection);
             if (selection !== prevSelection) {
                 // console.log("Selected particle changed", selection);
@@ -102,14 +122,6 @@ export const useSimulationStore = defineStore("simulation", () => {
         }
     );
 
-    // THIS ISN'T WORKING
-    watch(
-        () => selected_particle,
-        (selection, prevSelection) => {
-            console.log("Selected particle changed in store", selection);
-        }
-    );
-
     return {
         particle_array,
         selected_particle,
@@ -123,5 +135,7 @@ export const useSimulationStore = defineStore("simulation", () => {
         loadWorkspace,
         saveWorkspace,
         regenerateCode,
+        loadFromJSON,
+        canvas_size
     }
 })
