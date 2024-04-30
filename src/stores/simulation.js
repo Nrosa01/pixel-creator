@@ -70,7 +70,6 @@ export const useSimulationStore = defineStore("simulation", () => {
             workspace.clear();
 
             const block = workspace.newBlock("particle_base");
-            console.log("Loading index", index, particle_array.value[index]?.display_name);
             block.setFieldValue(particle_array.value[index]?.display_name, "NAME");
             const color = particle_array.value[index]?.data.color;
             const colorToHex = (color) => {
@@ -102,9 +101,7 @@ export const useSimulationStore = defineStore("simulation", () => {
     watch(
         [selected_particle, particle_array_length],
         ([selection, particleArrayLength], [prevSelection, prevParticleArrayLength]) => {
-            console.log("Watch changed", particleArrayLength, prevParticleArrayLength);
 
-            console.log("Watch changed", selection);
             if (selection !== prevSelection) {
                 // console.log("Selected particle changed", selection);
                 if (prevSelection !== undefined && prevSelection < particleArrayLength) saveWorkspace(prevSelection);

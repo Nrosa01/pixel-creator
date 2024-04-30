@@ -17,7 +17,6 @@ const store = useSimulationStore();
 let buttonClass = "bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-105  font-semibold py-1 px-2 rounded sm:grow-0 grow";
 
 function selectParticle(particleId) {
-  console.log("Particle selected:", particleId);
   store.selectParticle(particleId);
   wasm_exports.select_particle(js_object(particleId.toString()));
 
@@ -25,14 +24,12 @@ function selectParticle(particleId) {
 }
 
 function removeSelected() {
-  console.log("Remove selected particle");
   wasm_exports.remove_plugin(js_object(store.selected_particle.toString()));
   store.removeSelectedParticle();
   playRemove();
 }
 
 function add() {
-  console.log("Adding new particle");
   store.addParticle(ParticleModel.create());
   playAdd();
 }

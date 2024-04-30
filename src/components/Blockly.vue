@@ -16,7 +16,6 @@ function update_particle(index, data) {
 }
 
 onMounted(() => {
-  console.log("Blockly mounted");
 
   Blockly.Extensions.register("particle_list_extension", function () {
     this.getInput("DUMMY").appendField(
@@ -70,12 +69,10 @@ onMounted(() => {
     }
 
     // Modify workspace so only particle_base block and its children stay
-    console.log("Workspace changed");
 
     store.regenerateCode();
     update_particle(store.selected_particle, store.generated_code);
 
-    // console.log(Blockly.serialization.workspaces.save(Blockly.getMainWorkspace()));
   });
 
   store.loadWorkspace(store.selected_particle);

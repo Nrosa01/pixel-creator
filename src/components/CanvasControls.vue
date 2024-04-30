@@ -16,27 +16,23 @@ const { play: playHover } = useSound(hover, { volume: 0.5, interrupt: false });
 const store = useSimulationStore();
 
 function togglePause() {
-  console.log("Pause button clicked");
   paused.value = !paused.value;
   wasm_exports.pause(js_object(paused.value.toString()));
   play();
 }
 
 function clear() {
-  console.log("Clear button clicked");
   wasm_exports.clear();
   play();
 }
 
 function loadState() {
-  console.log("Load button clicked");
   store.loadFromFile();
 
   play();
 }
 
 function save() {
-  console.log("Save button clicked");
   store.saveToFile("particles.json");
   play();
 }
@@ -47,7 +43,6 @@ function lerp(a, b, t) {
 
 // Resizes the simulation to the given size during the given duration interpolating between the current size and the target size.
 async function resize_simulation(previous_size, new_size, duration) {
-  console.log("Resizing simulation to:", new_size, "during:", duration);
 
   var start = Date.now();
   var end = start + duration;
@@ -74,7 +69,6 @@ function handleNewSizeChange(event) {
 }
 
 function togglePerformanceMode() {
-  console.log("Performance button clicked");
   performance_mode.value = !performance_mode.value;
   play();
 }
