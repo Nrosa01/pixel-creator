@@ -302,8 +302,8 @@ jsonGenerator.forBlock['comparison'] = function (block, generator) {
 
 
 jsonGenerator.forBlock['bool_comparison'] = function (block, generator) {
-  const left = generator.valueToCode(block, 'LEFT', Order.ATOMIC);
-  const right = generator.valueToCode(block, 'RIGHT', Order.ATOMIC);
+  const left = generator.statementToCode(block, 'LEFT');
+  const right = generator.statementToCode(block, 'RIGHT');
   const comparison = block.getFieldValue('DROPDOWN');
   const code = `{
     "block": "${comparison}",
@@ -321,7 +321,7 @@ jsonGenerator.forBlock['bool_comparison'] = function (block, generator) {
 jsonGenerator.forBlock['boolean'] = function (block, generator) {
   const value_bool = block.getFieldValue('BOOLEAN');
   const code = `{ "block": "boolean", "data": { "value": ${value_bool} } }`;
-  return [code, Order.ATOMIC];
+  return code;
 }
 
 
