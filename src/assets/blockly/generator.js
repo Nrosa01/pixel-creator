@@ -472,7 +472,7 @@ jsonGenerator.forBlock['every_n_frames'] = function (block, generator) {
 
 
 jsonGenerator.forBlock['not'] = function (block, generator) {
-  const boolean = generator.valueToCode(block, 'BOOLEAN', Order.ATOMIC);
+  const boolean = generator.statementToCode(block, 'BOOLEAN');
 
   const code = `"block" : "not",
   "data" : {
@@ -480,5 +480,5 @@ jsonGenerator.forBlock['not'] = function (block, generator) {
   }`;
 
 
-  return [code, Order.ATOMIC];
+  return code;
 }
