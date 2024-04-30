@@ -141,14 +141,8 @@ const particleGroupMutator = {
       block.appendDummyInput(`ITEM_OR${i}`).appendField("or");
       block.appendValueInput(`ITEM${i}`);
 
-      const shadow = Blockly.getMainWorkspace().newBlock("particle");
       const input = block.getInput(`ITEM${i}`);
-      shadow.setShadow(true);
-      shadow.initSvg();
-      // shadow.render();
-
-      input.connection.connect(shadow.outputConnection);
-
+      input.connection.setShadowState({ 'type': 'particle' })
     }
 
     if (block.itemCount > 1) {
