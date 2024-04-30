@@ -740,12 +740,16 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         name: 'PROPERTY',
         check: "ParticleProperties"
       },
-
       {
-        type: 'input_value',
+        type: 'field_slider',
         name: 'NUMBER',
-        check: "Number"
+        min: -100,
+        max: 100,
+        precision: 1,
+        init: 1,
+
       },
+
     ],
     inputsInline: true,
     previousStatement: null,
@@ -762,9 +766,13 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         check: "ParticleProperties"
       },
       {
-        type: 'input_value',
+        type: 'field_slider',
         name: 'NUMBER',
-        check: "Number"
+        min: -100,
+        max: 100,
+        precision: 1,
+        init: 1,
+
       },
     ],
     inputsInline: true,

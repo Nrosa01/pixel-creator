@@ -256,13 +256,15 @@ export const toolbox = {
       'inputs': {
         'PROPERTY': {
           'shadow': {
-            'type': 'particle_proterties'
+            'type': 'particle_proterties',
+            'inputs': {
+              'OTHER': {
+                'shadow': {
+                  'type': 'direction',
+                }
+              },
+            }
           }
-        },
-        'NUMBER': {
-          'shadow': {
-            'type': 'custom_field_slider',
-          },
         },
       }
     },
@@ -272,16 +274,17 @@ export const toolbox = {
       'inputs': {
         'PROPERTY': {
           'shadow': {
-            'type': 'particle_proterties'
+            'type': 'particle_proterties',
+            'inputs': {
+              'OTHER': {
+                'shadow': {
+                  'type': 'direction',
+                }
+              },
+            }
+
           }
         },
-
-        'NUMBER': {
-          'shadow': {
-            'type': 'custom_field_slider',
-          },
-        },
-
       }
     },
     //----------------------------------------------------------------
