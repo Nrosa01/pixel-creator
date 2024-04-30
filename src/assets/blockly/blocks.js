@@ -89,25 +89,25 @@ var directionOptions = [
 var transformationOptions = [
   [
     "↻ Rotation",
-    "Rotation"
+    "rotation"
   ],
   [
     "✥ Reflection",
-    "Reflection",
+    "reflection",
   ],
   [
     "⟷ HorizontalReflection",
-    "HorizontalReflection",
+    "horizontalReflection",
   ],
   [
     "↕ VerticalReflection",
-    "VerticalReflection",
+    "verticalReflection",
   ]
 ]
 
 var ParticlePropertiesOptions = [
-  ["light", "LIGHT"],
-  ["extra", "EXTRA"]
+  ["light", "light"],
+  ["extra", "extra"]
 ]
 
 const particleGroupMutator = {
