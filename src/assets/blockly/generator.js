@@ -1,68 +1,12 @@
 import * as Blockly from 'blockly';
 
+
+
 export const jsonGenerator = new Blockly.Generator('JSON');
 
 //precedence is irrelevant in json format
 const Order = {
   ATOMIC: 0,
-};
-
-//#region tutorial
-
-//block basic generator 
-jsonGenerator.forBlock['logic_null'] = function (block) {
-  return ['null', Order.ATOMIC];
-};
-
-jsonGenerator.forBlock['text'] = function (block) {
-  const textValue = block.getFieldValue('TEXT');
-  const code = `"${textValue}"`;
-  return [code, Order.ATOMIC];
-};
-
-jsonGenerator.forBlock['math_number'] = function (block) {
-  const code = String(block.getFieldValue('NUM'));
-  return [code, Order.ATOMIC];
-};
-
-jsonGenerator.forBlock['logic_boolean'] = function (block) {
-  const code = (block.getFieldValue('BOOL') === 'TRUE') ? 'true' : 'false';
-  return [code, Order.ATOMIC];
-};
-
-//member generator
-jsonGenerator.forBlock['member'] = function (block, generator) {
-
-  const name = block.getFieldValue('MEMBER_NAME');
-  const value = generator.valueToCode(
-    block, 'MEMBER_VALUE', Order.ATOMIC);
-  const code = `"${name}": ${value}`;
-  return code;
-};
-
-//array generator 
-//The array block uses a mutator to dynamically change the number of inputs it has.
-jsonGenerator.forBlock['lists_create_with'] = function (block, generator) {
-  const values = [];
-  for (let i = 0; i < block.itemCount_; i++) {
-    const valueCode = generator.valueToCode(block, 'ADD' + i,
-      Order.ATOMIC);
-    if (valueCode) {
-      values.push(valueCode);
-    }
-  }
-  const valueString = values.join(',\n');
-  const indentedValueString =
-    generator.prefixLines(valueString, generator.INDENT);
-  const codeString = '[\n' + indentedValueString + '\n]';
-  return [codeString, Order.ATOMIC];
-};
-
-jsonGenerator.forBlock['object'] = function (block, generator) {
-  const statementMembers =
-    generator.statementToCode(block, 'MEMBERS');
-  const code = '{\n' + statementMembers + '\n}';
-  return [code, Order.ATOMIC];
 };
 
 jsonGenerator.scrub_ = function (block, code, thisOnly) {
@@ -73,8 +17,6 @@ jsonGenerator.scrub_ = function (block, code, thisOnly) {
   }
   return code;
 };
-
-// #endregion
 
 function hexToRgb(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -110,6 +52,15 @@ ${statementMembers}
 }`;
   return code;
 };
+
+jsonGenerator.forBlock['custom_field_slider'] = function (block, generator) {
+
+  const number = block.getFieldValue('NUMBER');
+  // const code = `{ "number": "constant", "data": ${number} }`
+  return [`${number}`, Order.ATOMIC];
+}
+
+
 jsonGenerator.forBlock['custom_input_color'] = function (block, generator) {
   const min_alpha = block.getFieldValue('MIN_ALPHA');
   const code = `"alpha": ${min_alpha}`
@@ -181,7 +132,6 @@ ${statementMembers}
   return code;
 }
 
-
 const directions = {
   "HERE": '{ "direction": "constant", "data": [0, 0] }',
   "UP": '{ "direction": "constant", "data": [0, 1] }',
@@ -193,7 +143,6 @@ const directions = {
   "DOWNLEFT": '{ "direction": "constant", "data": [-1, -1] }',
   "DOWNRIGHT": '{ "direction": "constant", "data": [1, -1] }',
   "RAND": '{ "direction": "random" }'
-  //randa and keyboard ¿?
 };
 
 
@@ -208,19 +157,6 @@ jsonGenerator.forBlock['particle'] = function (block) {
   const code = `{ "particle_type": "fromName", "data": "${particle}" }`;
   return [code, Order.ATOMIC]
 }
-
-/*
-"condition": {
-  "block": "checkTypesInDirection",
-  "data": {
-    "direction": { "direction": "constant", "data": [0, -1] },
-    "types": [
-      { "constant_number": "particleIdFromName", "data": "empty" },
-      { "constant_number": "particleIdFromName", "data": "water" }
-    ]
-  }
-},
-*/
 
 jsonGenerator.forBlock['particle_in_direction'] = function (block, generator) {
 
@@ -241,14 +177,7 @@ jsonGenerator.forBlock['particle_in_direction'] = function (block, generator) {
   return code;
 
 };
-/*
-"result": {
-  "action": "swap",
-  "data": {
-    "direction": { "direction": "constant", "data": [0, -1] }
-  }
-},
-*/
+
 jsonGenerator.forBlock['swap'] = function (block, generator) {
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
   console.log(directions[direction]);
@@ -278,112 +207,278 @@ jsonGenerator.forBlock['group_particle'] = function (block, generator) {
 
 jsonGenerator.forBlock['copy_myself'] = function (block, generator) {
 
-  const code = "";
-  return [code, Order.ATOMIC];
+  const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
+  console.log(directions[direction]);
+  const code = `{
+    "action": "copyTo",
+    "data": {
+      "direction": ${directions[direction]}
+    }
+  }` ;
+
+  return code;
 }
 
 
 jsonGenerator.forBlock['change_into'] = function (block, generator) {
 
-  const code = "";
-  return [code, Order.ATOMIC];
+  const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
+  const particle = generator.valueToCode(block, 'TYPE_PARTICLE', Order.ATOMIC);
+
+  const code = `{
+    "action": "changeInto",
+    "data": {
+      "direction": ${directions[direction]},
+      "type": ${particle}
+    }
+  }` ;
+
+  return code;
 }
 
 
 jsonGenerator.forBlock['touching'] = function (block, generator) {
 
-  const code = "";
-  return [code, Order.ATOMIC];
+  const particle = generator.valueToCode(block, 'TYPE_PARTICLE', Order.ATOMIC);
+
+  const code =
+    `{
+    "block": "isTouching",
+    "data": {
+      "types": [
+        ${particle}
+      ]
+    }
+  }`
+
+  return code;
 }
 
 
 jsonGenerator.forBlock['number_of'] = function (block, generator) {
 
-  const code = "";
+  const particle = generator.valueToCode(block, 'TYPE_PARTICLE', Order.ATOMIC);
+
+  const code =
+    `{
+    "block": "numberOfXTouching",
+    "data": {
+      "types": [
+        ${particle}
+      ]
+    }
+  }`
+
   return [code, Order.ATOMIC];
 }
 
 
 jsonGenerator.forBlock['type_of'] = function (block, generator) {
-
-  const code = "";
+  const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
+  const code = `{"number":"typeOf","data":{"direction":"constant","data":${directions[direction]}}}`;
   return [code, Order.ATOMIC];
 }
 
 
 jsonGenerator.forBlock['one_in_chance'] = function (block, generator) {
+  const number = generator.valueToCode(block, 'CHANCE', Order.ATOMIC);
+  const code = `{"block":"oneInXChance","data":{"chance": ${number} }}`;
+  return code;
+}
 
-  const code = "";
-  return [code, Order.ATOMIC];
+jsonGenerator.forBlock['comparison'] = function (block, generator) {
+  const left = generator.valueToCode(block, 'LEFT', Order.ATOMIC);
+  const right = generator.valueToCode(block, 'RIGHT', Order.ATOMIC);
+  const operator = block.getFieldValue('DROPDOWN');
+  const code = `{
+    "block": "${operator}",
+    "data": {
+      "block1": "{ "number": "constant", "data": ${left} }"},
+      "block2": "{ "number": "constant", "data": ${right} }" }
+    }
+  }`;
+  return code;
 }
 
 
 jsonGenerator.forBlock['bool_comparison'] = function (block, generator) {
+  const left = generator.valueToCode(block, 'LEFT', Order.ATOMIC);
+  const right = generator.valueToCode(block, 'RIGHT', Order.ATOMIC);
+  const comparison = block.getFieldValue('DROPDOWN');
+  const code = `{
+    "block": "${comparison}",
+    "data": {
+      "block1": ${left} },
+      "block2": ${right} }
+    }
+  }`;
 
-  const code = "";
-  return [code, Order.ATOMIC];
+
+  return code;
 }
 
 
 jsonGenerator.forBlock['boolean'] = function (block, generator) {
-
-  const code = "";
+  const value_bool = block.getFieldValue('BOOLEAN');
+  const code = `{ "block": "boolean", "data": { "value": ${value_bool} } }`;
   return [code, Order.ATOMIC];
 }
 
 
 jsonGenerator.forBlock['for_each_transformation'] = function (block, generator) {
 
-  const code = "";
-  return [code, Order.ATOMIC];
+  const action = block.getFieldValue('TRANSFORMATION');
+
+  const statementMembers =
+    generator.statementToCode(block, 'THEN');
+
+  const code =
+
+    `{
+"action": "ForEachTransformation",
+"data": {
+  "transformation": "${action}",
+  "block": ${statementMembers === '' ? 'null' : statementMembers}
+  }
+}`;
+
+  return code;
 }
 
 
 jsonGenerator.forBlock['rotated_by'] = function (block, generator) {
 
-  const code = "";
-  return [code, Order.ATOMIC];
+  const number = generator.valueToCode(block, 'NUMBER', Order.ATOMIC);
+
+  const statementMembers =
+    generator.statementToCode(block, 'THEN');
+
+  const code =
+
+    `{
+"action": "rotatedBy",
+"data": {
+  "number": "{ "number": "constant", "data": ${number} }",
+  "block": ${statementMembers === '' ? 'null' : statementMembers}
+  }
+}`;
+
+  return code;
 }
 
 
 jsonGenerator.forBlock['math_operation'] = function (block, generator) {
+  const left = generator.valueToCode(block, 'LEFT', Order.ATOMIC);
+  const right = generator.valueToCode(block, 'RIGHT', Order.ATOMIC);
+  const operator = block.getFieldValue('OPERATOR');
 
-  const code = "";
+  const code = `{
+    "number": "mathOperation",
+    "data": [
+      { "math_op": "${operator}" },
+      { "number": "constant", "data": ${left} },
+      { "number": "constant", "data": ${right} }
+    ]
+  }`;
   return [code, Order.ATOMIC];
 }
 
 
 jsonGenerator.forBlock['random_from'] = function (block, generator) {
+  const left = generator.valueToCode(block, 'LEFT', Order.ATOMIC);
+  const right = generator.valueToCode(block, 'RIGHT', Order.ATOMIC);
 
-  const code = "";
+  const code = `{"number":"randomFromXToY","data":[${left},${right}]}`;
   return [code, Order.ATOMIC];
 }
 
 jsonGenerator.forBlock['particle_proterties'] = function (block, generator) {
-
-  const code = "";
+  const propierty = block.getFieldValue('PROPERTY');
+  const code = `{ "particle_propierty_descriptor": "${propierty}" }`;
   return [code, Order.ATOMIC];
 }
 
-jsonGenerator.forBlock['increase_by'] = function (block, generator) {
+/*
+{
+    "action": "increaseParticlePropierty",
+    "data": {
+      "propierty": { "particle_propierty_descriptor": "light" },
+      "number": { "number": "constant", "data": 1 },
+      "direction": null
+    }
+  },
+*/
 
-  const code = "";
+//----------------------------------------------------------------
+//leer esto diferente de fichero o cambiar el campo de direccion al bloque padre
+jsonGenerator.forBlock['increase_by'] = function (block, generator) {
+  const property = generator.valueToCode(block, 'PROPERTY', Order.ATOMIC);
+  const number = generator.valueToCode(block, 'NUMBER', Order.ATOMIC);
+  const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
+  const code = ` 
+  "action": "increaseParticlePropierty",
+    "data": {
+      "propierty": ${property},
+      "number":{ "number": "constant", "data": ${number} },
+      "direction": ${directions[direction]}
+    }
+  },`;
   return [code, Order.ATOMIC];
 }
 
 jsonGenerator.forBlock['set_to'] = function (block, generator) {
-
-  const code = "";
+  const property = generator.valueToCode(block, 'PROPERTY', Order.ATOMIC);
+  const number = generator.valueToCode(block, 'NUMBER', Order.ATOMIC);
+  const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
+  const code = ` 
+  "action": "setParticlePropierty",
+    "data": {
+      "propierty": ${property},
+      "number": { "number": "constant", "data": ${number} },
+      "direction": ${directions[direction]}
+    }
+  },`;
   return [code, Order.ATOMIC];
 }
 jsonGenerator.forBlock['repeat_n_times'] = function (block, generator) {
 
-  const code = "";
-  return [code, Order.ATOMIC];
+  const number = generator.valueToCode(block, 'NUMBER', Order.ATOMIC);
+  const statementMembers =
+    generator.statementToCode(block, 'THEN');
+  const code = ` 
+  "action": "repeat",
+    "data": {
+      "number": { "number": "constant", "data": ${number} },
+      "block": ${statementMembers}
+    }
+  },`;
+  return code;
 }
 
 jsonGenerator.forBlock['every_n_frames'] = function (block, generator) {
 
-  const code = "";
+  const number = generator.valueToCode(block, 'NUMBER', Order.ATOMIC);
+  const statementMembers =
+    generator.statementToCode(block, 'THEN');
+  const code = ` 
+  "action": "everyXFrames",
+    "data": {
+      "number": { "number": "constant", "data": ${number} },
+      "block": ${statementMembers}
+    }
+  },`;
+  return code;
+}
+
+
+jsonGenerator.forBlock['not'] = function (block, generator) {
+  const boolean = generator.valueToCode(block, 'BOOLEAN', Order.ATOMIC);
+
+  const code = `"block" : "not",
+  "data" : {
+    "block" : ${boolean}
+  }`;
+
+
   return [code, Order.ATOMIC];
 }

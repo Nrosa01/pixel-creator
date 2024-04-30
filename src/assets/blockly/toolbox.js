@@ -157,7 +157,7 @@ export const toolbox = {
       'inputs': {
         'NUMBER': {
           'shadow': {
-            'type': 'math_number',
+            'type': 'custom_field_slider',
           },
         },
       }
@@ -206,6 +206,7 @@ export const toolbox = {
     {
       'kind': 'block',
       'type': 'bool_comparison',
+
     },
     {
       'kind': 'block',

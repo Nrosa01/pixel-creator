@@ -253,31 +253,31 @@ Blockly.Extensions.registerMutator(
 );
 
 
-//this should be possible to declare via json, but idk what arg parameter is used for the arg to be invisible,
-//and blockly documentation certainly doesn't help , visible and isVisible don't work
-Blockly.Blocks['if'] = {
-  init: function () {
-    this.appendValueInput("CONDITION")
-      .setCheck("Boolean")
-      .appendField("if");
-    this.appendStatementInput("THEN")
-
-    this.appendStatementInput("ELSE").appendField("else");
-    //in the forum they said this it is not recommended to modify visibility of specific fields (2017)
-    this.getInput("ELSE").setVisible(true);
-    this.setInputsInline(true);
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
-    this.setColour(330);
-    this.setMutator(new Blockly.icons.MutatorIcon(['if_mutator'], this))
-  }
-};
-
-
-
-
 export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
+  {
+    type: "if",
+    message0: "if %1 %2 else %3",
+    args0: [
+      {
+        type: "input_value",
+        name: "CONDITION",
+        check: "Boolean"
+      },
+      {
+        type: "input_statement",
+        name: "THEN",
+      },
+      {
+        type: "input_statement",
+        name: "ELSE"
+      }
 
+    ],
+    inputsInline: true,
+    previousStatement: null,
+    nextStatement: null,
+    colour: 330,
+  },
   {
     type: "custom_field_slider",
     message0: "%1",
@@ -510,13 +510,13 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         name: "DROPDOWN",
         options: [
           [
-            "is", "IS"
+            "is", "CompareNumberEquality"
           ],
           [
-            "is bigger than", "IS_BIGGER_THAN"
+            "is bigger than", "CompareBiggerThan"
           ],
           [
-            "is smaller than", "IS_SMALLER_THAN"
+            "is smaller than", "CompareLessThan"
           ]
         ]
       },
@@ -653,7 +653,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     args0: [
       {
         type: 'input_value',
-        name: 'NUMBER',
+        name: 'LEFT',
         check: "Number"
       },
       {
@@ -661,28 +661,28 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         name: "OPERATOR",
         options: [
           [
-            "+", "ADD"
+            "+", "Addition"
           ],
           [
-            "-", "SUBTRACT"
+            "-", "Subtraction"
           ],
           [
-            "*", "MULTIPLY"
+            "*", "Multiplication"
           ],
           [
-            "/", "DIVIDE"
+            "/", "Division"
           ],
           [
-            "%", "MODULO"
+            "%", "Modulo"
           ],
           [
-            "difference", "DIFFERENCE"
+            "difference", "Difference"
           ],
         ]
       },
       {
         type: 'input_value',
-        name: 'NUMBER',
+        name: 'RIGHT',
         check: "Number"
       },
     ],
@@ -715,7 +715,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     args0: [
       {
         type: "field_dropdown",
-        name: "TYPE",
+        name: "PROPIERTY",
         options: [
           ["light", "LIGHT"],
           ["extra", "EXTRA"]
