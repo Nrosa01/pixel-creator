@@ -242,7 +242,7 @@ export const toolbox = {
 
     {
       'kind': 'block',
-      'type': 'particle_proterties',
+      'type': 'particle_properties',
       'inputs': {
         'OTHER': {
           'shadow': {
@@ -257,7 +257,7 @@ export const toolbox = {
       'inputs': {
         'PROPERTY': {
           'shadow': {
-            'type': 'particle_proterties',
+            'type': 'particle_properties',
             'inputs': {
               'OTHER': {
                 'shadow': {
@@ -275,7 +275,7 @@ export const toolbox = {
       'inputs': {
         'PROPERTY': {
           'shadow': {
-            'type': 'particle_proterties',
+            'type': 'particle_properties',
             'inputs': {
               'OTHER': {
                 'shadow': {

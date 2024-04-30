@@ -704,7 +704,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     output: "Number",
   },
   {
-    type: "particle_proterties",
+    type: "particle_properties",
     message0: "%1 of %2",
     args0: [
       {

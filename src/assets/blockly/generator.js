@@ -392,7 +392,7 @@ jsonGenerator.forBlock['random_from'] = function (block, generator) {
   return [code, Order.ATOMIC];
 }
 
-jsonGenerator.forBlock['particle_proterties'] = function (block, generator) {
+jsonGenerator.forBlock['particle_properties'] = function (block, generator) {
   const propierty = block.getFieldValue('PROPERTY');
   const code = `{ "particle_propierty_descriptor": "${propierty}" }`;
   return [code, Order.ATOMIC];
