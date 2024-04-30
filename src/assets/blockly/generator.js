@@ -60,6 +60,14 @@ jsonGenerator.forBlock['custom_field_slider'] = function (block, generator) {
   return [`${number}`, Order.ATOMIC];
 }
 
+jsonGenerator.forBlock['custom_field_slider_positive'] = function (block, generator) {
+
+  const number = block.getFieldValue('NUMBER');
+  // const code = `{ "number": "constant", "data": ${number} }`
+  return [`${number}`, Order.ATOMIC];
+}
+
+
 
 jsonGenerator.forBlock['custom_input_color'] = function (block, generator) {
   const min_alpha = block.getFieldValue('MIN_ALPHA');

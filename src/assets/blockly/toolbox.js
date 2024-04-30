@@ -182,7 +182,7 @@ export const toolbox = {
       'inputs': {
         'CHANCE': {
           'shadow': {
-            'type': 'custom_field_slider',
+            'type': 'custom_field_slider_positive',
           },
         }
       }
@@ -261,6 +261,11 @@ export const toolbox = {
             'type': 'direction',
           }
         },
+        'CHANCE': {
+          'shadow': {
+            'type': 'custom_field_slider',
+          },
+        }
       }
     },
     {
@@ -272,6 +277,11 @@ export const toolbox = {
             'type': 'direction',
           }
         },
+        'CHANCE': {
+          'shadow': {
+            'type': 'custom_field_slider_positive',
+          },
+        }
       }
     },
     //----------------------------------------------------------------
@@ -281,7 +291,7 @@ export const toolbox = {
       'inputs': {
         'NUMBER': {
           'shadow': {
-            'type': 'custom_field_slider',
+            'type': 'custom_field_slider_positive',
           },
         }
       }
@@ -292,7 +302,7 @@ export const toolbox = {
       'inputs': {
         'NUMBER': {
           'shadow': {
-            'type': 'custom_field_slider',
+            'type': 'custom_field_slider_positive',
           },
         }
       }

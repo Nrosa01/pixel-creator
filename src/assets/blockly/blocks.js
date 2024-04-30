@@ -283,6 +283,23 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         type: 'field_slider',
         name: 'NUMBER',
         value: 0,
+        min: -100,
+        max: 100
+      }
+    ],
+    output: "Number",
+    colour: 160
+  },
+  {
+    type: "custom_field_slider_positive",
+    message0: "%1",
+    args0: [
+      {
+        type: 'field_slider',
+        name: 'NUMBER',
+        value: 0,
+        min: 0,
+        max: 100
       }
     ],
     output: "Number",
@@ -743,12 +760,9 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         check: "Vector"
       },
       {
-        type: 'field_slider',
-        name: 'NUMBER',
-        min: -100,
-        max: 100,
-        precision: 1,
-        init: 1,
+        type: 'input_value',
+        name: 'CHANCE',
+        check: "Number"
       },
 
     ],
@@ -772,12 +786,9 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         check: "Vector"
       },
       {
-        type: 'field_slider',
-        name: 'NUMBER',
-        min: -100,
-        max: 100,
-        precision: 1,
-        init: 1,
+        type: 'input_value',
+        name: 'CHANCE',
+        check: "Number"
       },
     ],
     inputsInline: true,
