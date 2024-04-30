@@ -24,6 +24,7 @@ import { loadScript } from "../assets/utils.js";
 import wasm from "../assets/app.wasm?url";
 import loader from "../assets/wasm_helpers/mq_gl.js?url";
 import sapp_utils from "../assets/wasm_helpers/sapp_jsutils.js?url";
+import plugins from "../assets/wasm_helpers/plugin.js?url";
 import Simulation from "./Simulation.vue";
 
 const scriptsLoaded = ref(false);
@@ -31,6 +32,7 @@ const scriptsLoaded = ref(false);
 onMounted(async () => {
     await loadScript(loader);
     await loadScript(sapp_utils);
+    await loadScript(plugins);
     await load(wasm);
 
     scriptsLoaded.value = true;
