@@ -3,8 +3,13 @@ class ParticleModel {
     static used_names = new Set();
 
     constructor(display_name, data, blockly_workspace = null) {
+        // Just to be sure
+        if (ParticleModel.used_names.has(data.name)) {
+            // console.error("Name already in use", data.name);
+            data.name = ParticleModel.createName();
+        }
+
         ParticleModel.used_names.add(data.name);
-        // console.log("Used names", ParticleModel.used_names)
 
         this.display_name = display_name;
         this.data = data;
@@ -19,7 +24,6 @@ class ParticleModel {
             ParticleModel.count++;
         }
 
-        // console.log("Name", `Particle ${ParticleModel.count}`)
         return `Particle ${ParticleModel.count}`;
     }
 
