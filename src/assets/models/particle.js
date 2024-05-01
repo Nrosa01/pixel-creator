@@ -1,9 +1,10 @@
 class ParticleModel {
     static count = 0;
-    static particle_names = [];
+    static used_names = new Set();
 
     constructor(display_name, data, blockly_workspace = null) {
-        ParticleModel.count++;
+        ParticleModel.used_names.add(data.name);
+        console.log("Used names", ParticleModel.used_names)
 
         this.display_name = display_name;
         this.data = data;
@@ -12,10 +13,19 @@ class ParticleModel {
         consume_js_object(wasm_exports.receive_json_plugin(js_object(JSON.stringify(data))));
     }
 
-    static create() {
+    static createName() {
         ParticleModel.count++;
+        while (ParticleModel.used_names.has(`Particle ${ParticleModel.count}`)) {
+            ParticleModel.count++;
+        }
+
+        console.log("Name", `Particle ${ParticleModel.count}`)
+        return `Particle ${ParticleModel.count}`;
+    }
+
+    static create() {
         var data = {
-            "name": ParticleModel.count.toString(),
+            "name": ParticleModel.createName(),
             "version": "1.0.0",
             "color": Array(3).fill().map(() => Math.floor(Math.random() * 256)),
             "alpha": [0.95, 1],

@@ -47,7 +47,16 @@ export const useSimulationStore = defineStore("simulation", () => {
     }
 
     const loadFromJSON = (json) => {
+        // We have to make sure to remove the old particles from the wasm memory
+        for (let i = 1; i < particle_array.value.length; i++) {
+            wasm_exports.remove_plugin(js_object(i.toString()));
+        }
+
+        ParticleModel.used_names.clear();
         particle_array.value = json.map((particle) => new ParticleModel(particle.display_name, particle.data, particle.blockly_workspace));
+        
+        selectParticle(Math.min(selected_particle.value, particle_array.value.length - 1));
+
         loadWorkspace(selected_particle.value);
     }
 
