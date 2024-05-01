@@ -140,7 +140,7 @@ jsonGenerator.forBlock['direction'] = function (block) {
 
 jsonGenerator.forBlock['particle'] = function (block) {
   const particle = block.getFieldValue('PARTICLE');
-  const code = `{ "particle_type": "fromName", "data": "${particle}" }`;
+  const code = `{ "particle_type": "fromID", "data": ${particle} }`;
   return [code, Order.ATOMIC]
 }
 

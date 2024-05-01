@@ -18,7 +18,7 @@ onMounted(() => {
   Blockly.Extensions.register("particle_list_extension", function () {
     this.getInput("DUMMY").appendField(
       new Blockly.FieldDropdown(function () {
-        return store.particle_array.map((particle) => [particle.display_name, particle.data.name]);
+        return store.particle_array.map((particle, i) => [particle.display_name, i.toString()]);
       }),
       "PARTICLE"
     );
