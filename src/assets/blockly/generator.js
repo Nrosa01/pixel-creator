@@ -500,10 +500,10 @@ jsonGenerator.forBlock['every_n_frames'] = function (block, generator) {
 jsonGenerator.forBlock['not'] = function (block, generator) {
   const boolean = generator.statementToCode(block, 'BOOLEAN');
 
-  const code = `"block" : "not",
+  const code = `{"block" : "not",
   "data" : {
     "block" : ${boolean}
-  }`;
+  }}`;
 
   return code;
 }
