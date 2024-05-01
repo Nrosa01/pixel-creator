@@ -89,6 +89,7 @@ export const useSimulationStore = defineStore("simulation", () => {
         const ws = Blockly.getMainWorkspace();
         const particle_base = ws.getBlocksByType("particle_base")[0];
         generated_code.value = jsonGenerator.blockToCode(particle_base);
+        particle_array.value[selected_particle.value].update_data(JSON.parse(generated_code.value));
     }
 
     const saveWorkspace = (index) => {

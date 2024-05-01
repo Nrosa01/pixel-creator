@@ -88,7 +88,7 @@ jsonGenerator.forBlock['randomTransformation'] = function (block, generator) {
 "action": "randomTransformation",
 "data": {
   "transformation": "${action === '' ? 'null' : action}",
-  "block": ${statementMembers === '' ? 'null' : statementMembers}
+  "block":${statementMembers === '' ? 'null' : `[${statementMembers}]`}
   }
 }`;
 
@@ -110,8 +110,8 @@ jsonGenerator.forBlock['if'] = function (block, generator) {
   "data": 
   {
     "condition": ${condition === '' ? 'null' : condition},
-    "result": ${statementMembers === '' ? 'null' : statementMembers},
-    "else": ${else_code === '' ? 'null' : else_code}
+    "result": ${statementMembers === '' ? 'null' : `[${statementMembers}]`},
+    "else": ${else_code === '' ? 'null' : `[${else_code}]`}
   }
 }`;
   return code;
@@ -320,7 +320,7 @@ jsonGenerator.forBlock['for_each_transformation'] = function (block, generator) 
 "action": "forEachTransformation",
 "data": {
   "transformation": "${action}",
-  "block": ${statementMembers === '' ? 'null' : statementMembers}
+  "block":${statementMembers === '' ? 'null' : `[${statementMembers}]`}
   }
 }`;
 
@@ -341,7 +341,7 @@ jsonGenerator.forBlock['rotated_by'] = function (block, generator) {
 "action": "rotatedBy",
 "data": {
   "number": ${number},
-  "block": ${statementMembers === '' ? 'null' : statementMembers}
+  "block": ${statementMembers === '' ? 'null' : `[${statementMembers}]`}
 }
 }`;
 
@@ -440,7 +440,7 @@ jsonGenerator.forBlock['repeat_n_times'] = function (block, generator) {
   "action": "repeat",
     "data": {
       "number": ${number},
-      "block": ${statementMembers === '' ? 'null' : statementMembers}
+      "block":${statementMembers === '' ? 'null' : `[${statementMembers}]`}
     }
   }`;
   return code;
@@ -455,7 +455,7 @@ jsonGenerator.forBlock['every_n_frames'] = function (block, generator) {
   "action": "everyXFrames",
     "data": {
       "number": ${number},
-      "block": ${statementMembers === '' ? 'null' : statementMembers}
+      "block":${statementMembers === '' ? 'null' : `[${statementMembers}]`}
     }
   }`;
   return code;

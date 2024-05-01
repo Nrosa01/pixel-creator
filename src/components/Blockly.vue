@@ -13,10 +13,6 @@ import niceJSON from "../assets/jsons/nice.json"
 
 const store = useSimulationStore();
 
-function update_particle(index, data) {
-  store.particle_array[index].update_data(JSON.parse(data));
-}
-
 onMounted(() => {
 
   Blockly.Extensions.register("particle_list_extension", function () {
@@ -91,16 +87,16 @@ onMounted(() => {
     // Modify workspace so only particle_base block and its children stay
 
     store.regenerateCode();
-    update_particle(store.selected_particle, store.generated_code);
     store.generated_code = jsonGenerator.workspaceToCode(Blockly.getMainWorkspace())
   });
 
   store.loadWorkspace(store.selected_particle);
   // store.loadFromJSON(failJSON);
   // store.loadFromJSON(niceJSON);
+
+  // key pressed event
 });
 
-const generated_code = ref("");
 </script>
 
 <template>
