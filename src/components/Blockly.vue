@@ -15,6 +15,10 @@ const store = useSimulationStore();
 
 onMounted(() => {
 
+  if (Blockly.Extensions.isRegistered('particle_list_extension')) {
+    Blockly.Extensions.unregister('particle_list_extension');
+  }
+
   Blockly.Extensions.register("particle_list_extension", function () {
     this.getInput("DUMMY").appendField(
       new Blockly.FieldDropdown(function () {
@@ -23,16 +27,15 @@ onMounted(() => {
       "PARTICLE"
     );
 
-    this.setOnChange(function(changeEvent) {
+    this.setOnChange(function (changeEvent) {
       if (changeEvent.type !== 'block_field_intermediate_change' || changeEvent.name !== 'NAME') {
         return;
       }
-      
+
       let block_selection = this.getField('PARTICLE').selectedOption[1];
       let current_particle = store.selected_particle.toString();
       let display_name = store.particle_array[store.selected_particle].display_name;
-      if(block_selection === current_particle)
-      {
+      if (block_selection === current_particle) {
         this.getField('PARTICLE').setValue(current_particle);
         this.getField('PARTICLE').selectedOption[0] = display_name
         this.initSvg();
