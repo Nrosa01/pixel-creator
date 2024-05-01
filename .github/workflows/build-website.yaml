@@ -4,7 +4,7 @@ name: Generate a build and push to another branch
 on:
   push:
     branches:
-      - main
+      - master
 
 permissions:
   contents: read
@@ -68,4 +68,4 @@ jobs:
           path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@main
+        uses: actions/deploy-pages@master
