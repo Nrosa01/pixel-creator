@@ -30,11 +30,6 @@ export const toolbox = {
     },
     {
       'kind': 'block',
-      'type': 'particle'
-    },
-
-    {
-      'kind': 'block',
       'type': 'swap',
       'inputs': {
         'OTHER': {
@@ -299,14 +294,6 @@ export const toolbox = {
         }
       }
     },
-
-    {
-      'kind': 'block',
-      'type': 'custom_input_color'
-    },
-
-
-
   ]
 
 
