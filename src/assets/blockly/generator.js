@@ -409,7 +409,7 @@ jsonGenerator.forBlock['increase_by'] = function (block, generator) {
   "action": "increaseParticlePropierty",
     "data": {
       "propierty": { "particle_propierty_descriptor": "${property}" },
-      "number": { "number": "constant", "data": ${number} },
+      "number": ${number},
       "direction": ${directions[direction]}
     }
   }`;
