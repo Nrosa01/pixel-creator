@@ -68,7 +68,14 @@ Blockly.Blocks['custom_input_color'] = {
   }
 };
 
-
+Blockly.Blocks['note'] = {
+  init: function () {
+    this.appendDummyInput()
+      .appendField("Note: ")
+      .appendField(new Blockly.FieldTextInput(""), "note");
+    this.setColour(160);
+  }
+};
 
 
 var directionOptions = [

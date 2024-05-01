@@ -293,6 +293,11 @@ export const toolbox = {
         }
       }
     },
+    {
+      'kind': 'block',
+      'type': 'note'
+    },
+
   ]
 
 
