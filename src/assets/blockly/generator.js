@@ -414,9 +414,9 @@ jsonGenerator.forBlock['particle_properties'] = function (block, generator) {
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
   const code =
     `{
-  "number": "${propierty}"
+  "number": '${propierty}',
   "data": {
-    "direction": ${direction}
+    "direction": ${directions[direction]}
   }`;
 
   //const code = `{ "particle_propierty_descriptor": "${propierty}" }`;

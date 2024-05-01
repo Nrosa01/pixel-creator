@@ -731,8 +731,8 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         type: "field_dropdown",
         name: "PROPERTY",
         options: [
-          ["light", "LIGHT"],
-          ["extra", "EXTRA"]
+          ["light", "light"],
+          ["extra", "extra"]
         ]
       },
       {
@@ -743,7 +743,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     ],
 
     colour: 200,
-    output: "ParticleProperties",
+    output: "Number",
   },
   {
     type: "increase_by",
