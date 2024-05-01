@@ -70,7 +70,7 @@ onMounted(() => {
     },
     zoom: {
       controls: true,
-      wheel: false,
+      wheel: true,
       startScale: 1.0,
       maxScale: 1.5,
       minScale: 0.5,
