@@ -57,14 +57,14 @@ jsonGenerator.forBlock['custom_field_slider'] = function (block, generator) {
 
   const number = block.getFieldValue('NUMBER');
   // const code = `{ "number": "constant", "data": ${number} }`
-  return [`${number}`, Order.ATOMIC];
+  return [`{ "number": "constant", "data": ${number} }`, Order.ATOMIC];
 }
 
 jsonGenerator.forBlock['custom_field_slider_positive'] = function (block, generator) {
 
   const number = block.getFieldValue('NUMBER');
   // const code = `{ "number": "constant", "data": ${number} }`
-  return [`${number}`, Order.ATOMIC];
+  return [`{ "number": "constant", "data": ${number} }`, Order.ATOMIC];
 }
 
 
@@ -429,14 +429,14 @@ jsonGenerator.forBlock['increase_by'] = function (block, generator) {
   const property = block.getFieldValue('PROPERTY');
   const number = generator.valueToCode(block, 'CHANCE', Order.ATOMIC);
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
-  const code = ` 
+  const code = `{
   "action": "increaseParticlePropierty",
     "data": {
       "propierty": { "particle_propierty_descriptor": "${property}" },
       "number":{ "number": "constant", "data": ${number} },
       "direction": ${directions[direction]}
     }
-  },`;
+  }`;
   return code;
 }
 
@@ -444,14 +444,15 @@ jsonGenerator.forBlock['set_to'] = function (block, generator) {
   const property = block.getFieldValue('PROPERTY');
   const number = generator.valueToCode(block, 'CHANCE', Order.ATOMIC);
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
-  const code = ` 
+  
+  const code = `{
   "action": "setParticlePropierty",
     "data": {
       "propierty": { "particle_propierty_descriptor": "${property}" },
-      "number": { "number": "constant", "data": ${number} },
+      "number": ${number},
       "direction": ${directions[direction]}
     }
-  },`;
+  }`;
   return code;
 }
 jsonGenerator.forBlock['repeat_n_times'] = function (block, generator) {
@@ -459,13 +460,13 @@ jsonGenerator.forBlock['repeat_n_times'] = function (block, generator) {
   const number = generator.valueToCode(block, 'NUMBER', Order.ATOMIC);
   const statementMembers =
     generator.statementToCode(block, 'THEN');
-  const code = ` 
+  const code = `{
   "action": "repeat",
     "data": {
       "number": { "number": "constant", "data": ${number} },
       "block": ${statementMembers}
     }
-  },`;
+  }`;
   return code;
 }
 
@@ -474,13 +475,13 @@ jsonGenerator.forBlock['every_n_frames'] = function (block, generator) {
   const number = generator.valueToCode(block, 'NUMBER', Order.ATOMIC);
   const statementMembers =
     generator.statementToCode(block, 'THEN');
-  const code = ` 
+  const code = `{
   "action": "everyXFrames",
     "data": {
       "number": { "number": "constant", "data": ${number} },
       "block": ${statementMembers}
     }
-  },`;
+  }`;
   return code;
 }
 

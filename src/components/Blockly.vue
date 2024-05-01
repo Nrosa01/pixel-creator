@@ -6,6 +6,8 @@ import { blocks } from "../assets/blockly/blocks";
 import { toolbox } from "../assets/blockly/toolbox";
 import "../assets/blockly/renderer.js";
 import { useSimulationStore } from "../stores/simulation";
+import { jsonGenerator } from "../assets/blockly/generator";
+
 import failJSON from "../assets/jsons/fails.json"
 import niceJSON from "../assets/jsons/nice.json"
 
@@ -90,13 +92,15 @@ onMounted(() => {
 
     store.regenerateCode();
     update_particle(store.selected_particle, store.generated_code);
-
+    store.generated_code = jsonGenerator.workspaceToCode(Blockly.getMainWorkspace())
   });
 
   store.loadWorkspace(store.selected_particle);
   // store.loadFromJSON(failJSON);
   // store.loadFromJSON(niceJSON);
 });
+
+const generated_code = ref("");
 </script>
 
 <template>
