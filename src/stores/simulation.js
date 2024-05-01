@@ -8,23 +8,20 @@ import ParticleModel from "../assets/models/particle";
 // Having to import this here is ugly, this will be fixed once 
 // whe get a default array preconfigured to load from Blockly component, but well, for now this is.
 import empty from "../assets/particles/empty.json";
-import sand from "../assets/particles/sand.json";
-import replicant from "../assets/particles/replicant.json";
-import simplest from "../assets/particles/simplest.json";
-import test from "../assets/particles/test.json";
+// import sand from "../assets/particles/sand.json";
+// import replicant from "../assets/particles/replicant.json";
+// import simplest from "../assets/particles/simplest.json";
+// import test from "../assets/particles/test.json";
 
 export const useSimulationStore = defineStore("simulation", () => {
     const particle_array = ref([
         new ParticleModel("Empty", empty),
-        new ParticleModel("Sand", sand),
-        new ParticleModel("Replicant", replicant),
-        new ParticleModel("Simplest", simplest),
-        new ParticleModel("Test", test),
     ])
-    const selected_particle = ref(1)
+    const selected_particle = ref(0)
     const generated_code = ref("")
     const particle_array_length = computed(() => particle_array.value.length)
     const canvas_size = ref(150)
+    const debug = ref(false)
 
     const addParticle = (particle) => {
         particle_array.value.push(particle)
@@ -124,6 +121,9 @@ export const useSimulationStore = defineStore("simulation", () => {
         particle_array,
         selected_particle,
         generated_code,
+        debug,
+        canvas_size,
+        particle_array_length,
         addParticle,
         removeParticle,
         removeSelectedParticle,
@@ -133,7 +133,6 @@ export const useSimulationStore = defineStore("simulation", () => {
         loadWorkspace,
         saveWorkspace,
         regenerateCode,
-        loadFromJSON,
-        canvas_size
+        loadFromJSON
     }
 })

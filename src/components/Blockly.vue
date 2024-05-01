@@ -100,7 +100,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <Draggable>
+  <Draggable v-if="store.debug">
     <!-- For some reason, tailwind z index class dont work well -->
     <pre style="z-index: 300"
       class="select-none backdrop-blur-md max-h-[80vmin] overflow-scroll absolute text-xs origin-top-left scale-75 pivo top-0 left-0 m-4 p-4 bg-slate-400/75 resize-y rounded-xl">{{ store.generated_code }}</pre>
