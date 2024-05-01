@@ -125,17 +125,16 @@ jsonGenerator.forBlock['controls_if'] = function (block, generator) {
     const condition = generator.statementToCode(block, `IF${i}`, Order.ATOMIC);
     const statementMembers =
       generator.statementToCode(block, `DO${i}`);
-    
-      if (condition === '' || statementMembers === '') {
-        if_code.push(`null`);
-      }
-      else
-      { 
-        if_code.push(`[
+
+    if (condition === '' || statementMembers === '') {
+      if_code.push(`null`);
+    }
+    else {
+      if_code.push(`[
         ${condition},
           ${`[${statementMembers}]`}
       ]`)
-      }
+    }
     i++;
   }
   const code = `{
@@ -505,4 +504,8 @@ jsonGenerator.forBlock['not'] = function (block, generator) {
   }}`;
 
   return code;
+}
+
+jsonGenerator.forBlock['note'] = function (block, generator) {
+  return "";
 }
