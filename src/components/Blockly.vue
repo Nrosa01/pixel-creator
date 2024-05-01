@@ -29,7 +29,7 @@ onMounted(() => {
       }
       
       let block_selection = this.getField('PARTICLE').selectedOption[1];
-      let current_particle = store.particle_array[store.selected_particle].data.name;
+      let current_particle = store.selected_particle.toString();
       let display_name = store.particle_array[store.selected_particle].display_name;
       if(block_selection === current_particle)
       {
