@@ -4,7 +4,7 @@ class ParticleModel {
 
     constructor(display_name, data, blockly_workspace = null) {
         ParticleModel.used_names.add(data.name);
-        console.log("Used names", ParticleModel.used_names)
+        // console.log("Used names", ParticleModel.used_names)
 
         this.display_name = display_name;
         this.data = data;
@@ -19,7 +19,7 @@ class ParticleModel {
             ParticleModel.count++;
         }
 
-        console.log("Name", `Particle ${ParticleModel.count}`)
+        // console.log("Name", `Particle ${ParticleModel.count}`)
         return `Particle ${ParticleModel.count}`;
     }
 
