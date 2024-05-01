@@ -118,6 +118,34 @@ jsonGenerator.forBlock['if'] = function (block, generator) {
 
 };
 
+jsonGenerator.forBlock['controls_if'] = function (block, generator) {
+  const if_code = []
+  var i = 0;
+  while (block.getInput(`IF${i}`) !== null) {
+    const condition = generator.statementToCode(block, `IF${i}`, Order.ATOMIC);
+    const statementMembers =
+      generator.statementToCode(block, `DO${i}`);
+    if_code.push(`{
+      "condition": ${condition === '' ? 'null' : condition},
+      "result": ${statementMembers === '' ? 'null' : `[${statementMembers}]`}
+    }`)
+    i++;
+  }
+  const code = `{
+  "action": "if",
+  "data":
+  [
+    ${if_code.join(',\n\t')}
+  ]
+}`
+
+  //var code = "[\n" + if_code.join(',\n') + "]\n";
+
+
+  return code;
+
+};
+
 const directions = {
   "HERE": '{ "direction": "constant", "data": [0, 0] }',
   "UP": '{ "direction": "constant", "data": [0, 1] }',
@@ -377,8 +405,8 @@ jsonGenerator.forBlock['random_from'] = function (block, generator) {
 jsonGenerator.forBlock['particle_properties'] = function (block, generator) {
   const propierty = block.getFieldValue('PROPERTY');
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
-  const code = 
-`{
+  const code =
+    `{
   "number": "${propierty}"
   "data": {
     "direction": ${direction}
@@ -420,7 +448,7 @@ jsonGenerator.forBlock['set_to'] = function (block, generator) {
   const property = block.getFieldValue('PROPERTY');
   const number = generator.valueToCode(block, 'CHANCE', Order.ATOMIC);
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
-  
+
   const code = `{
   "action": "setParticlePropierty",
     "data": {

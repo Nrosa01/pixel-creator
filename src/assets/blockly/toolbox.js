@@ -161,7 +161,11 @@ export const toolbox = {
       'kind': 'block',
       'type': 'if'
     },
+    {
+      'kind': 'block',
+      'type': 'controls_if',
 
+    },
 
     {
       'kind': 'block',
