@@ -87,7 +87,7 @@ jsonGenerator.forBlock['randomTransformation'] = function (block, generator) {
     `{
 "action": "randomTransformation",
 "data": {
-  "transformation": "${action}",
+  "transformation": "${action === '' ? 'null' : action}",
   "block": ${statementMembers === '' ? 'null' : statementMembers}
   }
 }`;
@@ -109,36 +109,14 @@ jsonGenerator.forBlock['if'] = function (block, generator) {
   "action": "if",
   "data": 
   {
-    "condition": ${condition},
-    "result": ${statementMembers},
+    "condition": ${condition === '' ? 'null' : condition},
+    "result": ${statementMembers === '' ? 'null' : statementMembers},
     "else": ${else_code === '' ? 'null' : else_code}
   }
 }`;
   return code;
 
 };
-var lastBlock = null;
-jsonGenerator.forBlock['controls_if'] = function (block, generator) {
-  // Assuming 'block' is your Blockly block
-  console.log(lastBlock == block);
-  lastBlock = block;
-
-  const statementMembers =
-    generator.statementToCode(block, 'DO0');
-  const condition =
-    generator.statementToCode(block, 'IF0');
-  const code =
-    `"block": {
-"action": "if",
-"data": {
-${condition}
-},
-${statementMembers}
-}
-}
-}`;
-  return code;
-}
 
 const directions = {
   "HERE": '{ "direction": "constant", "data": [0, 0] }',
@@ -188,7 +166,6 @@ jsonGenerator.forBlock['particle_in_direction'] = function (block, generator) {
 
 jsonGenerator.forBlock['swap'] = function (block, generator) {
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
-  console.log(directions[direction]);
   const code = `{
     "action": "swap",
     "data": {
@@ -216,7 +193,6 @@ jsonGenerator.forBlock['group_particle'] = function (block, generator) {
 jsonGenerator.forBlock['copy_myself'] = function (block, generator) {
 
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
-  console.log(directions[direction]);
   const code = `{
     "action": "copyTo",
     "data": {
@@ -269,12 +245,11 @@ jsonGenerator.forBlock['number_of'] = function (block, generator) {
 
   const code =
     `{
-    "block": "numberOfXTouching",
-    "data": {
-      "types": [
+    "number": "numberOfXTouching",
+    "data": 
+      [
         ${particle}
       ]
-    }
   }`
 
   return [code, Order.ATOMIC];
@@ -301,8 +276,8 @@ jsonGenerator.forBlock['comparison'] = function (block, generator) {
   const code = `{
     "block": "${operator}",
     "data": {
-      "block1": "{ "number": "constant", "data": ${left} }"},
-      "block2": "{ "number": "constant", "data": ${right} }" }
+      "block1": ${left},
+      "block2": ${right}
     }
   }`;
   return code;
@@ -320,7 +295,6 @@ jsonGenerator.forBlock['bool_comparison'] = function (block, generator) {
       "block2": ${right}
     }
   }`;
-
 
   return code;
 }
@@ -343,7 +317,7 @@ jsonGenerator.forBlock['for_each_transformation'] = function (block, generator) 
   const code =
 
     `{
-"action": "ForEachTransformation",
+"action": "forEachTransformation",
 "data": {
   "transformation": "${action}",
   "block": ${statementMembers === '' ? 'null' : statementMembers}
@@ -366,9 +340,9 @@ jsonGenerator.forBlock['rotated_by'] = function (block, generator) {
     `{
 "action": "rotatedBy",
 "data": {
-  "number": "{ "number": "constant", "data": ${number} }",
+  "number": ${number},
   "block": ${statementMembers === '' ? 'null' : statementMembers}
-  }
+}
 }`;
 
   return code;
@@ -384,8 +358,8 @@ jsonGenerator.forBlock['math_operation'] = function (block, generator) {
     "number": "mathOperation",
     "data": [
       { "math_op": "${operator}" },
-      { "number": "constant", "data": ${left} },
-      { "number": "constant", "data": ${right} }
+      ${left},
+      ${right}
     ]
   }`;
   return [code, Order.ATOMIC];
@@ -403,9 +377,11 @@ jsonGenerator.forBlock['random_from'] = function (block, generator) {
 jsonGenerator.forBlock['particle_properties'] = function (block, generator) {
   const propierty = block.getFieldValue('PROPERTY');
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
-  const code = `"number": "${propierty}"
+  const code = 
+`{
+  "number": "${propierty}"
   "data": {
-    "direction": "${direction}
+    "direction": ${direction}
   }`;
 
   //const code = `{ "particle_propierty_descriptor": "${propierty}" }`;
@@ -433,7 +409,7 @@ jsonGenerator.forBlock['increase_by'] = function (block, generator) {
   "action": "increaseParticlePropierty",
     "data": {
       "propierty": { "particle_propierty_descriptor": "${property}" },
-      "number":{ "number": "constant", "data": ${number} },
+      "number": { "number": "constant", "data": ${number} },
       "direction": ${directions[direction]}
     }
   }`;
@@ -463,8 +439,8 @@ jsonGenerator.forBlock['repeat_n_times'] = function (block, generator) {
   const code = `{
   "action": "repeat",
     "data": {
-      "number": { "number": "constant", "data": ${number} },
-      "block": ${statementMembers}
+      "number": ${number},
+      "block": ${statementMembers === '' ? 'null' : statementMembers}
     }
   }`;
   return code;
@@ -478,8 +454,8 @@ jsonGenerator.forBlock['every_n_frames'] = function (block, generator) {
   const code = `{
   "action": "everyXFrames",
     "data": {
-      "number": { "number": "constant", "data": ${number} },
-      "block": ${statementMembers}
+      "number": ${number},
+      "block": ${statementMembers === '' ? 'null' : statementMembers}
     }
   }`;
   return code;
@@ -493,7 +469,6 @@ jsonGenerator.forBlock['not'] = function (block, generator) {
   "data" : {
     "block" : ${boolean}
   }`;
-
 
   return code;
 }

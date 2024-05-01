@@ -162,14 +162,6 @@ export const toolbox = {
         },
       }
     },
-
-    {
-      'kind': 'block',
-      'type': 'controls_if'
-    },
-
-
-
     {
       'kind': 'block',
       'type': 'if'

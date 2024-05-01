@@ -524,13 +524,13 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         name: "DROPDOWN",
         options: [
           [
-            "is", "CompareNumberEquality"
+            "is", "compareNumberEquality"
           ],
           [
-            "is bigger than", "CompareBiggerThan"
+            "is bigger than", "compareBiggerThan"
           ],
           [
-            "is smaller than", "CompareLessThan"
+            "is smaller than", "compareLessThan"
           ]
         ]
       },
