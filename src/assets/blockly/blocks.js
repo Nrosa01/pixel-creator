@@ -566,10 +566,10 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         name: "DROPDOWN",
         options: [
           [
-            "and", "AND"
+            "and", "and"
           ],
           [
-            "or", "OR"
+            "or", "or"
           ],
         ]
       },
@@ -592,10 +592,10 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         name: "BOOLEAN",
         options: [
           [
-            "true", "TRUE"
+            "true", "true"
           ],
           [
-            "false", "FALSE"
+            "false", "false"
           ]
         ]
       },

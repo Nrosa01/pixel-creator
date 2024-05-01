@@ -316,8 +316,8 @@ jsonGenerator.forBlock['bool_comparison'] = function (block, generator) {
   const code = `{
     "block": "${comparison}",
     "data": {
-      "block1": ${left} },
-      "block2": ${right} }
+      "block1": ${left},
+      "block2": ${right}
     }
   }`;
 
