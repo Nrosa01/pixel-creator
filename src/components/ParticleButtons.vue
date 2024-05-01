@@ -18,13 +18,11 @@ let buttonClass = "bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:
 
 function selectParticle(particleId) {
   store.selectParticle(particleId);
-  wasm_exports.select_particle(js_object(particleId.toString()));
 
   play();
 }
 
 function removeSelected() {
-  wasm_exports.remove_plugin(js_object(store.selected_particle.toString()));
   store.removeSelectedParticle();
   playRemove();
 }

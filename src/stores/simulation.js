@@ -23,13 +23,17 @@ export const useSimulationStore = defineStore("simulation", () => {
     const canvas_size = ref(150)
     const debug = ref(false)
 
+    // Surprinsingly this works, it seems I can do anything on setup pinia stores
+    // This only gets called once as every other call to useSimulationStore will return the same instance (memoized store)
+    wasm_exports.select_particle(js_object(selected_particle.value.toString()));
+
     const addParticle = (particle) => {
         particle_array.value.push(particle)
     }
 
     const removeParticle = (index) => {
+        wasm_exports.remove_plugin(js_object(index.toString()));
         particle_array.value.splice(index, 1)
-
         selected_particle.value = Math.min(selected_particle.value, particle_array.value.length - 1);
     }
 
@@ -38,6 +42,7 @@ export const useSimulationStore = defineStore("simulation", () => {
     }
 
     const selectParticle = (index) => {
+        wasm_exports.select_particle(js_object(index.toString()));
         selected_particle.value = index
     }
 
