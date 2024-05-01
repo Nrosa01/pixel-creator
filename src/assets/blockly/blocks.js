@@ -743,7 +743,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
     ],
 
     colour: 200,
-    output: "ParticleProperties",
+    output: "Number",
   },
   {
     type: "increase_by",
