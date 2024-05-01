@@ -1,7 +1,10 @@
 class ParticleModel {
     static count = 0;
+    static particle_names = [];
 
     constructor(display_name, data, blockly_workspace = null) {
+        ParticleModel.count++;
+
         this.display_name = display_name;
         this.data = data;
         this.blockly_workspace = blockly_workspace;
