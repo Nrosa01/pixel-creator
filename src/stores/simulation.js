@@ -48,8 +48,10 @@ export const useSimulationStore = defineStore("simulation", () => {
 
     const loadFromJSON = (json) => {
         // We have to make sure to remove the old particles from the wasm memory
+
+        // Print how many particles are being removed
         for (let i = 1; i < particle_array.value.length; i++) {
-            wasm_exports.remove_plugin(js_object(i.toString()));
+            wasm_exports.remove_plugin(js_object("1")); // We remove the first particle every time, we are removing all of them anyway
         }
 
         ParticleModel.used_names.clear();
