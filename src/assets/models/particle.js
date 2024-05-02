@@ -35,6 +35,7 @@ class ParticleModel {
             "alpha": [0.95, 1],
             "update": []
         }
+        
         return new ParticleModel("New Particle", data);
     }
 
