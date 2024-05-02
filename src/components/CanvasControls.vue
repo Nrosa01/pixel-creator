@@ -114,5 +114,5 @@ function showModal() {
 
       <button @mouseenter="playHoverSound" :class="buttonClass" title="Clear all the particles" @click="showModal"><i class="text-orange-400 ph-duotone ph-question"></i></button>
   </div>
-  <BlockDialog ref="modal" @click="showModal"></BlockDialog>
+  <BlockDialog ref="modal" v-if="store.mainWorkspace" @click="showModal"></BlockDialog>
 </template>

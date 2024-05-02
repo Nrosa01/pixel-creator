@@ -79,6 +79,8 @@ onMounted(() => {
     toolbox,
   });
 
+  store.mainWorkspace = ws;
+
   ws.addChangeListener((e) => {
     // Don't run the code when the workspace finishes loading; we're
     // already running it once when the application starts.

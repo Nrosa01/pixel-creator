@@ -22,6 +22,7 @@ export const useSimulationStore = defineStore("simulation", () => {
     const particle_array_length = computed(() => particle_array.value.length)
     const canvas_size = ref(150)
     const debug = ref(false)
+    const mainWorkspace = ref(null)
 
     // Surprinsingly this works, it seems I can do anything on setup pinia stores
     // This only gets called once as every other call to useSimulationStore will return the same instance (memoized store)
@@ -75,7 +76,7 @@ export const useSimulationStore = defineStore("simulation", () => {
 
     const loadWorkspace = (index) => {
         Blockly.Events.disable();
-        const workspace = Blockly.getMainWorkspace();
+        const workspace = mainWorkspace.value;
         const data = particle_array.value[index]?.blockly_workspace;
         if (data) {
             Blockly.serialization.workspaces.load(data, workspace);
@@ -99,14 +100,14 @@ export const useSimulationStore = defineStore("simulation", () => {
     }
 
     const regenerateCode = () => {
-        const ws = Blockly.getMainWorkspace();
+        const ws = mainWorkspace.value;
         const particle_base = ws.getBlocksByType("particle_base")[0];
         generated_code.value = jsonGenerator.blockToCode(particle_base);
         particle_array.value[selected_particle.value].update_data(JSON.parse(generated_code.value));
     }
 
     const saveWorkspace = (index) => {
-        const json = Blockly.serialization.workspaces.save(Blockly.getMainWorkspace());
+        const json = Blockly.serialization.workspaces.save(mainWorkspace.value);
         particle_array.value[index].blockly_workspace = json;
     }
 
@@ -140,6 +141,7 @@ export const useSimulationStore = defineStore("simulation", () => {
         debug,
         canvas_size,
         particle_array_length,
+        mainWorkspace,
         addParticle,
         removeParticle,
         removeSelectedParticle,
