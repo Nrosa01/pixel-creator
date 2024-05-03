@@ -186,7 +186,7 @@ function pointerup(event) {
 <template>
     <dialog ref="modal" @close="onModalClose"
         class="backdrop:backdrop-blur-sm backdrop:backdrop-brightness-75 rounded-xl px-4 py-1 drop-shadow-2xl">
-        <div ref="modalInner" class="w-[90vmin] gap-2 lg:max-h-[90vmin] max-h-[90vh] flex flex-col">
+        <div ref="modalInner" class="w-[90vmin] max-w-full gap-2 lg:max-h-[90vmin] max-h-[90vh] flex flex-col">
             <form method="dialog">
                 <button
                     class="w-full bg-slate-200 border-2 border-black  hover:bg-slate-300 hover:scale-[1.01]  font-semibold py-1 px-2 rounded sm:grow-0 grow mt-4"><i
