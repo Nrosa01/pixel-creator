@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import Draggable from "./Draggable.vue";
 import * as Blockly from "blockly";
 import { blocks } from "../assets/blockly/blocks";
 import { toolbox } from "../assets/blockly/toolbox";
@@ -94,22 +93,17 @@ onMounted(() => {
   });
 
   store.loadWorkspace(store.selected_particle);
+  store.blocklyLoaded = true;
   // store.loadFromJSON(failJSON);
   // store.loadFromJSON(niceJSON);
 
-  // key pressed event
+  // Because blockly is reeeeeally special we need to wait a frame and trick it into re render by a resize event
 });
 
 </script>
 
 <template>
-  <Draggable v-if="store.debug">
-    <!-- For some reason, tailwind z index class dont work well -->
-    <pre style="z-index: 300"
-      class="select-none backdrop-blur-md max-h-[80vmin] overflow-scroll absolute text-xs origin-top-left scale-75 pivo top-0 left-0 m-4 p-4 bg-slate-400/75 resize-y rounded-xl">{{ store.generated_code }}</pre>
-  </Draggable>
-
-  <div class="w-full m-4 bg-slate-600/50 rounded-xl box-content overflow-clip">
-    <div class="w-full h-full" id="blocklyDiv"></div>
-  </div>
+    <div class="w-full m-4 bg-slate-600/50 rounded-xl box-content overflow-clip">
+      <div class="w-full h-full" id="blocklyDiv"></div>
+    </div>
 </template>

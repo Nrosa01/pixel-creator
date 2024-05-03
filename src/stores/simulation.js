@@ -21,6 +21,7 @@ export const useSimulationStore = defineStore("simulation", () => {
     const generated_code = ref("")
     const particle_array_length = computed(() => particle_array.value.length)
     const canvas_size = ref(150)
+    const blocklyLoaded = ref(false)
     const debug = ref(false)
 
     // Surprinsingly this works, it seems I can do anything on setup pinia stores
@@ -117,12 +118,9 @@ export const useSimulationStore = defineStore("simulation", () => {
         ([selection, particleArrayLength], [prevSelection, prevParticleArrayLength]) => {
 
             if (selection !== prevSelection) {
-                // console.log("Selected particle changed", selection);
                 if (prevSelection !== undefined && prevSelection < particleArrayLength) saveWorkspace(prevSelection);
                 if (selection !== undefined) loadWorkspace(selection);
             } else if (particleArrayLength !== prevParticleArrayLength) {
-                // console.log("Particle array length changed", particleArrayLength);
-
                 // This is needed for when a particle is added, as it modifies the particle id blocks that can get lost if not saved
                 // Sure I could also save the workspace everytime is edited but that would be too much
                 if (prevParticleArrayLength < particleArrayLength) saveWorkspace(selection);
@@ -140,6 +138,7 @@ export const useSimulationStore = defineStore("simulation", () => {
         debug,
         canvas_size,
         particle_array_length,
+        blocklyLoaded,
         addParticle,
         removeParticle,
         removeSelectedParticle,

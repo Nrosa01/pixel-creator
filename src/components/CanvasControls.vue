@@ -8,12 +8,13 @@ const dropdown = ref("bg-slate-200 border-2 border-black  hover:bg-slate-300 hov
 import { useSound } from "@vueuse/sound";
 import click from "../assets/sounds/select.wav";
 import hover from "../assets/sounds/hover.wav";
-import { loadFile, saveToFile } from "../assets/utils.js";
 import { useSimulationStore } from "../stores/simulation";
+import BlockDialog from "./BlockDialog.vue";
 
 const { play } = useSound(click, { volume: 0.5, interrupt: true });
 const { play: playHover } = useSound(hover, { volume: 0.5, interrupt: false });
 const store = useSimulationStore();
+const modal = ref(null);
 
 function togglePause() {
   paused.value = !paused.value;
@@ -78,24 +79,40 @@ function playHoverSound() {
     playHover();
   }
 }
+
+function showModal(e) {
+  modal.value.showModal();
+}
 </script>
 
 <template>
   <div class="flex w-full gap-2 flex-wrap justify-between items-center bg-slate-600/50 rounded-xl mb-4 p-2">
-    <div class="flex gap-2 flex-wrap justify-start items-center grow">
-      <button @mouseenter="playHoverSound" :class="buttonClass" @click="togglePause">
-        <i :class="['ph-duotone', paused ? 'ph-play' : 'ph-pause']"></i>
-      </button>
-      <button @mouseenter="playHoverSound" :class="buttonClass" title="Clear all the particles" @click="clear"><i class="ph-duotone ph-broom"></i></button>
-      <button @mouseenter="playHoverSound" :class="buttonClass" title="Save the current state of the simulation as a file" @click="save"><i class="ph-duotone ph-floppy-disk"></i></button>
-      <button @mouseenter="playHoverSound" :class="buttonClass" title="Load a state from disk" @click="loadState"><i class="ph-duotone ph-upload"></i></button>
-      <button @mouseenter="playHoverSound" :class="buttonClass + ' transition-colors' + (performance_mode ? ' text-red-500' : '')" title="Toggle performance mode. Performance mode disables realtime particle editing updates and animations when resizing the world" @click="togglePerformanceMode"><i class="ph-duotone ph-fire"></i></button>
+      <div class="flex gap-2 flex-wrap justify-start items-center grow">
+        <button @mouseenter="playHoverSound" :class="buttonClass" @click="togglePause">
+          <i :class="['ph-duotone', paused ? 'ph-play' : 'ph-pause']"></i>
+        </button>
+        <button @mouseenter="playHoverSound" :class="buttonClass" title="Clear all the particles" @click="clear"><i
+            class="ph-duotone ph-broom"></i></button>
+        <button @mouseenter="playHoverSound" :class="buttonClass"
+          title="Save the current state of the simulation as a file" @click="save"><i
+            class="ph-duotone ph-floppy-disk"></i></button>
+        <button @mouseenter="playHoverSound" :class="buttonClass" title="Load a state from disk" @click="loadState"><i
+            class="ph-duotone ph-upload"></i></button>
+        <button @mouseenter="playHoverSound"
+          :class="buttonClass + ' transition-colors' + (performance_mode ? ' text-red-500' : '')"
+          title="Toggle performance mode. Performance mode disables realtime particle editing updates and animations when resizing the world"
+          @click="togglePerformanceMode"><i class="ph-duotone ph-fire"></i></button>
 
-      <select @mouseenter="playHoverSound" @click="play" title="Change the simulation size. Tiny is 75*75, normal 150*150 and big is 300*300" :class="dropdown" @change="handleNewSizeChange">
-        <option value="75">Tiny</option>
-        <option value="150" selected>Normal</option>
-        <option value="300">Big</option>
-      </select>
-    </div>
+        <select @mouseenter="playHoverSound" @click="play"
+          title="Change the simulation size. Tiny is 75*75, normal 150*150 and big is 300*300" :class="dropdown"
+          @change="handleNewSizeChange">
+          <option value="75">Tiny</option>
+          <option value="150" selected>Normal</option>
+          <option value="300">Big</option>
+        </select>
+      </div>
+
+      <button @mouseenter="playHoverSound" :class="buttonClass" title="Clear all the particles" @click="showModal"><i class="text-orange-400 ph-duotone ph-question"></i></button>
   </div>
+  <BlockDialog v-if="store.blocklyLoaded" ref="modal"></BlockDialog>
 </template>

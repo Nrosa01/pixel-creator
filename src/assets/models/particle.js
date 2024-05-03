@@ -28,15 +28,15 @@ class ParticleModel {
     }
 
     static create() {
+        let name = ParticleModel.createName();
         var data = {
-            "name": ParticleModel.createName(),
+            "name": name,
             "version": "1.0.0",
             "color": Array(3).fill().map(() => Math.floor(Math.random() * 256)),
             "alpha": [0.95, 1],
             "update": []
         }
-        
-        return new ParticleModel("New Particle", data);
+        return new ParticleModel("New " + name, data);
     }
 
     update_data(data) {
