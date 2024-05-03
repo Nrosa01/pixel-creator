@@ -113,7 +113,7 @@ var transformationOptions = [
 ]
 
 var ParticlePropertiesOptions = [
-  ["light", "light"],
+  ["opacity", "light"],
   ["extra", "extra"]
 ]
 
@@ -737,10 +737,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: "field_dropdown",
         name: "PROPERTY",
-        options: [
-          ["light", "light"],
-          ["extra", "extra"]
-        ]
+        options: ParticlePropertiesOptions
       },
       {
         type: "input_value",
