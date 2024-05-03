@@ -53,31 +53,31 @@ const borderPitchStrategy = (event, canvas) => {
 
 const pitchStrategy = gridPitchStrategy;
 
-const onMouseMove = (event) => {
+const onPointerMove = (event) => {
   playbackRate.value = pitchStrategy(event, canvas.value);
 };
 
-const onMouseDown = () => {
+const onPointerDown = () => {
   if (timer) return; // Don't start multiple timers
   timer = setInterval(play, 75); // Play sound every 75ms
-  canvas.value.addEventListener("mousemove", onMouseMove); // Listen to mouse move events
+  canvas.value.addEventListener("pointermove", onPointerMove); // Listen to mouse move events
 };
 
-const onMouseUp = () => {
+const onPointerUp = () => {
   clearInterval(timer); // Stop playing sound
-  canvas.value.removeEventListener("mousemove", onMouseMove); // Stop listening to mouse move events
+  canvas.value.removeEventListener("pointermove", onPointerMove); // Stop listening to mouse move events
   timer = null;
 };
 
-const onMouseOut = () => {
-  onMouseUp();
+const onPointerOut = () => {
+  onPointerUp();
 
   if (typeof wasm_exports !== "undefined") {
     wasm_exports.set_mouse_hidden(js_object("true"));
   }
 };
 
-const onMouseEnter = () => {
+const onPointerEnter = () => {
   if (typeof wasm_exports !== "undefined") {
     wasm_exports.set_mouse_hidden(js_object("false"));
   }
@@ -108,10 +108,10 @@ onMounted(() => {
   glcanvas.parentNode.removeChild(glcanvas);
   canvas.value.appendChild(glcanvas);
 
-  canvas.value.addEventListener("mousedown", onMouseDown);
-  canvas.value.addEventListener("mouseup", onMouseUp);
-  canvas.value.addEventListener("mouseout", onMouseOut);
-  canvas.value.addEventListener("mouseenter", onMouseEnter);
+  canvas.value.addEventListener("pointerdown", onPointerDown);
+  canvas.value.addEventListener("pointerup", onPointerUp);
+  canvas.value.addEventListener("pointerout", onPointerOut);
+  canvas.value.addEventListener("pointerenter", onPointerEnter);
   canvas.value.addEventListener("wheel", onMouseWheel);
 
   // Trigger windows resize event to make the canvas resize
@@ -119,10 +119,10 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  canvas.value.removeEventListener("mousedown", onMouseDown);
-  canvas.value.removeEventListener("mouseup", onMouseUp);
-  canvas.value.removeEventListener("mouseout", onMouseOut);
-  canvas.value.removeEventListener("mouseenter", onMouseEnter);
+  canvas.value.removeEventListener("pointerdown", onPointerDown);
+  canvas.value.removeEventListener("pointerup", onPointerUp);
+  canvas.value.removeEventListener("pointerout", onPointerOut);
+  canvas.value.removeEventListener("pointerenter", onPointerEnter);
   canvas.value.removeEventListener("wheel", onMouseWheel);
 });
 
