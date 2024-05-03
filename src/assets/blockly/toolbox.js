@@ -210,6 +210,22 @@ export const toolbox = {
     },
     {
       'kind': 'block',
+      'type': 'math_operation',
+      'inputs': {
+        'LEFT': {
+          'shadow': {
+            'type': 'custom_field_slider',
+          },
+        },
+        'RIGHT': {
+          'shadow': {
+            'type': 'custom_field_slider',
+          },
+        },
+      }
+    },
+    {
+      'kind': 'block',
       'type': 'random_from',
       'inputs': {
         'LEFT': {

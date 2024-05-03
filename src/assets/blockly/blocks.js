@@ -682,22 +682,22 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
         name: "OPERATOR",
         options: [
           [
-            "+", "Addition"
+            "+", "addition"
           ],
           [
-            "-", "Subtraction"
+            "-", "subtraction"
           ],
           [
-            "*", "Multiplication"
+            "*", "multiplication"
           ],
           [
-            "/", "Division"
+            "/", "division"
           ],
           [
-            "%", "Modulo"
+            "%", "modulo"
           ],
           [
-            "difference", "Difference"
+            "difference", "difference"
           ],
         ]
       },

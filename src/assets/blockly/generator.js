@@ -391,7 +391,7 @@ jsonGenerator.forBlock['math_operation'] = function (block, generator) {
   const code = `{
     "number": "mathOperation",
     "data": [
-      { "math_op": "${operator}" },
+      "${operator}",
       ${left},
       ${right}
     ]
