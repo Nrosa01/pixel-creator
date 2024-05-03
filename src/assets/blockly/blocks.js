@@ -84,11 +84,11 @@ var directionOptions = [
   ["⬅ left", "LEFT"],
   ["⬆ up", "UP"],
   ["⬇ down", "DOWN"],
-  ["⬈ NE ", "UPRIGHT"],
-  ["⬊ SE", "DOWNRIGHT"],
-  ["⬋ SW", "DOWNLEFT"],
-  ["⬉ NW", "UPLEFT"],
-  ["? Neighbor", "RAND"],
+  ["⬈ up-right ", "UPRIGHT"],
+  ["⬊ down-right", "DOWNRIGHT"],
+  ["⬋ down-left", "DOWNLEFT"],
+  ["⬉ up-left", "UPLEFT"],
+  ["? random", "RAND"],
   // ["Arrow Keys", "KB"],
 ];
 
@@ -103,11 +103,11 @@ var transformationOptions = [
     "reflection",
   ],
   [
-    "⟷ HorizontalReflection",
+    "⟷ Horizontal Reflection",
     "horizontalReflection",
   ],
   [
-    "↕ VerticalReflection",
+    "↕ Vertical Reflection",
     "verticalReflection",
   ]
 ]

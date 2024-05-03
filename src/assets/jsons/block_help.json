@@ -1,10 +1,10 @@
 {
-    "group_particle": "This block allows you to define a particle or group of particles.",
+    "group_particle": "This block represents a type of particle. When you draw this blog to the workspace, a '+' symbol appears, you can represent many particle types at the same with this block. ",
     "swap": "This block swaps the current particle with the particle found in the specified direction.",
     "copy_myself": "This block creates a duplicate of the current particle at the specified position.",
     "change_into": "This block changes the type of the particle in the specified direction to the selected type.",
     "touching": "This block is used to determine if the particle is touching a particle of a specific type in any of its eight directions.",
-    "number_of": "This block returns the number of particles of a specific type in the specified direction. It allows you to count the number of particles in a particular direction.",
+    "number_of": "This blocks returns a number. Allows you to count the number of particles of a specific type surrounding the current particle in any of the eight directions. You can use a Particle Group block to count more than one type.",
     "type_of": "Returns the type of the particule in the specified direction.",
     "particle_in_direction": "This block returns the type of the particle in the specified direction. It allows you to access the type of a particle in a particular direction.",
     "direction": "This block allows you to define a certain direction or random, which choose a random direction among the others",
