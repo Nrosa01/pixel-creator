@@ -32,10 +32,64 @@ export const useSimulationStore = defineStore("simulation", () => {
         particle_array.value.push(particle)
     }
 
+    // This function is pretty damn slow....
+    // But it can't be optimized more
     const removeParticle = (index) => {
+        let previous_selected = selected_particle.value;
+
+        // Because we are removing a particle, all fields in the dropdowns that function with indexes will be shifted
+        // For example, let's say we have 4 particles, A B, C and D. 
+        // Currently the dropdown options are [A, B, C, D], let's say C has a block with a dropdown that selects D
+        // The value of that dropdown will be 3, because it is the index of D in the dropdown.
+        // If we now remove B, the dropdown will be [A, C, D], Blockly will see that and change the value of the dropdown to 0. Before that happens
+        // We want to remove one value to each field on the dropdown that is greater than the index of the removed particle
+
+        // And that's what we are doing here. For each workspace, we are shifting the dropdowns that have a value greater than the index of the removed particle
+
+        // We have to do this BEFORE removing the particle from the array because if we do so, when loading a workspace with a dropdown referencing the last value
+        // Blockly will shift it to 0 and I want to avoi that.
+
+        // Doing all of this is quite slow as we are parsing lots of strings, searching, modifying etc...
+        // Not doing all of this would result in code being much much faster at the cost of user experience
+        // Anyways, removing particles is not something that will be done frequently so I think it is worth it.
+        // And thankfuly adding particles doesn't have this problem.
+
+        let cache = {};
+
+        // Memoization of the id to string conversion
+        const mapOfIdToString = (id) => {
+            if (cache[id] === undefined) {
+                cache[id] = id.toString();
+            }
+            return cache[id];
+        };
+
+        const workspace = Blockly.getMainWorkspace();
+
+        for (let i = 0; i < particle_array.value.length; i++) {
+            const data = particle_array.value[i]?.blockly_workspace;
+            if (!data) continue;
+
+            Blockly.serialization.workspaces.load(data, workspace);
+
+            let blocks = workspace.getBlocksByType("particle");
+            blocks.map((block) => {
+                let value = parseInt(block.getFieldValue("PARTICLE"));
+                if (value >= index) {
+                    block.setFieldValue(mapOfIdToString(value - 1), "PARTICLE");
+                }
+            })
+
+            saveWorkspace(i);
+            const particle_base = workspace.getBlocksByType("particle_base")[0];
+            let code = jsonGenerator.blockToCode(particle_base);
+            particle_array.value[i].update_data(JSON.parse(code));
+        }
+
         wasm_exports.remove_plugin(js_object(index.toString()));
         particle_array.value.splice(index, 1)
-        selected_particle.value = Math.min(selected_particle.value, particle_array.value.length - 1);
+
+        selected_particle.value = Math.min(previous_selected, particle_array.value.length - 1);
     }
 
     const removeSelectedParticle = () => {
@@ -57,7 +111,7 @@ export const useSimulationStore = defineStore("simulation", () => {
 
         ParticleModel.used_names.clear();
         particle_array.value = json.map((particle) => new ParticleModel(particle.display_name, particle.data, particle.blockly_workspace));
-        
+
         // We need to send all the behaviour to wasm, for that we need to load everyworkspace
         // Because regenerate code inside loadworkspace loads the current selected particle
         // I have to select particle and then load workspace
