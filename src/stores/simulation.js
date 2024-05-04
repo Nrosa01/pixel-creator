@@ -22,7 +22,7 @@ export const useSimulationStore = defineStore("simulation", () => {
     const particle_array_length = computed(() => particle_array.value.length)
     const canvas_size = ref(150)
     const blocklyLoaded = ref(false)
-    const debug = ref(false)
+    const debug = ref(true)
 
     // Surprinsingly this works, it seems I can do anything on setup pinia stores
     // This only gets called once as every other call to useSimulationStore will return the same instance (memoized store)

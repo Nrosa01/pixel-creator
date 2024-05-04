@@ -135,7 +135,6 @@ const particleGroupMutator = {
     block.removeInput("PLUS", true);
     block.removeInput("MINUS", true);
 
-
     let itemId = 1;
     while (block.getInput(`ITEM${itemId}`) !== null) {
       if (itemId >= this.itemCount) {
@@ -168,6 +167,9 @@ const particleGroupMutator = {
       );
 
       block.appendDummyInput("MINUS").appendField(minusField);
+      block.setOutput(true, 'Group');
+    } else {
+      block.setOutput(true, 'Particle');
     }
 
     const plusField = new Blockly.FieldImage(
@@ -181,7 +183,6 @@ const particleGroupMutator = {
       }
     );
     block.appendDummyInput("PLUS").appendField(plusField);
-
   },
 }
 
@@ -387,7 +388,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: "input_value",
         name: "TYPE_PARTICLE",
-        check: ["Group"]
+        check: ["Group", "Particle"]
       },
     ],
     inputsInline: true,
@@ -467,7 +468,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: "input_value",
         name: "TYPE_PARTICLE",
-        check: ["Group"]
+        check: ["Group", "Particle"]
       },
     ],
     inputsInline: true,
@@ -481,7 +482,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: "input_value",
         name: "TYPE_PARTICLE",
-        check: ["Group"]
+        check: ["Group", "Particle"]
       },
     ],
     inputsInline: true,
@@ -766,7 +767,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: 'input_value',
         name: 'CHANCE',
-        check: "Number"
+        check: ["Number", "Particle"]
       },
 
     ],
@@ -792,7 +793,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: 'input_value',
         name: 'CHANCE',
-        check: "Number"
+        check: ["Number", "Particle"]
       },
     ],
     inputsInline: true,

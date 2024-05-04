@@ -19,10 +19,6 @@ export const toolbox = {
   "contents": [
     {
       'kind': 'block',
-      'type': 'particle',
-    },
-    {
-      'kind': 'block',
       'type': 'group_particle',
       'inputs': {
         'ITEM0': {
@@ -85,14 +81,7 @@ export const toolbox = {
       'inputs': {
         'TYPE_PARTICLE': {
           'shadow': {
-            'type': 'group_particle',
-            'inputs': {
-              'ITEM0': {
-                'shadow': {
-                  'type': 'particle',
-                },
-              },
-            },
+            'type': 'particle',
           },
         },
       }
@@ -103,14 +92,7 @@ export const toolbox = {
       'inputs': {
         'TYPE_PARTICLE': {
           'shadow': {
-            'type': 'group_particle',
-            'inputs': {
-              'ITEM0': {
-                'shadow': {
-                  'type': 'particle',
-                },
-              },
-            },
+            'type': 'particle',
           },
         },
       }
@@ -143,25 +125,18 @@ export const toolbox = {
         },
         'TYPE_PARTICLE': {
           'shadow': {
-            'type': 'group_particle',
-            'inputs': {
-              'ITEM0': {
-                'shadow': {
-                  'type': 'particle',
-                },
-              },
-            },
+            'type': 'particle',
           },
         }
       },
     },
-    // {
-    //   'kind': 'block',
-    //   'type': 'direction',
-    //   "fields": {
-    //     "DIRECTION": "DOWN"
-    //   }
-    // },
+    {
+      'kind': 'block',
+      'type': 'direction',
+      "fields": {
+        "DIRECTION": "DOWN"
+      }
+    },
     //----------------------------------------------------------------
     {
       'kind': 'block',
