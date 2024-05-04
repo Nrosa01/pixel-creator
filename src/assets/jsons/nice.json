@@ -145,7 +145,7 @@
                 },
                 "types": [
                   {
-                    "particle_type": "fromName",
+                    "number": "fromName",
                     "data": "empty"
                   }
                 ]

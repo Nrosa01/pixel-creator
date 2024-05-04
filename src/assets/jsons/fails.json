@@ -139,7 +139,7 @@
               "block": "checkTypesInDirection",
               "data": {
                 "direction": { "direction": "constant", "data": [0, -1] },
-                "types": [{ "particle_type": "fromName", "data": "empty" }]
+                "types": [{ "number": "fromName", "data": "empty" }]
               }
             },
             "result": {

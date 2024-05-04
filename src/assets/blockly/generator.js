@@ -174,7 +174,7 @@ jsonGenerator.forBlock['direction'] = function (block) {
 
 jsonGenerator.forBlock['particle'] = function (block) {
   const particle = block.getFieldValue('PARTICLE');
-  const code = `{ "particle_type": "fromID", "data": ${particle} }`;
+  const code = `{ "number": "fromID", "data": ${particle} }`;
   return [code, Order.ATOMIC]
 }
 
@@ -292,7 +292,7 @@ jsonGenerator.forBlock['number_of'] = function (block, generator) {
 
 jsonGenerator.forBlock['type_of'] = function (block, generator) {
   const direction = generator.valueToCode(block, 'OTHER', Order.ATOMIC);
-  const code = `{"particle_type": "typeOf","data": ${directions[direction]}}`;
+  const code = `{"number": "typeOf","data": ${directions[direction]}}`;
   return [code, Order.ATOMIC];
 }
 

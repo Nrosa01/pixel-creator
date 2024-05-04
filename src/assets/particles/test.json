@@ -12,7 +12,7 @@
             "data": {
               "direction": { "direction": "constant", "data": [0, -1] },
               "types": [
-                { "particle_type": "fromName", "data": "empty" }
+                { "number": "fromName", "data": "empty" }
               ]
             }
           },
