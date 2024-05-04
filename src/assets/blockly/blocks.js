@@ -387,7 +387,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: "input_value",
         name: "TYPE_PARTICLE",
-        check: ["Particle", "Group"]
+        check: ["Group"]
       },
     ],
     inputsInline: true,
@@ -450,7 +450,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: "input_value",
         name: "TYPE_PARTICLE",
-        check: "Particle",
+        check: ["Particle", "Number"],
       }
 
     ],
@@ -467,7 +467,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: "input_value",
         name: "TYPE_PARTICLE",
-        check: ["Particle", "Group"]
+        check: ["Group"]
       },
     ],
     inputsInline: true,
@@ -481,7 +481,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: "input_value",
         name: "TYPE_PARTICLE",
-        check: ["Particle", "Group"]
+        check: ["Group"]
       },
     ],
     inputsInline: true,
@@ -524,7 +524,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: 'input_value',
         name: 'LEFT',
-        check: "Number"
+        check: ["Number", "Particle"]
       },
       {
         type: "field_dropdown",
@@ -544,7 +544,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: 'input_value',
         name: 'RIGHT',
-        check: "Number"
+        check: ["Number", "Particle"]
       },
       // {
       //   type: 'field_slider',
@@ -718,12 +718,12 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: 'input_value',
         name: 'LEFT',
-        check: "Number"
+        check: ["Number", "Particle"]
       },
       {
         type: 'input_value',
         name: 'RIGHT',
-        check: "Number"
+        check: ["Number", "Particle"]
       }
     ],
     inputsInline: true,

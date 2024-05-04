@@ -188,9 +188,7 @@ jsonGenerator.forBlock['particle_in_direction'] = function (block, generator) {
     "block": "checkTypesInDirection",
     "data": {
       "direction": ${directions[direction]},
-      "types": [
-        ${particle}
-      ]
+      "types": ${particle}
     }
   }`
 
@@ -221,7 +219,7 @@ jsonGenerator.forBlock['group_particle'] = function (block, generator) {
 
   var code = particleTypes.join(',\n\t');
 
-  return [code, Order.ATOMIC];
+  return [`[${code}]`, Order.ATOMIC];
 }
 
 jsonGenerator.forBlock['copy_myself'] = function (block, generator) {
@@ -263,9 +261,7 @@ jsonGenerator.forBlock['touching'] = function (block, generator) {
     `{
     "block": "isTouching",
     "data": {
-      "types": [
-        ${particle}
-      ]
+      "types": ${particle}
     }
   }`
 
@@ -281,9 +277,7 @@ jsonGenerator.forBlock['number_of'] = function (block, generator) {
     `{
     "number": "numberOfXTouching",
     "data": 
-      [
         ${particle}
-      ]
   }`
 
   return [code, Order.ATOMIC];
