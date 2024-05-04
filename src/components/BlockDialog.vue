@@ -122,7 +122,7 @@ onMounted(() => {
                 case "Boolean":
                     return "boolean";
                 case "Group":
-                    return "group_particle";
+                    return "particle"; // For some reason this is the only way for it to work
                 default:
                     return undefined;
             }
