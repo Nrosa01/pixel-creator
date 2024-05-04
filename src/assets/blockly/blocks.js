@@ -676,7 +676,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: 'input_value',
         name: 'LEFT',
-        check: "Number"
+        check: ["Number", "Particle"]
       },
       {
         type: "field_dropdown",
@@ -705,7 +705,7 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
       {
         type: 'input_value',
         name: 'RIGHT',
-        check: "Number"
+        check: ["Number", "Particle"]
       },
     ],
     inputsInline: true,
