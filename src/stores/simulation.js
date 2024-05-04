@@ -58,8 +58,21 @@ export const useSimulationStore = defineStore("simulation", () => {
         ParticleModel.used_names.clear();
         particle_array.value = json.map((particle) => new ParticleModel(particle.display_name, particle.data, particle.blockly_workspace));
         
-        selectParticle(Math.min(selected_particle.value, particle_array.value.length - 1));
+        // We need to send all the behaviour to wasm, for that we need to load everyworkspace
+        // Because regenerate code inside loadworkspace loads the current selected particle
+        // I have to select particle and then load workspace
+        // One would think that because of reactiviy, just selecting the particle would trigger the load workspace
+        // But nop, so we have to manually do it this way.
 
+        // Tbh just having to do this makes me question all this store reactivy. Maybe I should enfornce a more imperative approach
+        // But for now this reactive approach is working, so I will keep it.
+        let previous_selected = selected_particle.value;
+        for (let i = 0; i < particle_array.value.length; i++) {
+            selectParticle(i);
+            loadWorkspace(i);
+        }
+
+        selectParticle(Math.min(previous_selected, particle_array.value.length - 1));
         loadWorkspace(selected_particle.value);
     }
 
