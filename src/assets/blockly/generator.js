@@ -153,16 +153,16 @@ jsonGenerator.forBlock['controls_if'] = function (block, generator) {
 };
 
 const directions = {
-  "HERE": '{ "direction": "constant", "data": [0, 0] }',
-  "UP": '{ "direction": "constant", "data": [0, 1] }',
-  "DOWN": '{ "direction": "constant", "data": [0, -1] }',
-  "LEFT": '{ "direction": "constant", "data": [-1, 0] }',
-  "RIGHT": '{ "direction": "constant", "data": [1, 0] }',
-  "UPLEFT": '{ "direction": "constant", "data": [-1, 1] }',
-  "UPRIGHT": '{ "direction": "constant", "data": [1, 1] }',
-  "DOWNLEFT": '{ "direction": "constant", "data": [-1, -1] }',
-  "DOWNRIGHT": '{ "direction": "constant", "data": [1, -1] }',
-  "RAND": '{ "direction": "random" }'
+  "HERE": '[0, 0]',
+  "UP": '[0, 1]',
+  "DOWN": '[0, -1]',
+  "LEFT": '[-1, 0]',
+  "RIGHT": '[1, 0]',
+  "UPLEFT": '[-1, 1]',
+  "UPRIGHT": '[1, 1]',
+  "DOWNLEFT": '[-1, -1]',
+  "DOWNRIGHT": '[1, -1]',
+  "RAND": 'null'
 };
 
 
@@ -441,7 +441,7 @@ jsonGenerator.forBlock['increase_by'] = function (block, generator) {
   const code = `{
   "action": "increaseParticlePropierty",
     "data": {
-      "propierty": { "particle_propierty_descriptor": "${property}" },
+      "propierty": "${property}",
       "number": ${number},
       "direction": ${directions[direction]}
     }
@@ -457,7 +457,7 @@ jsonGenerator.forBlock['set_to'] = function (block, generator) {
   const code = `{
   "action": "setParticlePropierty",
     "data": {
-      "propierty": { "particle_propierty_descriptor": "${property}" },
+      "propierty": "${property}",
       "number": ${number},
       "direction": ${directions[direction]}
     }
