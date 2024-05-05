@@ -138,7 +138,20 @@ export const useSimulationStore = defineStore("simulation", () => {
 
     const saveToFile = (fileName) => {
         saveWorkspace(selected_particle.value);
-        save(fileName, JSON.stringify(particle_array.value))
+
+        // We don't need to save particle.data.update because that is created from the blockly workspace
+        let data_to_save = particle_array.value.map((particle) => {
+            return {
+                display_name: particle.display_name,
+                data: {
+                    name: particle.data.name
+                },
+                blockly_workspace: particle.blockly_workspace
+            }
+
+        });
+
+        save(fileName, JSON.stringify(data_to_save))
     }
 
     const loadWorkspace = (index) => {
