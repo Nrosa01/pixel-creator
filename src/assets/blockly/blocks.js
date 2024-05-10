@@ -1,6 +1,6 @@
 import * as Blockly from 'blockly';
 
-import * as ColorWheel from "blockly-field-color-wheel";
+import { ColorWheelField } from "blockly-field-color-wheel";
 import { FieldSlider } from "@blockly/field-slider";
 
 import { createMinusField } from './field_minus';
@@ -31,7 +31,7 @@ Blockly.Blocks['particle_base'] = {
       .appendField("Name: ")
       .appendField(new Blockly.FieldTextInput(""), "NAME")
       .appendField(" Colour:")
-      .appendField(new ColorWheel.ColorWheelField("#7fdab4", 150, {
+      .appendField(new ColorWheelField("#7fdab4", 150, {
         layoutDirection: "vertical",
       }),
         "COLOR")
@@ -55,7 +55,7 @@ Blockly.Blocks['custom_input_color'] = {
   init: function () {
     this.appendDummyInput()
 
-      .appendField(new ColorWheel.ColorWheelField("#7fdab4", 150, {
+      .appendField(new ColorWheelField("#7fdab4", 150, {
         layoutDirection: "vertical",
       }),
         "COLOR")
