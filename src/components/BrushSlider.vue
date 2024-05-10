@@ -4,7 +4,7 @@ import { useSound } from "@vueuse/sound";
 import slider from "../assets/sounds/hover.wav";
 
 const { play: playSlider } = useSound(slider, { volume: 0.5, interrupt: false });
-const value = ref(25);
+const value = ref(24);
 let canvas = document.getElementById("glcanvas");
 
 const brush_size = computed(() => {
@@ -52,8 +52,7 @@ function onWheel(event) {
 
 onMounted(() => {
     document.addEventListener("wheel", onWheel)
-    wasm_exports.set_brush_size(js_object(brush_size.value.toString()));
-
+    value.value = 25;
 });
 onUnmounted(() => document.removeEventListener("wheel", onWheel))
 

@@ -113,8 +113,12 @@ var transformationOptions = [
 ]
 
 var ParticlePropertiesOptions = [
-  ["opacity", "light"],
-  ["extra", "extra"]
+  ["Opacity", "opacity"],
+  ["Hue Rotate", "hueShift"],
+  ["Extra", "extra"],
+  ["Extra2", "extra2"],
+  ["Extra3", "extra3"],
+  ["Extra4", "extra4"],
 ]
 
 const particleGroupMutator = {
