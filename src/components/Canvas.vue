@@ -2,11 +2,9 @@
 import { onMounted, onUnmounted, ref } from "vue";
 import { useSound } from "@vueuse/sound";
 import click from "../assets/sounds/add_particle.wav";
-import slider from "../assets/sounds/hover.wav";
 
 const playbackRate = ref(1.0);
 const { play } = useSound(click, { volume: 0.5, playbackRate, interrupt: false });
-const { play: playSlider } = useSound(slider, { volume: 0.5, interrupt: false });
 
 let timer = null;
 
@@ -83,23 +81,6 @@ const onPointerEnter = () => {
   }
 };
 
-let mouseWheelTimer = null;
-
-const onMouseWheel = (event) => {
-  const delta = Math.max(-1, Math.min(1, event.deltaY));
-
-  // If a timer is already running, don't start another one
-  if (mouseWheelTimer) return;
-
-  // Start a timer to play the slider after 75ms
-  mouseWheelTimer = setTimeout(() => {
-    playSlider({ playbackRate: delta > 0 ? 0.8 : 0.75 });
-
-    // Clear the timer
-    mouseWheelTimer = null;
-  }, 15);
-};
-
 onMounted(() => {
   // There is an existing canvas with id glcanvas. I want to move that canvas to this component
   const glcanvas = document.getElementById("glcanvas");
@@ -112,7 +93,6 @@ onMounted(() => {
   canvas.value.addEventListener("pointerup", onPointerUp);
   canvas.value.addEventListener("pointerout", onPointerOut);
   canvas.value.addEventListener("pointerenter", onPointerEnter);
-  canvas.value.addEventListener("wheel", onMouseWheel);
 
   // Trigger windows resize event to make the canvas resize
   window.dispatchEvent(new Event("resize"));
@@ -123,7 +103,6 @@ onUnmounted(() => {
   canvas.value.removeEventListener("pointerup", onPointerUp);
   canvas.value.removeEventListener("pointerout", onPointerOut);
   canvas.value.removeEventListener("pointerenter", onPointerEnter);
-  canvas.value.removeEventListener("wheel", onMouseWheel);
 });
 
 </script>
