@@ -29,7 +29,6 @@ function removeSelected() {
 
 function add() {
   store.addParticle(ParticleModel.create());
-  store.selectParticle(store.particle_array.length - 1);
   playAdd();
 }
 

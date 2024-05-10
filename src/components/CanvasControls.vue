@@ -10,7 +10,6 @@ import click from "../assets/sounds/select.wav";
 import hover from "../assets/sounds/hover.wav";
 import { useSimulationStore } from "../stores/simulation";
 import BlockDialog from "./BlockDialog.vue";
-import BrushSlider from "./BrushSlider.vue";
 
 const { play } = useSound(click, { volume: 0.5, interrupt: true });
 const { play: playHover } = useSound(hover, { volume: 0.5, interrupt: false });
@@ -54,7 +53,6 @@ async function resize_simulation(previous_size, new_size, duration) {
     var t = (Date.now() - start) / duration;
     var value = lerp(current, new_size, t);
     wasm_exports.resize_simulation(js_object(Math.round(value).toString()));
-    store.canvas_size = Math.round(value);
     await new Promise((r) => setTimeout(r, 1000 / 60));
   }
 
@@ -82,11 +80,6 @@ function playHoverSound() {
   }
 }
 
-function stepSimulation() {
-  wasm_exports.step_simulation();
-  play();
-}
-
 function showModal(e) {
   modal.value.showModal();
 }
@@ -94,12 +87,9 @@ function showModal(e) {
 
 <template>
   <div class="flex w-full gap-2 flex-wrap justify-between items-center bg-slate-600/50 rounded-xl mb-4 p-2">
-      <div class="flex gap-2 flex-wrap justify-start items-center grow" v-auto-animate="{ duration: 100 }">
-        <button @mouseenter="playHoverSound" :class="buttonClass" @click="togglePause" :title="[paused ? 'Unpause the simulation' : 'Pause the simulation']">
+      <div class="flex gap-2 flex-wrap justify-start items-center grow">
+        <button @mouseenter="playHoverSound" :class="buttonClass" @click="togglePause">
           <i :class="['ph-duotone', paused ? 'ph-play' : 'ph-pause']"></i>
-        </button>
-        <button @mouseenter="playHoverSound" v-if="paused" :class="buttonClass" @click="stepSimulation" title="Run the simulation once">
-          <i class="ph ph-caret-line-right font-black"></i>
         </button>
         <button @mouseenter="playHoverSound" :class="buttonClass" title="Clear all the particles" @click="clear"><i
             class="ph-duotone ph-broom"></i></button>
@@ -120,7 +110,6 @@ function showModal(e) {
           <option value="150" selected>Normal</option>
           <option value="300">Big</option>
         </select>
-        <BrushSlider></BrushSlider>
       </div>
 
       <button @mouseenter="playHoverSound" :class="buttonClass" title="Clear all the particles" @click="showModal"><i class="text-orange-400 ph-duotone ph-question"></i></button>
