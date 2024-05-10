@@ -7,20 +7,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@blockly/block-plus-minus": "^7.0.4",
-    "@blockly/field-slider": "^6.1.7",
+    "@blockly/block-plus-minus": "^7.0.6",
+    "@blockly/field-slider": "^6.1.9",
     "@formkit/auto-animate": "^0.8.2",
     "@vueuse/sound": "^2.0.1",
-    "blockly": "^10.0.0",
-    "blockly-field-color-wheel": "^1.0.2",
+    "blockly": "^10.4.3",
+    "blockly-field-color-wheel": "^1.0.5",
     "pinia": "^2.1.7",
-    "vue": "^3.4.13"
+    "vue": "^3.4.27"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.33",
-    "tailwindcss": "^3.4.1",
-    "vite": "^5.2.10"
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "vite": "^5.2.11"
   }
 }
