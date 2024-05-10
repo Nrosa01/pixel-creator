@@ -3,8 +3,6 @@ import * as Blockly from 'blockly';
 import { ColorWheelField } from "blockly-field-color-wheel";
 import { FieldSlider } from "@blockly/field-slider";
 
-import { PlusMinus } from '@blockly/block-plus-minus';
-
 import { createMinusField } from './field_minus';
 import { createPlusField } from './field_plus';
 //import { MutatorIcon } from 'blockly/core/icons';
