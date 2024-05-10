@@ -1,6 +1,6 @@
 import * as Blockly from 'blockly';
 
-import { ColorWheelField } from "blockly-field-color-wheel";
+import { ColorWheelField } from "../npm/color-wheel.js";
 import { FieldSlider } from "@blockly/field-slider";
 
 import { createMinusField } from './field_minus';

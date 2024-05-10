@@ -14,6 +14,9 @@ dependencies:
   '@formkit/auto-animate':
     specifier: ^0.8.2
     version: 0.8.2
+  '@jaames/iro':
+    specifier: ^5.5.2
+    version: 5.5.2
   '@vueuse/sound':
     specifier: ^2.0.1
     version: 2.0.1(vue@3.4.27)

@@ -10,6 +10,7 @@
     "@blockly/block-plus-minus": "^7.0.6",
     "@blockly/field-slider": "^6.1.9",
     "@formkit/auto-animate": "^0.8.2",
+    "@jaames/iro": "^5.5.2",
     "@vueuse/sound": "^2.0.1",
     "blockly": "^10.4.3",
     "blockly-field-color-wheel": "^1.0.5",
