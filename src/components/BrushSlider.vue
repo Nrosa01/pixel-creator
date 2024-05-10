@@ -5,9 +5,10 @@ import slider from "../assets/sounds/hover.wav";
 
 const { play: playSlider } = useSound(slider, { volume: 0.5, interrupt: false });
 const value = ref(25);
+let canvas = document.getElementById("glcanvas");
 
 const brush_size = computed(() => {
-    let diagonal = 800 * Math.sqrt(2);
+    let diagonal = canvas.width * Math.sqrt(2);
     let maxRadius = diagonal / 2;
     let fraction = value.value / 100;
     let radius = Math.pow(fraction, 2) * maxRadius;
