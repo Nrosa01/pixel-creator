@@ -117,7 +117,7 @@ var transformationOptions = [
 var ParticlePropertiesOptions = [
   ["Opacity", "opacity"],
   ["Hue Rotate", "hueShift"],
-  ["ColorFade", "colorFade"],
+  ["Color Fade", "colorFade"],
   ["Extra", "extra"],
   ["Extra2", "extra2"],
   ["Extra3", "extra3"],
