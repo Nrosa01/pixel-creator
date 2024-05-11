@@ -46,25 +46,4 @@ onMounted(async () => {
     <div v-if="scriptsLoaded">
         <Simulation></Simulation>
     </div>
-    <Transition name="fade">
-        <div v-if="!scriptsLoaded"
-            class="absolute top-0 right-0 justify-center text-center items-center h-screen w-screen bg-black pointer-events-none transition-opacity duration-300 ease-in-out "
-            style="z-index: 10000">
-            <div class="flex w-full h-full text-center items-center justify-center">
-                <p class="text-white text-6xl font-bold left-0 overflow-visible">Loading...</p>
-            </div>
-
-        </div>
-    </Transition>
 </template>
-
-<style scoped>
-.fade-enter-active {
-    transition: opacity .5s ease-in-out;
-}
-
-.fade-enter,
-.fade-leave-active {
-    opacity: 0
-}
-</style>
