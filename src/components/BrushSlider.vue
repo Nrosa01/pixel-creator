@@ -51,10 +51,13 @@ function onWheel(event) {
 }
 
 onMounted(() => {
-    document.addEventListener("wheel", onWheel)
+    let glcanvas = document.getElementById("glcanvas");
+    glcanvas.addEventListener("wheel", onWheel)
     value.value = 25;
 });
-onUnmounted(() => document.removeEventListener("wheel", onWheel))
+onUnmounted(() => {
+    let glcanvas = document.getElementById("glcanvas");
+    glcanvas.removeEventListener("wheel", onWheel)})
 
 </script>
 

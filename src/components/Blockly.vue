@@ -9,6 +9,7 @@ import { jsonGenerator } from "../assets/blockly/generator";
 
 import failJSON from "../assets/jsons/fails.json"
 import niceJSON from "../assets/jsons/nice.json"
+import baseParticles from "../assets/particles/base.json";
 
 const store = useSimulationStore();
 
@@ -94,6 +95,7 @@ onMounted(() => {
 
   store.loadWorkspace(store.selected_particle);
   store.blocklyLoaded = true;
+  store.loadFromJSON(baseParticles);
   // store.loadFromJSON(failJSON);
   // store.loadFromJSON(niceJSON);
 

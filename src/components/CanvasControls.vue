@@ -109,7 +109,7 @@ function showModal(e) {
         <button @mouseenter="playHoverSound" :class="buttonClass" title="Load a state from disk" @click="loadState"><i
             class="ph-duotone ph-upload"></i></button>
         <button @mouseenter="playHoverSound"
-          :class="buttonClass + ' transition-colors' + (performance_mode ? ' text-red-500' : '')"
+          :class="buttonClass + ' transition-colors duration-300 ease-in-out' + (performance_mode ? ' text-red-500' : '')"
           title="Toggle performance mode. Performance mode disables realtime particle editing updates and animations when resizing the world"
           @click="togglePerformanceMode"><i class="ph-duotone ph-fire"></i></button>
 
