@@ -41,7 +41,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <canvas class="cursor-none sticky top-0 box-border z-10 w-full touch-pinch-zoom border-black border-2 bg-black" 
+    <canvas class="cursor-none sticky top-0 box-border z-10 w-full touch-pinch-zoom border-slate-700 border-2 bg-black" 
         id="glcanvas" height="800" width="800"></canvas>
     <div v-if="scriptsLoaded">
         <Simulation></Simulation>
