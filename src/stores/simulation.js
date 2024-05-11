@@ -124,6 +124,7 @@ export const useSimulationStore = defineStore("simulation", () => {
         for (let i = 0; i < particle_array.value.length; i++) {
             selectParticle(i);
             loadWorkspace(i);
+            regenerateCode();
         }
 
         selectParticle(Math.min(previous_selected, particle_array.value.length - 1));
