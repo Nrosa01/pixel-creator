@@ -22,7 +22,7 @@ import { ref } from "vue";
 import { onMounted } from "vue";
 import { loadScript } from "../assets/utils.js";
 import wasm from "../assets/app.wasm?url";
-import loader from "../assets/wasm_helpers/mq_gl.js?url";
+import loader from "../assets/wasm_helpers/mq_gl.min.js?url";
 import sapp_utils from "../assets/wasm_helpers/sapp_jsutils.js?url";
 import plugins from "../assets/wasm_helpers/plugin.js?url";
 import Simulation from "./Simulation.vue";
