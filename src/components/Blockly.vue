@@ -95,7 +95,7 @@ onMounted(() => {
 
   store.loadWorkspace(store.selected_particle);
   store.blocklyLoaded = true;
-  store.loadFromJSON(baseParticles);
+  // store.loadFromJSON(baseParticles);
   // store.loadFromJSON(failJSON);
   // store.loadFromJSON(niceJSON);
 
