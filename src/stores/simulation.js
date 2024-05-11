@@ -169,9 +169,9 @@ export const useSimulationStore = defineStore("simulation", () => {
             const colorToHex = (color) => {
                 return "#" + color.map((c) => c.toString(16).padStart(2, "0")).join("");
             };
-            block.setFieldValue(colorToHex(color), "COLOR");
-            block.setFieldValue(particle_array.value[index]?.data.alpha[0], "MIN_ALPHA");
-            block.setFieldValue(particle_array.value[index]?.data.alpha[1], "MAX_ALPHA");
+            let hexColor = colorToHex(color);
+            block.setFieldValue(hexColor, "COLOR");
+            block.setFieldValue(hexColor, "COLOR2");
             block.initSvg();
             block.render();
         }

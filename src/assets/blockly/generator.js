@@ -32,8 +32,7 @@ jsonGenerator.forBlock['particle_base'] = function (block, generator) {
   //name of the particle
   const nameValue = block.getFieldValue('NAME');
   const color = hexToRgb(block.getFieldValue('COLOR'));
-  const min_alpha = block.getFieldValue('MIN_ALPHA');
-  const max_alpha = block.getFieldValue('MAX_ALPHA');
+  const color2 = hexToRgb(block.getFieldValue('COLOR2'));
 
   const statementMembers =
     generator.statementToCode(block, 'THEN');
@@ -43,7 +42,7 @@ jsonGenerator.forBlock['particle_base'] = function (block, generator) {
 "name": "${nameValue}",  
 "version": "1.0.0", 
 "color": [${color.r},${color.g}, ${color.b}],
-"alpha": [${min_alpha}, ${max_alpha}],
+"color2": [${color2.r},${color2.g}, ${color2.b}],
 "update": [
   
 ${statementMembers}

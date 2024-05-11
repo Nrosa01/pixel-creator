@@ -37,9 +37,11 @@ Blockly.Blocks['particle_base'] = {
         layoutDirection: "vertical",
       }),
         "COLOR")
-      .appendField(" Alpha: ")
-      .appendField(new FieldSlider(1, 0, 1, 0.01, validator_min), "MIN_ALPHA")
-      .appendField(new FieldSlider(1, 0, 1, 0.01, validator_max), "MAX_ALPHA");
+      .appendField("»")
+      .appendField(new ColorWheelField("#7fdab4", 150, {
+        layoutDirection: "vertical",
+      }),
+        "COLOR2")
     this.appendStatementInput("THEN")
     this.setInputsInline(true);
     this.setDeletable(false);
@@ -115,10 +117,10 @@ var transformationOptions = [
 var ParticlePropertiesOptions = [
   ["Opacity", "opacity"],
   ["Hue Rotate", "hueShift"],
+  ["ColorFade", "colorFade"],
   ["Extra", "extra"],
   ["Extra2", "extra2"],
   ["Extra3", "extra3"],
-  ["Extra4", "extra4"],
 ]
 
 const particleGroupMutator = {
