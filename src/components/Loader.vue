@@ -22,28 +22,58 @@ import { ref } from "vue";
 import { onMounted } from "vue";
 import { loadScript } from "../assets/utils.js";
 import wasm from "../assets/app.wasm?url";
-import loader from "../assets/wasm_helpers/mq_gl.min.js?url";
+import loader from "../assets/wasm_helpers/mq_gl.js?url";
 import sapp_utils from "../assets/wasm_helpers/sapp_jsutils.js?url";
 import plugins from "../assets/wasm_helpers/plugin.js?url";
 import Simulation from "./Simulation.vue";
 
 const scriptsLoaded = ref(false);
+const loadingProgress = ref(0);
 
 onMounted(async () => {
+    // I need to disable scrollbars until the wasm is loaded
+    // They shuoldn't appear but I probably missed something so this works for now...
+    document.body.style.overflow = "hidden";
+
     await loadScript(loader);
+    loadingProgress.value = 33;
     await loadScript(sapp_utils);
+    loadingProgress.value = 66;
     await loadScript(plugins);
+    loadingProgress.value = 99;
     await load(wasm);
 
     scriptsLoaded.value = true;
+    document.body.style.overflow = "auto";
 });
 
 </script>
 
 <template>
-    <canvas class="cursor-none sticky top-0 box-border z-10 w-full touch-pinch-zoom border-slate-700 border-2 bg-black" 
+    <canvas class="cursor-none sticky top-0 box-border z-10 w-full touch-pinch-zoom border-black border-2 bg-black" 
         id="glcanvas" height="800" width="800"></canvas>
     <div v-if="scriptsLoaded">
         <Simulation></Simulation>
     </div>
+    <Transition name="fade">
+        <div v-if="!scriptsLoaded"
+            class="absolute top-0 right-0 justify-center text-center items-center h-screen w-screen bg-slate-500/50 backdrop-blur-xl pointer-events-none transition-opacity duration-300 ease-in-out "
+            style="z-index: 10000">
+            <div class="flex flex-col w-full h-full text-center items-center justify-center">
+                <p class="animate-bounce text-white text-6xl font-bold left-0 overflow-visible">Loading... </p>
+                <p class="animate-bounce text-slate-300 py-4 text-4xl font-bold left-0 overflow-visible">{{ loadingProgress }}% </p>
+            </div>
+        </div>
+    </Transition>
 </template>
+
+<style scoped>
+.fade-enter-active {
+    transition: opacity .5s ease-in-out;
+}
+
+.fade-enter,
+.fade-leave-active {
+    opacity: 0
+}
+</style>
